@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-26",
+  "purpose": "Source catalog and rights triage; no raw data supplied or permissions granted by listing.",
+  "all_raw_assets_bundled": false,
+  "assets": [
+    {
+      "id": "kodak_e100_e4000_2018",
+      "kind": "manufacturer_document",
+      "source_url": "https://www.kodakprofessional.com/sites/default/files/wysiwyg/pro/resources/e4000_ektachrome_100.pdf",
+      "license_or_rights_status": "manufacturer_document_reuse_review_pending",
+      "bundled": false,
+      "version": "Revised 8-18",
+      "sha256": "d6e6fa1497c4fc16010997b1a8510d9df3b4692e34c48599c8a4338d5768fab6",
+      "curves": {
+        "characteristic": "page3; Daylight 1/100 sec; E-6; Status A",
+        "spectral_sensitivity": "page4; effective exposure 1/10 sec; E.N.D.=1.0",
+        "spectral_dye_density": "page4; dyes normalized for visual neutral density1.0 / viewing illuminant5000K"
+      },
+      "review_required_for": [
+        "raw_PDF",
+        "digitized_curves",
+        "derived_models",
+        "distributed_LUTs"
+      ]
+    },
+    {
+      "id": "kodak_5207_dye_density",
+      "kind": "digitized_material_curve",
+      "source_url": null,
+      "license_or_rights_status": "original_document_and_redistribution_review_pending",
+      "bundled": false,
+      "historical_filename": "dye_density_5207.csv",
+      "sha256": "4da26f06651fe356a6468bbdeefd0b56eb380730571547122d4a8a0fda68af1d",
+      "quantity": "diffuse spectral density; preserve base and normalization",
+      "note": "Historical research input only; establish exact manufacturer document revision and extraction provenance before migration."
+    },
+    {
+      "id": "kodak_5207_sensitivity",
+      "kind": "digitized_material_curve",
+      "source_url": null,
+      "license_or_rights_status": "original_document_and_redistribution_review_pending",
+      "bundled": false,
+      "historical_filename": "sensitivity_5207.csv",
+      "sha256": "34b4d5ec71ce981d3b9c9128ea2beef3f05e6f83b166a75c43f6fdff999fbceb",
+      "quantity": "verify original log sensitivity convention",
+      "note": "Historical research input only; establish exact manufacturer document revision and extraction provenance before migration."
+    },
+    {
+      "id": "kodak_5207_original_StatusM",
+      "kind": "digitized_characteristic",
+      "source_url": null,
+      "license_or_rights_status": "original_document_and_redistribution_review_pending",
+      "bundled": false,
+      "historical_filename": "5207_statusM_RGB_common_grid.csv",
+      "sha256": "d76eb7ca53b4279a20ce0f7b356dc29c0b2bdc6f2597eaf1ad9ab44f67dd25aa",
+      "quantity": "log exposure/stock camera-stop coordinate and Status M density",
+      "note": "Historical research input only; establish exact manufacturer document revision and extraction provenance before migration."
+    },
+    {
+      "id": "ultra_endura_e4020_2003",
+      "kind": "manufacturer_document",
+      "source_url": "https://125px.com/docs/unsorted/kodak/e4020.pdf",
+      "license_or_rights_status": "manufacturer_document_reuse_review_pending",
+      "bundled": false,
+      "source_type": "mirror; verify exact revision against manufacturer record",
+      "version": "E-4020, July2003",
+      "sha256": "2fd9770fb55bf37fe24afb7d76dbef4d45c6d445d4a2e98d4b8ff1033e2085e4"
+    },
+    {
+      "id": "ultra_endura_faust_2006",
+      "kind": "measured_finished_print_spectra",
+      "source_url": "https://www.colorreference.de/testdata/index.html",
+      "license_or_rights_status": "upstream_terms_and_derived_distribution_review_pending",
+      "bundled": false,
+      "derived_sha256": "21bf89ec7a67c350cc1d972911390c6024db55277a9826852496346fb53e18cf",
+      "upstream_archives": [
+        "testscan11cgt.zip",
+        "testscan14cgt.zip"
+      ],
+      "quantity": "spectral reflectance factor",
+      "grid_nm": [
+        380,
+        780,
+        10
+      ],
+      "samples": 2880,
+      "note": "Finished-print spectra, not paired known-exposure measurements and not a measured unexposed paper white."
+    },
+    {
+      "id": "CIE_1931_2deg",
+      "kind": "colorimetric_reference",
+      "source_url": "https://files.cie.co.at/CIE_xyz_1931_2deg.csv",
+      "license_or_rights_status": "check_exact_release_metadata_and_attribution_before_bundling",
+      "bundled": false,
+      "sha256": "fa663e3535a7e0763a745993a1f0a192eb0275ac46ad2d1befd7626841e713c1",
+      "reference_catalog": "https://cie.co.at/data-tables"
+    },
+    {
+      "id": "CIE_D50",
+      "kind": "colorimetric_reference",
+      "source_url": "https://files.cie.co.at/CIE_std_illum_D50.csv",
+      "license_or_rights_status": "check_exact_release_metadata_and_attribution_before_bundling",
+      "bundled": false,
+      "sha256": "b23049c6f7b266c1c1fbe147aa271e8930ca02d6e569c5ae1804c036faea4193",
+      "reference_catalog": "https://cie.co.at/data-tables"
+    },
+    {
+      "id": "D55_historical_colour_046",
+      "kind": "illuminant_reference",
+      "source_url": "https://github.com/colour-science/colour/tree/v0.4.6",
+      "license_or_rights_status": "code_and_tabulated_data_rights_require_separate_exact_source_review",
+      "bundled": false,
+      "sha256": "9edd934fe7ed033b221a935cd875f5ac9a03a01e109f0f3268ae3feb51469c15",
+      "quantity": "relative spectral energy SPD",
+      "note": "Historical table extraction from Colour0.4.6; may replace with an exact, rights-reviewed official CIE D55 release."
+    },
+    {
+      "id": "ISO_5_3_1984",
+      "kind": "densitometry_definition",
+      "source_url": null,
+      "license_or_rights_status": "copyrighted_standard_not_bundled; review use of numerical tables",
+      "bundled": false,
+      "table_ids": {
+        "Status_A": "Table3",
+        "Status_M": "Table4"
+      },
+      "historical_source_sha256": "0566ec1097ed23310993420fd876ad4d099d6d064e75029245b1a421c204623c",
+      "note": "Historical finite-band evaluations are not claims of complete instrument/standard conformance."
+    },
+    {
+      "id": "manchester_hyperspectral_50_v3",
+      "kind": "scene_spectral_dataset",
+      "source_url": "https://doi.org/10.48420/14877285.v3",
+      "license_or_rights_status": "CC-BY-4.0 per archived release metadata; retain attribution and verify selected release at import",
+      "bundled": false,
+      "authors": [
+        "David H.Foster",
+        "Kinjiro Amano",
+        "Sérgio M.C.Nascimento"
+      ],
+      "grid_nm": [
+        400,
+        720,
+        10
+      ],
+      "selected_files": [
+        {
+          "name": "hsi_1.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31451251",
+          "supplied_md5": "c057a0daadb4c3f4813e2d3151a81419"
+        },
+        {
+          "name": "hsi_5.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31451263",
+          "supplied_md5": "3edf24912f883e90ead4193e16fd548a"
+        },
+        {
+          "name": "hsi_6.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31451266",
+          "supplied_md5": "eaab88e43638f4cb070370996296e8e6"
+        },
+        {
+          "name": "hsi_16.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31451296",
+          "supplied_md5": "e84fdaf804373284477ce79f1d9ed097"
+        },
+        {
+          "name": "hsi_31.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31451341",
+          "supplied_md5": "01b50e3f2e3b33bfc971fbaf1acea636"
+        },
+        {
+          "name": "hsi_38.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31451362",
+          "supplied_md5": "ca4312e5c7999f7987828a73bf38cdcc"
+        },
+        {
+          "name": "hsi_43.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31451377",
+          "supplied_md5": "80c77d6e0a49002a961926207829626c"
+        },
+        {
+          "name": "hsi_50.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31451398",
+          "supplied_md5": "bd9830baca59bb0275a8abed9b22393b"
+        }
+      ],
+      "note": "Eight development scenes; not a broad skin/sky or independent final evaluation suite."
+    },
+    {
+      "id": "GH7_user_response",
+      "kind": "private_sensor_measurement",
+      "source_url": null,
+      "license_or_rights_status": "not_contributed_for_public_distribution",
+      "bundled": false,
+      "quantity": "linear response; relative interchannel gains unavailable",
+      "note": "No raw curve or camera-validity claim is bundled."
+    },
+    {
+      "id": "measured_capture_light",
+      "kind": "private_illuminant_measurement",
+      "source_url": null,
+      "license_or_rights_status": "not_contributed_for_public_distribution",
+      "bundled": false,
+      "note": "Historical narrow-band energy SPD; no raw values bundled and not a standard Status M response."
+    },
+    {
+      "id": "legacy_fixed_CCMs",
+      "kind": "private_calibration_assets",
+      "source_url": null,
+      "license_or_rights_status": "not_contributed_for_public_distribution",
+      "bundled": false,
+      "note": "Compatibility with historical GH7 input scale unverified. No matrix values or private profile files bundled."
+    }
+  ]
+}

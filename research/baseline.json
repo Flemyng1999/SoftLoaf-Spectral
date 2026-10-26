@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-26",
+  "status": "historical_external_research_only",
+  "distribution": "Sanitized metric summary. Original reports, private implementation and data are not bundled.",
+  "independently_reproducible_from_this_repository": false,
+  "scenes": {
+    "dataset_DOI": "10.48420/14877285.v3",
+    "scene_ids": [
+      1,
+      5,
+      6,
+      16,
+      31,
+      38,
+      43,
+      50
+    ],
+    "role": "development evidence; not a fresh final holdout"
+  },
+  "routes": {
+    "negative_digitization_5207": {
+      "original_report_sha256": "baf2fc495815793a6a993e72dd77dd36ea7c69df4f98a98eddb7ec9bbf1f4814",
+      "original_verification_sha256": "fa41833f5435b7fc808254759d4e4dcf018cd4bceae5becc402891abdf9884c4",
+      "implementation_in_this_repository": false,
+      "neutral_StatusM_construction_max_D": 1.0560003982362787e-08,
+      "APD_missing_standard_weight_fraction_RGB": [
+        0.0002555692805724652,
+        0.00011494032681369504,
+        0.0030086039798636888
+      ],
+      "numerical_verification": {
+        "source_hashes": 14,
+        "native_CCM_frames": 16,
+        "native_display_frames": 24,
+        "DNGs": 18,
+        "float_TIFFs": 18,
+        "rolls": 3,
+        "maximum_native_CCM_error_vs_numpy": 7.257652967496142e-08,
+        "maximum_softplus_density_error": 5.960461968435027e-08,
+        "status": "PASS"
+      },
+      "limitations": [
+        "Neutral sensitometry and separable effective dye model do not validate colored-film response.",
+        "GH7 channel relative scale unavailable; fixed CCM compatibility unverified.",
+        "Adaptive roll calibration and display used an external private application, not this repository."
+      ]
+    },
+    "optical_print_5207_ultra_endura": {
+      "original_report_sha256": "7986602da0dd8d358f969a0cd3b269e0fe60b8e4ddd80d987a9d73379833d9e2",
+      "original_verification_sha256": "1c24c47cc6ebc32c4337904bccc80cd22ea6483105ff64473e8d1cc101544874",
+      "implementation_in_this_repository": false,
+      "numerical_verification": {
+        "numerical_readback": "PASS",
+        "model_quality": "qualitative demonstration only; no independent exposure-to-print validation",
+        "paper_fit_holdout_samples": 71,
+        "holdout_spectral_RMS": 0.009830857327037326,
+        "holdout_deltaE76_mean": 3.9755478721279482,
+        "holdout_deltaE76_p95": 14.989954635067189,
+        "frames": 8,
+        "exposure_bracket_PNGs": 24,
+        "max_reflectance_float_readback_error": 4.453694457673407e-08,
+        "max_XYZ_float_readback_error": 4.3986108089200116e-08,
+        "max_linear_sRGB_float_readback_error": 5.715942874573443e-08,
+        "max_PNG_code_difference": 1,
+        "midgray_Y_at_minus1_0_plus1_paper_EV": [
+          0.5838181611525418,
+          0.18000000000000008,
+          0.014584501123858479
+        ],
+        "sensitivity_peak_nm_RGB": [
+          704.0,
+          550.0,
+          474.0
+        ]
+      },
+      "representation_validation": {
+        "training": {
+          "samples": 217,
+          "spectral_reflectance_RMS": 0.010764125524442867,
+          "spectral_reflectance_abs_p95": 0.020424301234486637,
+          "deltaE76_mean": 4.603707532404487,
+          "deltaE76_p95": 17.566460368211395,
+          "measured_above_fitted_white_fraction": 0.0
+        },
+        "held_out_colors": {
+          "samples": 71,
+          "spectral_reflectance_RMS": 0.009830857327037326,
+          "spectral_reflectance_abs_p95": 0.01950322301647417,
+          "deltaE76_mean": 3.9755478721279482,
+          "deltaE76_p95": 14.989954635067189,
+          "measured_above_fitted_white_fraction": 0.0
+        },
+        "additional_1152_color_grid": {
+          "samples": 1152,
+          "spectral_reflectance_RMS": 0.010892069822830329,
+          "spectral_reflectance_abs_p95": 0.021448027280704756,
+          "deltaE76_mean": 3.8471078568155312,
+          "deltaE76_p95": 14.001258756238096,
+          "measured_above_fitted_white_fraction": 0.0009103997289972899
+        },
+        "second_set_repeats_not_new_colors": {
+          "samples": 1440,
+          "spectral_reflectance_RMS": 0.010732824750001868,
+          "spectral_reflectance_abs_p95": 0.021143655552538457,
+          "deltaE76_mean": 4.00002244443943,
+          "deltaE76_p95": 14.884888836161894,
+          "measured_above_fitted_white_fraction": 0.0017107046070460705
+        }
+      },
+      "neutral_StatusA_construction_max_D": 0.0004013461551430064,
+      "independent_exposure_to_print_validation": false,
+      "limits": "Test-patch latent coefficients were fitted to each measured spectrum. White envelope and enlarger filters are modeled, not measured paper base or a specific enlarger."
+    },
+    "reversal_E100": {
+      "original_report_sha256": "31989ae6a204d860160faf8f319a11cecb4cc5bee7221b3beef0433fddb14b98",
+      "original_verification_sha256": "331038f3b97d5703d3d50bb4e18c920df272d603a0fdeb8b55b3f6473a52cf53",
+      "implementation_in_this_repository": false,
+      "numerical_verification": {
+        "status": "PASS",
+        "scope": "Numerical implementation and saved artifact consistency only, NOT independent measured E100 color validation.",
+        "checks": {
+          "source_hashes": "PASS",
+          "independent_CIE_quadrature_and_white_adaptation": "PASS",
+          "neutral_construction_max_D": 0.0008688238317375863,
+          "neutral_exposure_increases_transmission": "PASS",
+          "gray_anchor_Y": 0.09999999999999426,
+          "one_global_view_gain": 1.8000000000001033,
+          "linear_spectral_exposure_kernel": "PASS",
+          "frames": 8,
+          "exposure_variants": 24,
+          "individual_PNGs": 56,
+          "png_max_code_difference": 1,
+          "XYZ_max_abs_readback_error": 3.700863393518716e-08,
+          "effective_logH_max_abs_error": 6.179646163673169e-07,
+          "spectral_T_max_abs_error": 2.980232050031617e-08,
+          "physical_transmittance_range": "0 < T <= 1 for all saved pixels and bands",
+          "finite_band_endpoints_nm": [
+            400.0,
+            700.0
+          ],
+          "HSI_above_1_policy": "Original measured reflectance factors retained, not clipped before exposure; these may include specular/measurement effects and are not a proof of diffuse reflectance <=1."
+        }
+      },
+      "neutral_StatusA_construction_max_D": 0.0008688238317375863,
+      "exposure": {
+        "illuminant": "CIE D55 energy SPD, declared daylight approximation",
+        "grid_nm": [
+          400,
+          720,
+          10
+        ],
+        "reference": "Each layer exposure origin aligned with the same 18% spectrally flat gray under D55. Published log-sensitivities converted to linear before integration. This neutral alignment is a model calibration, not measured shutter/lens exposure.",
+        "gray_logH_anchor": -0.9999955673381196,
+        "anchor_definition": "Neutral trajectory D50 visual transmission Y=0.1 (visual density 1.0); chosen simulation convention, NOT manufacturer 18%-gray camera calibration.",
+        "exposure_EV": [
+          -1,
+          0,
+          1
+        ],
+        "outside_trace": "Zero linear sensitivity outside published per-layer traces; characteristic endpoint hold outside common logH range."
+      },
+      "viewing": {
+        "light": "CIE D50",
+        "grid_nm": [
+          400,
+          700,
+          2
+        ],
+        "colorimetry": "CIE1931 2deg; finite-band white Bradford-adapted to sRGB D65",
+        "physical_lightbox_white_Y": 1,
+        "fixed_brightness_gain": 1.8000000000001033,
+        "gain_definition": "One scalar, shared across all scenes and all EVs, maps model 18% neutral from Y=0.1 to Y=0.18. No per-channel white balance, no image-based grading.",
+        "source_reference": "Scene D55 spectrum on measured 400-720nm/10nm support, gray Y=.18, display gain=1. Different from previous reference PNGs that used gain .5.",
+        "no_processing": [
+          "negative demasking",
+          "CCM",
+          "OpenDRT",
+          "per-photo autoexposure"
+        ]
+      },
+      "limitations": [
+        "Three fixed manufacturer dye shapes with nonnegative effective coefficients; residual base/fog is absorbed into coefficients, no separately measured base spectrum.",
+        "Neutral StatusA trajectories are fit constraints, not independent color validation.",
+        "Independent layer exposure drives the corresponding CMY coefficient; no measured interlayer/interimage development model.",
+        "Only published finite spectral support; no reconstructed UV/IR, film grain, lens flare or E6 chemistry.",
+        "D55 exposure approximation, neutral exposure-origin calibration and viewing intensity are declared choices. No physical ISO100 shutter calibration claimed.",
+        "No independently measured E100 color-chart exposures and transmissions: cannot claim this reproduces real E100 color accuracy."
+      ],
+      "independent_measured_color_validation": false
+    }
+  }
+}

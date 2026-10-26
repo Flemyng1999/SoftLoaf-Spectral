@@ -1,0 +1,17 @@
+# Reproducible sources belong in Git; downloaded/restricted assets do not.
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.env
+.env.*
+local/
+data/raw/
+data/restricted/
+research/private/
+artifacts/
+dist/
+build/
+*.egg-info/
