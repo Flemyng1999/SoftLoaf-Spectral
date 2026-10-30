@@ -32,6 +32,15 @@ measurement standard.
 
 ## Film exposure and development
 
+The film-emulation interface uses each material's reference capture illumination:
+5500 K CIE daylight for the current daylight stocks, and a 3200 K Planck
+approximation for VISION3 tungsten stocks. New recipes and film changes adopt
+this condition automatically and show it as a read-only note. This is a film
+model reference, not an estimate of the imported photograph's illumination or
+its camera white balance. Printing and viewing lights remain independent.
+The lower-level reference calculation still accepts explicit scene conditions
+for scientific comparisons. Saved recipes retain their recorded conditions.
+
 The scene reflectance factor multiplied by the exposure illuminant gives the
 incident spectrum. Integrating it with each layer response gives effective
 exposure. The material model converts these exposures to developed spectral

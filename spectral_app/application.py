@@ -30,6 +30,7 @@ from .preview_policy import PREVIEW_SHORT_EDGE,PREVIEW_SCHEMA,preview_size
 from .rawtherapee import RawTherapee, DecodeGate, RAW_EXTENSIONS, lut_input
 from .photo_jobs import PhotoJobs
 from .compute_policy import retry_cpu
+from .film_lighting import bind_reference_scene, reference_scene
 from spectral_lut.native import sibling_library
 
 MAX_IMAGE_BYTES = 16*1024*1024
@@ -158,13 +159,19 @@ class Application(PipelineRoutes, Workbench):
 
     def bootstrap(self):
         result = super().bootstrap()
-        if hasattr(self.model,'input_priors'):
-            for group in ('templates','recipe_presets','reversal_presets'):
-                for entry in result.get(group,[]):
-                    if entry.get('recipe'):
-                        r=entry['recipe'];r.setdefault('input_model',self.model.input_priors.descriptor(r['route']))
-                        entry['recipe']=self.model.validate(r)['normalized_recipe']
-            result['default_recipe']=copy.deepcopy(result['templates'][0]['recipe'])
+        for group in ('templates','recipe_presets','reversal_presets'):
+            for entry in result.get(group,[]):
+                if entry.get('recipe'):
+                    r=bind_reference_scene(entry['recipe'])
+                    if hasattr(self.model,'input_priors'):
+                        r.setdefault('input_model',self.model.input_priors.descriptor(r['route']))
+                        r=self.model.validate(r)['normalized_recipe']
+                    entry['recipe']=r
+        result['default_recipe']=copy.deepcopy(result['templates'][0]['recipe'])
+        result['capture_references']={}
+        for stock,material in result.get('spectral_assets',{}).items():
+            reference=reference_scene({'film':{'stock':stock,'custom_material':material}})
+            if reference is not None:result['capture_references'][stock]=reference
         result['inputs'] = [copy.deepcopy(item) for item in result['inputs'] if item.get('name') != 'softloaf-first-image.png']
         result['chart_layout'] = {'rows': 4, 'columns': 6}
         for item in result['inputs']:
