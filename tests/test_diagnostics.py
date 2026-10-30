@@ -10,7 +10,7 @@ def test_diagnostics_are_bounded_and_do_not_record_private_values(tmp_path):
                   phase='矫正预览 · private-photo.ARW',path='/private/photo',token='secret')
     log.close();files=list(tmp_path.glob('events.jsonl*'))
     assert 1<=len(files)<=3
-    records=[json.loads(line) for path in files for line in path.read_text().splitlines()]
+    records=[json.loads(line) for path in files for line in path.read_text(encoding='utf-8').splitlines()]
     assert records and all(r['event']=='job.progress' and r['schema']==1 for r in records)
     text=json.dumps(records)
     for private in ('private-photo','/private/photo','secret'):assert private not in text
