@@ -3,13 +3,18 @@
 [中文说明](README.zh-CN.md)
 
 **The desktop runtime and scientific inputs are distributed separately.**
-Alpha.1 is source-only; alpha.2 adds standalone macOS arm64 packaging. Windows
-installers remain in validation. See [Releases](https://github.com/Flemyng1999/SoftLoaf-Spectral/releases)
-for published downloads. Neither channel includes film/paper curves, frozen
+Alpha.1 is source-only; alpha.2 adds standalone macOS arm64 packaging; alpha.3
+adds the Windows x64 runtime preview. See [Releases](https://github.com/Flemyng1999/SoftLoaf-Spectral/releases)
+for published downloads and platform requirements. Neither channel includes film/paper curves, frozen
 spectral models, photographs or scan calibrations.
 Public core checks run without those inputs; the application needs a prepared
 scientific-data directory. See [source build inputs](docs/source-release.md)
 and [installer setup and packaging](docs/installer-setup.md).
+
+The Windows preview is unsigned and requires WebView2 Evergreen. Its installed
+runtime passed RAW preview/export, D3D12 and CPU execution, LUT file readback,
+cache retention and uninstall/reinstall checks. Numerical and physical accuracy
+limits remain; see the release's `Windows-Validation.json` and `Known-Limits.md`.
 
 The workspace opens Film emulation, followed by Negative conversion and Spectra.
 New recipes and stock changes use the film's reference capture light, shown as
