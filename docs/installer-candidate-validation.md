@@ -12,8 +12,20 @@ command-line argument roundtripping, per-monitor DPI and embedded branding.
 A frozen Mac service ran with the checkout, developer Python, Homebrew and the
 installed RawTherapee application denied by a read sandbox. It loaded Metal,
 read a real Sony A7R V source, rendered the full 9556 × 6366 image in 1061 blocks
-with a 64 MiB working budget, and read the exported PNG back exactly. All three
-65³ pipeline exports passed their reference/file checks and downloaded hashes.
+with a 64 MiB rendering working budget, and read the exported PNG back exactly.
+All three 65³ pipeline exports passed file-integrity checks and downloaded
+hashes. Their GPU/float64 display differences were below 7 × 10⁻⁶ on 512 checked
+points. These results are separate from LUT interpolation acceptance.
+
+For 27,098 checked conditions, the reversal 65³ LUT put 98.4575% within two
+float display-code values, below the required 99%; maximum error was 20.7430
+codes. It did **not** pass that interpolation threshold. Negative APD reached
+100% (maximum 1.9990 codes); optical print reached 99.2066% (maximum 7.6753),
+passing the aggregate threshold while retaining outliers. Direct image
+rendering uses the continuous pipeline rather than this LUT interpolation.
+Larger grids need their own verification. The original alpha.2 source archive's
+broader “reference/file checks” wording is corrected by its published
+`Known-Limits.md`; the immutable tag is not moved.
 The first native window's complete first paint, without manual resizing, was
 confirmed by the owner. A one-time drawing-area resize is retained at first
 navigation; it does not change the outer window geometry.
