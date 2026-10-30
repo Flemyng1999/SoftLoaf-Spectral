@@ -132,7 +132,13 @@ class Application(PipelineRoutes, Workbench):
                     self.session_notice='已直接升级优化采样：反转片与负片分别使用已选模型。'
                 if any(old.get('recipe',{}).get('asset_refs',{}).get('model') in ('5207-paper-reference/1','5207-paper-reference/2','5207-paper-reference/3')
                         for old in saved['session']['documents']):
-                    notice='5207 使用 Status M 拟合；旧默认拍摄光已改为 5500 K，曝光与自定义色温保留。'
+                    notice='5207 使用 Status M 拟合；曝光与其他材料设置保留。'
+                    self.session_notice=(self.session_notice+' '+notice) if self.session_notice else notice
+                old_documents=saved['session']['documents']+[e['document'] for e in saved['session'].get('deleted_documents',[])]
+                new_documents=self.session['documents']+[e['document'] for e in self.session.get('deleted_documents',[])]
+                if any(old.get(field) is not None and old[field].get('scene')!=new[field].get('scene')
+                        for old,new in zip(old_documents,new_documents) for field in ('recipe','baseline')):
+                    notice='已将旧配方的拍摄光更新为片种参考条件；曝光、放大光和观看光保留。'
                     self.session_notice=(self.session_notice+' '+notice) if self.session_notice else notice
                 if type(saved['revision']) is not int or saved['revision'] < 1:
                     raise ValueError('Invalid workspace revision.')
@@ -141,6 +147,18 @@ class Application(PipelineRoutes, Workbench):
                 self.session_warning = '上次工作区无法完整复现；原文件保留，请检查材料版本或重新打开配方。'
 
     def update_cache_settings(self,request):return self.cache_settings.update(request)
+
+    def validate_recipe(self,recipe,compute=False):
+        """Canonical app recipe; explicit scene experiments stay in model.validate."""
+        result=self.model.validate(recipe,compute=compute)
+        if result.get('ok') and result.get('normalized_recipe'):
+            normalized=result['normalized_recipe']
+            bound=bind_reference_scene(normalized)
+            if bound!=normalized:return self.model.validate(bound,compute=compute)
+        return result
+
+    def _reference_request(self,request):
+        return {**request,'recipe':self.validate_recipe(request.get('recipe'),compute=True)['normalized_recipe']}
 
     def update_preferences(self,request):
         try:return self.preferences.update(request)
@@ -238,7 +256,8 @@ class Application(PipelineRoutes, Workbench):
         if isinstance(spec,dict):
             if request.get('priority')=='prefetch' and spec.get('id') in self.pending_preview_upgrades:raise RecipeError('preview_not_ready','预取只使用已准备的预览。')
             self._ensure_preview(spec.get('id'))
-        recipe=self.model.validate(request.get('recipe'),compute=True)['normalized_recipe']
+        request=self._reference_request(request)
+        recipe=request['recipe']
         identifier=spec.get('id') if isinstance(spec,dict) else None
         source=self.photo_sources.get(identifier,{})
         path=getattr(self.model.inputs,'paths',{}).get(identifier)
@@ -319,10 +338,10 @@ class Application(PipelineRoutes, Workbench):
         def validated_document(doc):
             if not isinstance(doc, dict):
                 raise RecipeError('invalid_session', '工作区配方格式错误。')
-            recipe = self.model.validate(doc.get('recipe'))['normalized_recipe']
+            recipe = self.validate_recipe(doc.get('recipe'))['normalized_recipe']
             baseline = doc.get('baseline')
             if baseline is not None:
-                baseline = self.model.validate(baseline)['normalized_recipe']
+                baseline = self.validate_recipe(baseline)['normalized_recipe']
             return {'recipe': recipe, 'baseline': baseline}
         documents=[validated_document(doc) for doc in state['documents']]
         identifiers={doc['recipe']['id'] for doc in documents}
@@ -576,11 +595,11 @@ class Application(PipelineRoutes, Workbench):
 
     @retry_cpu
     def export_image(self,request):
-        return self.photo_exporter.export(request)
+        return self.photo_exporter.export(self._reference_request(request))
 
     def start_photo_export(self,request):
         frozen=copy.deepcopy(request)
-        frozen['recipe']=self.model.validate(request.get('recipe'),compute=True)['normalized_recipe']
+        frozen['recipe']=self.validate_recipe(request.get('recipe'),compute=True)['normalized_recipe']
         if not isinstance(frozen.get('inputs'),list) or not 1<=len(frozen['inputs'])<=512:
             raise RecipeError('invalid_input','请选择 1–512 张已导入的照片。')
         return self.photo_jobs.start(frozen)
@@ -590,4 +609,4 @@ class Application(PipelineRoutes, Workbench):
 
     @retry_cpu
     def export_images(self,request,progress=None,cancelled=None):
-        return self.batch_exporter.export(request,progress=progress,cancelled=cancelled)
+        return self.batch_exporter.export(self._reference_request(request),progress=progress,cancelled=cancelled)

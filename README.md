@@ -17,9 +17,10 @@ cache retention and uninstall/reinstall checks. Numerical and physical accuracy
 limits remain; see the release's `Windows-Validation.json` and `Known-Limits.md`.
 
 The workspace opens Film emulation, followed by Negative conversion and Spectra.
-New recipes and stock changes use the film's reference capture light, shown as
-a note. RAW white balance, enlarger light and viewing light remain separate;
-saved recipes retain their recorded conditions.
+New recipes, stock changes and reopened saved recipes use the film's reference
+capture light, shown as a note. RAW white balance, enlarger light and viewing
+light remain separate. Upgrading a saved capture condition increments the
+recipe revision once; subsequent openings retain that revision.
 
 SoftLoaf Spectral is a project for calculating film-emulation LUTs from spectral
 data. Its planned desktop application will combine illuminants, film sensitivity,

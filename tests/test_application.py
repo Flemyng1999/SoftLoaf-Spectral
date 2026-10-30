@@ -44,6 +44,45 @@ def test_new_workflows_bind_capture_light_without_modifying_viewing_or_old_docum
     assert app.session==original
 
 
+def test_old_workspace_capture_light_migrates_once_and_survives_save_restart(app,tmp_path):
+    from spectral_app.application import Application
+    model=copy.copy(app.model);model.output=tmp_path
+    old=template();old.update(revision=7,name='Saved daylight recipe')
+    old['scene']={'illuminant':'CIE_D','temperature_k':6500}
+    old['film']['exposure_ev']=.75
+    state={'documents':[{'recipe':old,'baseline':copy.deepcopy(old)}],'active_id':old['id']}
+    path=tmp_path/'workspace.json'
+    path.write_text(json.dumps({'revision':3,'session':state}))
+    loaded=Application(model)
+    doc=loaded.session['documents'][0]
+    assert doc['recipe']['scene']==doc['baseline']['scene']=={'illuminant':'CIE_D','temperature_k':5500}
+    assert doc['recipe']['revision']==doc['baseline']['revision']==8
+    assert doc['recipe']['film']['exposure_ev']==.75
+    assert doc['recipe']['viewing']==old['viewing']
+    assert '片种参考' in loaded.session_notice
+    # Loading does not bypass the existing workspace revision/concurrency guard.
+    assert json.loads(path.read_text())['session']==state
+    saved=loaded.save_session({'expected_revision':3,'session':loaded.session})
+    assert saved['revision']==4
+    restarted=Application(model)
+    assert restarted.session==loaded.session
+    assert restarted.session_revision==4 and restarted.session_notice is None
+
+
+def test_old_and_upgraded_preview_requests_share_canonical_cache_identity(app,tmp_path,monkeypatch):
+    from spectral_app.application import Application
+    model=copy.copy(app.model);model.output=tmp_path;isolated=Application(model)
+    old=template();old['scene']={'illuminant':'CIE_D','temperature_k':6500}
+    request={'recipe':old,'input':{'id':'chart'},'selection':{'sample_id':'cc22'}}
+    first=isolated.evaluate(request)
+    canonical=isolated.validate_recipe(old,compute=True)['normalized_recipe']
+    assert first['version']['revision']==canonical['revision']
+    def unexpected_render(_request):raise AssertionError('The same canonical recipe should reuse its preview')
+    monkeypatch.setattr(isolated,'_evaluate_uncached',unexpected_render)
+    second=isolated.evaluate({**request,'recipe':canonical})
+    assert second==first
+
+
 def test_import_and_export_keep_dimensions_recipe_and_declared_rgb_interpretation(app):
     request, pixels = image_request()
     imported = app.import_image(request)
@@ -56,17 +95,18 @@ def test_import_and_export_keep_dimensions_recipe_and_declared_rgb_interpretatio
     recipe['film']['exposure_ev'] = .5
     response = app.export_image({'recipe': recipe, 'input': {'id': item['id'], 'exposure_ev': .25}})
     assert response['ok'] and response['verification']['readback_exact']
-    assert response['frozen']['revision'] == 1
+    assert response['frozen']['revision'] == 2
     png = next(f for f in response['files'] if f['name'].endswith('.png'))
     path, _ = app.downloads[png['url']]
     with Image.open(path) as actual:
         assert actual.size == (2, 2) and actual.info['icc_profile']
-        expected = app.model.sample(app.model.srgb_to_ap1(pixels/255)*np.exp2(.25), exposure_ev=.5)['sRGB']
+        expected = app.model.sample(app.model.srgb_to_ap1(pixels/255)*np.exp2(.25), exposure_ev=.5,scene_temperature_k=5500)['sRGB']
         np.testing.assert_array_equal(np.array(actual), np.floor(expected*255+.5).astype(np.uint8))
     manifest_file = next(f for f in response['files'] if f['name'] == 'image.json')
     metadata = json.loads(app.downloads[manifest_file['url']][0].read_text())
     assert metadata['input']['interpretation']['scene_referred'] is False
     assert metadata['recipe']['film']['exposure_ev'] == .5
+    assert metadata['recipe']['scene']=={'illuminant':'CIE_D','temperature_k':5500}
     assert metadata['conditions']['compute_backend'].startswith('C++')
 
 
@@ -170,7 +210,7 @@ def test_batch_export_freezes_one_recipe_and_keeps_each_images_exposure_and_prof
     assert result['ok'] and result['succeeded']==2 and result['failed']==0
     archive=batch.downloads[result['files'][0]['url']][0]
     with zipfile.ZipFile(archive) as z:
-        report=json.loads(z.read('manifest.json'));assert report['frozen']['revision']==8
+        report=json.loads(z.read('manifest.json'));assert report['frozen']['revision']==9
         assert [i['input']['exposure_ev'] for i in report['images']]==[0,.5]
         names=[i['file'] for i in report['images']];assert len(set(names))==2
         for index,name in enumerate(names):
@@ -178,7 +218,9 @@ def test_batch_export_freezes_one_recipe_and_keeps_each_images_exposure_and_prof
             with Image.open(io.BytesIO(z.read(name))) as image:
                 assert image.size==(3+index,2)
                 assert image.info['icc_profile']==model.display_profile('Display P3')
-        assert json.loads(z.read('recipe.json'))['revision']==8
+        saved=json.loads(z.read('recipe.json'))
+        assert saved['revision']==9
+        assert saved['scene']=={'illuminant':'CIE_D','temperature_k':5500}
 
 
 def test_batch_export_reports_bad_source_and_still_exports_other_images(app,tmp_path):
