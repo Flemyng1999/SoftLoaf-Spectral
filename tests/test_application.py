@@ -32,6 +32,18 @@ def image_request(icc=None):
     return {'name': 'my photo.png', 'data_base64': base64.b64encode(data.getvalue()).decode()}, pixels
 
 
+def test_new_workflows_bind_capture_light_without_modifying_viewing_or_old_documents(app):
+    original=copy.deepcopy(app.session)
+    data=app.bootstrap()
+    assert data['capture_references']['E100']=={'illuminant':'CIE_D','temperature_k':5500}
+    for group in ('templates','recipe_presets','reversal_presets'):
+        for entry in data.get(group,[]):
+            recipe=entry['recipe'];reference=data['capture_references'].get(recipe['film']['stock'])
+            if reference is not None:assert recipe['scene']==reference
+    assert data['default_recipe']['viewing']['illuminant']=='D50'
+    assert app.session==original
+
+
 def test_import_and_export_keep_dimensions_recipe_and_declared_rgb_interpretation(app):
     request, pixels = image_request()
     imported = app.import_image(request)

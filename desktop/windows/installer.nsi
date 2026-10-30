@@ -52,7 +52,7 @@ Section "Application" SEC_APP
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\SoftLoafSpectral" "DisplayName" "SoftLoaf Spectral"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\SoftLoafSpectral" "DisplayVersion" "${APP_VERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\SoftLoafSpectral" "Publisher" "Yangming Feng and contributors"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\SoftLoafSpectral" "UninstallString" '$"$INSTDIR\Uninstall.exe$"'
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\SoftLoafSpectral" "UninstallString" '"$INSTDIR\Uninstall.exe"'
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\SoftLoafSpectral" "URLInfoAbout" "https://github.com/Flemyng1999/SoftLoaf-Spectral"
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\SoftLoafSpectral" "NoModify" 1
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\SoftLoafSpectral" "NoRepair" 1

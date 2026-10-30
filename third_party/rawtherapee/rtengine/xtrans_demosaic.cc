@@ -808,13 +808,9 @@ void RawImageSource::xtrans_interpolate (const int passes, const bool useCieLab,
                     }
                 }
 
-                if (height - top < ts + 4) {
-                    mrow = height - top + 2;
-                }
-
-                if (width - left < ts + 4) {
-                    mcol = width - left + 2;
-                }
+                // The 5x5 sum must stay within initialized homogeneity maps.
+                // The remaining sensor boundary uses the existing RT raw
+                // interpolation below, rather than stale tile-buffer bytes.
 
 
                 /* Build 5x5 sum of homogeneity maps */
@@ -963,7 +959,7 @@ void RawImageSource::xtrans_interpolate (const int passes, const bool useCieLab,
         free(buffer);
     }
 
-    xtransborder_interpolate(passes > 1 ? 8 : 11, red, green, blue);
+    xtransborder_interpolate(11, red, green, blue);
 }
 #undef CLIP
 void RawImageSource::fast_xtrans_interpolate (const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue)

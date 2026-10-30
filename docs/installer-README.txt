@@ -1,4 +1,4 @@
-面包光谱 / SoftLoaf Spectral 0.1.0-alpha.2
+面包光谱 / SoftLoaf Spectral 0.1.0-alpha.3
 Yangming Feng and contributors
 https://github.com/Flemyng1999/SoftLoaf-Spectral
 

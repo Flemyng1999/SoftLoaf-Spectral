@@ -1,4 +1,4 @@
-# Installing the alpha.2 candidate
+# Installing the alpha.3 candidate
 
 This prerelease packages the native window and its runtime. Scientific inputs
 remain separate. It contains no film/paper curves, trained spectral models,
@@ -65,6 +65,10 @@ resources include the platform-specific `options` file and
 `rtengine/camconst.json`, following upstream's separate installation rules.
 
 `scripts/build_service.py` freezes program code and public resources only.
+Windows builds require explicit `--native-dependencies` and `--msvc-runtime`
+directories. The latter must contain the reviewed release CRT files from one
+Microsoft redistributable version; the service and native shell receive the
+same three files rather than a mixture selected from Python and the host OS.
 `scripts/bundle_macos_raw.py` and `scripts/bundle_windows_raw.py` copy explicit
 RAW reader dependency closures. The Mac compatibility reader retains the
 original official RT numerical binary while relocating resource strings and
@@ -83,3 +87,41 @@ assessment. Generate final SHA-256 sums only after those operations.
 missing RAW resources and inventories the payload. Windows packaging uses
 `desktop/windows/installer.nsi`; data volumes are not included in its uninstall
 rules. Never copy a local workspace, test pack or RAW corpus into a public stage.
+
+For Windows MSYS2 inputs, `scripts/msys2_inventory.py` verifies each selected DLL
+against its original cached binary package. It preserves `.PKGINFO`,
+`.BUILDINFO`, package notices, source URLs and hashes. After fetching the source
+archives, `--sources-manifest` also checks their `PKGBUILD` against the hash in
+the binary's build record. A filename or a matching library version alone is
+insufficient evidence. The audit includes both RAW roles and MSYS2 libraries
+selected by the frozen-service analysis; other native providers need separate
+records.
+
+Staging rejects a missing executable in either RAW role before creating its
+output directory. Install the role executables, DLL closures and resources
+after freezing the service: a clean freeze replaces its output tree.
+
+The Windows compatibility reader is built with
+`scripts/build_windows_rt_reference.py --archive … --source … --toolchain … --output …`.
+The archive must be the pinned official RT 5.12 release source; the script
+rejects other bytes before extraction and records the two source fixes and
+generic x64 build flags. `--integrated-source third_party/rawtherapee` instead
+builds the adapter-enabled reader after checking its declared source hashes.
+Use new source/build directories. Both roles need the complete matching
+upstream camera resources, not just an executable copied from an installation.
+Include the exact upstream archive, this build script and dependency source
+archives with the corresponding-source supplement.
+
+Use a short checkout path when freezing on Windows: the resource arguments can
+otherwise exceed Windows' process command-line limit. For remote installed-byte
+tests, keep the SSH session alive or launch through the interactive desktop.
+A service left behind after its SSH session closes can remain reachable while
+new RT child processes fail with `STATUS_DLL_INIT_FAILED`. An attached run and
+a normal desktop launch must be checked separately from that failed harness.
+
+The X-Trans bounds change uses RT's existing interpolation for the outer 11
+sensor pixels. In the tested X-T30 and X-T30 II files, the changed region is
+the outer four output pixels. The remaining region matches the independent
+official CLI exactly with identical camera data; the new full image repeats
+exactly. The original CLI's outer pixels were not a stable numerical oracle.
+This does not establish an image-edge accuracy measurement for other cameras.
