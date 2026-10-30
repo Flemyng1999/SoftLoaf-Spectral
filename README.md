@@ -2,10 +2,11 @@
 
 [中文说明](README.zh-CN.md)
 
-**The published 0.1.0-alpha.1 is a source-only prerelease.** The alpha.2
-installer candidate packages the desktop runtime separately from scientific
-inputs; it has not yet passed all publication gates. Neither channel includes
-film/paper curves, frozen spectral models, photographs or scan calibrations.
+**The desktop runtime and scientific inputs are distributed separately.**
+Alpha.1 is source-only; alpha.2 adds standalone macOS arm64 packaging. Windows
+installers remain in validation. See [Releases](https://github.com/Flemyng1999/SoftLoaf-Spectral/releases)
+for published downloads. Neither channel includes film/paper curves, frozen
+spectral models, photographs or scan calibrations.
 Public core checks run without those inputs; the application needs a prepared
 scientific-data directory. See [source build inputs](docs/source-release.md)
 and [installer setup and packaging](docs/installer-setup.md).

@@ -1,8 +1,10 @@
 # 面包光谱（SoftLoaf Spectral）
 
-**已发布的 0.1.0-alpha.1 为源码测试版。** alpha.2 的独立运行时安装候选版
-仍在完成发布检查，尚未发布。两种分发均不附胶片／相纸曲线、冻结采样模型、
-照片或扫描标定。公开内核测试可独立运行；应用仍需另行准备科学资料目录。
+**安装版与科学资料分开提供。** alpha.1 为源码版，alpha.2 增加 macOS arm64
+独立运行时打包；Windows 安装器仍在验证。已上线下载见
+[Releases](https://github.com/Flemyng1999/SoftLoaf-Spectral/releases)。两种分发均不附
+胶片／相纸曲线、冻结采样模型、照片或扫描标定。公开内核测试可独立运行；
+应用仍需另行准备科学资料目录。
 见[源码构建与运行资料](docs/source-release.md)及[安装与打包说明](docs/installer-setup.md)。
 
 日志、跨平台 CI、本地严格测试和设置中的语言选择见
