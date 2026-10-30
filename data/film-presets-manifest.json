@@ -1,0 +1,162 @@
+{
+  "schema": "softloaf.experimental-presets/1",
+  "recorded_on": "2026-10-28",
+  "status": "local research only; not measured full-stock color accuracy",
+  "directory": "local/materials/film-presets-v1",
+  "recipes": [
+    {
+      "id": "portra160-print",
+      "name": "Kodak Portra 160",
+      "process": "C-41",
+      "route": "print",
+      "file": "portra160-print.json",
+      "sha256": "fb94a5da8ee2255b894e35b743bf38e1b1ac69ff0140c8d580caf6858bf3da29",
+      "summary": "实验模型；5207 暂代：染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "portra400-print",
+      "name": "Kodak Portra 400",
+      "process": "C-41",
+      "route": "print",
+      "file": "portra400-print.json",
+      "sha256": "67e8b882816d935dc726bfb701c9c99d2a64e47484e713cd463e0c8dff64e9d5",
+      "summary": "实验模型；5207 暂代：染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "portra800-print",
+      "name": "Kodak Portra 800",
+      "process": "C-41",
+      "route": "print",
+      "file": "portra800-print.json",
+      "sha256": "a1271f4e9e4c511b6b82136c4a65e2ea28a00374ea1597a6d6da943a991e88f4",
+      "summary": "实验模型；5207 暂代：染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "ektar100-print",
+      "name": "Kodak Ektar 100",
+      "process": "C-41",
+      "route": "print",
+      "file": "ektar100-print.json",
+      "sha256": "3af4cbe7928bc14522dc473abb5f68d8b0c3b39131b2c5d42789d371ff47c79d",
+      "summary": "实验模型；5207 暂代：染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "gold200-print",
+      "name": "Kodak Gold 200",
+      "process": "C-41",
+      "route": "print",
+      "file": "gold200-print.json",
+      "sha256": "3223a1ffb2e8bafdc5c30836b095991a4d239328993d89cdbfbb34f9ec14ac68",
+      "summary": "实验模型；5207 暂代：染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "ultramax400-print",
+      "name": "Kodak Ultramax 400",
+      "process": "C-41",
+      "route": "print",
+      "file": "ultramax400-print.json",
+      "sha256": "d4a858ed6eee745f39d8d398a5bac1a9c8bac10ccafba1b0d7bb49d5a5dc2665",
+      "summary": "实验模型；5207 暂代：特性曲线、染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "c200-print",
+      "name": "Fujifilm C200",
+      "process": "C-41",
+      "route": "print",
+      "file": "c200-print.json",
+      "sha256": "ba89e39e2b207aaf480c01eb095a23733f7cfa9faa6cac0d0dfb0102ae645a26",
+      "summary": "实验模型；5207 暂代：特性曲线、染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "pro400h-print",
+      "name": "Fujifilm Pro 400H",
+      "process": "C-41",
+      "route": "print",
+      "file": "pro400h-print.json",
+      "sha256": "aab4cb0cb346ba55b8311a4f54f6ad0b4251129c6728893439dcfcb88a0657b7",
+      "summary": "实验模型；5207 暂代：特性曲线、染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "superia400-print",
+      "name": "Fujifilm Superia X-TRA 400",
+      "process": "C-41",
+      "route": "print",
+      "file": "superia400-print.json",
+      "sha256": "cc6ee259e593c8ce9bcc1282b785b348d9dfc6040fdf1eb74b7ff5b1c627f2f7",
+      "summary": "实验模型；5207 暂代：特性曲线、染料、片基（来源中注明范围）、曝光标定。非原厂完整测量。"
+    },
+    {
+      "id": "5203-negative",
+      "name": "Kodak VISION3 50D 5203",
+      "process": "ECN-2",
+      "route": "negative",
+      "file": "5203-negative-vision3-v2.json",
+      "sha256": "c323fe028b09947511e2c7ef99ca5f4fed9dc302a562f5a4e318ddc031a8a966",
+      "summary": "原厂独立曲线；相对曝光参考，非实拍校准。"
+    },
+    {
+      "id": "5203-print",
+      "name": "Kodak VISION3 50D 5203",
+      "process": "ECN-2",
+      "route": "print",
+      "file": "5203-print-vision3-v2.json",
+      "sha256": "5e2516d5187fc8f93159b4ca3e42a4a3a0636112109ac5af42749b44de9efeb9",
+      "summary": "原厂独立曲线；相对曝光参考，非实拍校准。"
+    },
+    {
+      "id": "5207-negative",
+      "name": "Kodak VISION3 250D 5207",
+      "process": "ECN-2",
+      "route": "negative",
+      "file": "5207-negative-vision3-v2.json",
+      "sha256": "83ad7cd1b6baf6885c82f715063adeb2a9576b8511d4caa545aa7e8823651059",
+      "summary": "原厂独立曲线；相对曝光参考，非实拍校准。"
+    },
+    {
+      "id": "5207-print",
+      "name": "Kodak VISION3 250D 5207",
+      "process": "ECN-2",
+      "route": "print",
+      "file": "5207-print-vision3-v2.json",
+      "sha256": "3386b586c209ec7f0708e86f1fa3d4ce32cf75a84880d4d2708c500077f02ebf",
+      "summary": "原厂独立曲线；相对曝光参考，非实拍校准。"
+    },
+    {
+      "id": "5213-negative",
+      "name": "Kodak VISION3 200T 5213",
+      "process": "ECN-2",
+      "route": "negative",
+      "file": "5213-negative-vision3-v2.json",
+      "sha256": "41114ed1bdad272caba1faa35cadcbd14b3fa2f1c24bb35385781c9c6d070991",
+      "summary": "原厂独立曲线；相对曝光参考，非实拍校准。"
+    },
+    {
+      "id": "5213-print",
+      "name": "Kodak VISION3 200T 5213",
+      "process": "ECN-2",
+      "route": "print",
+      "file": "5213-print-vision3-v2.json",
+      "sha256": "ef0b79a20f51aa8882a7cfac3b422ec8b4a31c1ba73df3707a514daf7836bdf5",
+      "summary": "原厂独立曲线；相对曝光参考，非实拍校准。"
+    },
+    {
+      "id": "5219-negative",
+      "name": "Kodak VISION3 500T 5219",
+      "process": "ECN-2",
+      "route": "negative",
+      "file": "5219-negative-vision3-v2.json",
+      "sha256": "40735015f166b443c4bfce3ac06fefec0a2b9ef7eab3b9966a2a275aba82d5fd",
+      "summary": "原厂独立曲线；相对曝光参考，非实拍校准。 Status M 按同文档交叉推定。"
+    },
+    {
+      "id": "5219-print",
+      "name": "Kodak VISION3 500T 5219",
+      "process": "ECN-2",
+      "route": "print",
+      "file": "5219-print-vision3-v2.json",
+      "sha256": "84a0bf16db2bf01db8c9ae722f2dbc2edb8e6b67951131c004079ad6e04dfbd8",
+      "summary": "原厂独立曲线；相对曝光参考，非实拍校准。 Status M 按同文档交叉推定。"
+    }
+  ],
+  "vision3_material_version": "vision3-source/2"
+}

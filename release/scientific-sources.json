@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "review_date": "2026-10-30",
+  "scope": "Scientific source review only. No installer candidate or permission to publish pending data.",
+  "roots": [
+    "cie-CIE_xyz_1931_2deg",
+    "cie-CIE_std_illum_D50",
+    "cie-CIE_std_illum_D65",
+    "cie-CIE_illum_D55",
+    "cie-CIE_illum_Dxx_comp",
+    "kodak-film-paper",
+    "fujifilm-reversal",
+    "apd-measurement-tables",
+    "printing-optics",
+    "sampling-models"
+  ],
+  "assets": [
+    {
+      "id": "cie-CIE_xyz_1931_2deg",
+      "status": "approved",
+      "source_kind": "original",
+      "source": "https://files.cie.co.at/Publications-datasets/CIE_xyz_1931_2deg.csv",
+      "path": "assets/science/cie/CIE_xyz_1931_2deg.csv",
+      "sha256": "fa663e3535a7e0763a745993a1f0a192eb0275ac46ad2d1befd7626841e713c1",
+      "license_record": "assets/science/cie/README.md",
+      "dependencies": [],
+      "scope": "Unmodified original numeric table; CC-BY-SA-4.0 attribution and adaptation obligations retained"
+    },
+    {
+      "id": "cie-CIE_std_illum_D50",
+      "status": "approved",
+      "source_kind": "original",
+      "source": "https://files.cie.co.at/Publications-datasets/CIE_std_illum_D50.csv",
+      "path": "assets/science/cie/CIE_std_illum_D50.csv",
+      "sha256": "b23049c6f7b266c1c1fbe147aa271e8930ca02d6e569c5ae1804c036faea4193",
+      "license_record": "assets/science/cie/README.md",
+      "dependencies": [],
+      "scope": "Unmodified original numeric table; CC-BY-SA-4.0 attribution and adaptation obligations retained"
+    },
+    {
+      "id": "cie-CIE_std_illum_D65",
+      "status": "approved",
+      "source_kind": "original",
+      "source": "https://files.cie.co.at/Publications-datasets/CIE_std_illum_D65.csv",
+      "path": "assets/science/cie/CIE_std_illum_D65.csv",
+      "sha256": "e76f210bffff3d552ef7113025da5f325d5dfec200dd4b878b1a2f3a507032cb",
+      "license_record": "assets/science/cie/README.md",
+      "dependencies": [],
+      "scope": "Unmodified original numeric table; CC-BY-SA-4.0 attribution and adaptation obligations retained"
+    },
+    {
+      "id": "cie-CIE_illum_D55",
+      "status": "approved",
+      "source_kind": "original",
+      "source": "https://files.cie.co.at/Publications-datasets/CIE_illum_D55.csv",
+      "path": "assets/science/cie/CIE_illum_D55.csv",
+      "sha256": "3e5aa1a8d5514df1928effef1615ab90e16c9a368ccfe513372cd8556c37bf4b",
+      "license_record": "assets/science/cie/README.md",
+      "dependencies": [],
+      "scope": "Unmodified original numeric table; CC-BY-SA-4.0 attribution and adaptation obligations retained"
+    },
+    {
+      "id": "cie-CIE_illum_Dxx_comp",
+      "status": "approved",
+      "source_kind": "original",
+      "source": "https://files.cie.co.at/Publications-datasets/CIE_illum_Dxx_comp.csv",
+      "path": "assets/science/cie/CIE_illum_Dxx_comp.csv",
+      "sha256": "4056cf7c1afb23fb8820ff9cbc383a80005acdffe1c0a6945c6032616e08c6be",
+      "license_record": "assets/science/cie/README.md",
+      "dependencies": [],
+      "scope": "Unmodified original numeric table; CC-BY-SA-4.0 attribution and adaptation obligations retained"
+    },
+    {
+      "id": "kodak-film-paper",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.kodak.com/en/company/page/frequently-asked-questions/",
+      "reason": "Own manufacturer PDF extractions already identified by material manifests. Permission basis for embedded tables and derived models is not established.",
+      "dependencies": []
+    },
+    {
+      "id": "fujifilm-reversal",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.fujifilm.com/us/en/terms",
+      "reason": "Own manufacturer extractions; regional source terms and redistribution basis need review.",
+      "dependencies": []
+    },
+    {
+      "id": "status-a-m",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://cdn.standards.iteh.ai/samples/20101/642e3ed0adfe43be85e67b2c413cca56/ISO-5-3-1984.pdf",
+      "reason": "Status A/M source tables remain local. Exact applicable standard and distribution basis must be established from recorded source manifests.",
+      "dependencies": []
+    },
+    {
+      "id": "apd-measurement-tables",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.oscars.org/science-technology/sci-tech-projects/aces",
+      "reason": "Separately assess numeric responsivities and stock conversion coefficients; Academy transform code licence alone does not clear measured tables.",
+      "dependencies": []
+    },
+    {
+      "id": "schott-kg3",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.schott.com/en-gb/products/optical-filter-glass-p1000266/downloads",
+      "reason": "Original SCHOTT 2024-02 XLSX acquired; D-Bank CI2 identifies KG3, CI3 reference thickness 2 mm. Copyright sheet requires permission for commercial data/program use. No distribution clearance recorded.",
+      "dependencies": []
+    },
+    {
+      "id": "edmund-cmy",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.edmundoptics.com/p/cyan-magentayellow-50mm-diameter-dichroic-filter-set/10628/",
+      "reason": "Original manufacturer cyan theoretical curve found. Independent extraction, magenta/yellow numeric acquisition and distribution basis remain incomplete; no repo fallback approved.",
+      "dependencies": []
+    },
+    {
+      "id": "paper-white",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.kodak.com/",
+      "reason": "Current spectral-v2 base shape is an upstream processed Ultra Endura profile. No original measured paper-white spectrum acquired; exclude this borrowed component from publication until resolved.",
+      "dependencies": []
+    },
+    {
+      "id": "optional-lens",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.lensrentals.com/blog/2018/03/a-geek-of-many-colors-adventures-in-spectrometry/",
+      "reason": "Original measurement article identified. Numeric extraction and redistribution basis incomplete. Existing repo table is not approved for release.",
+      "dependencies": []
+    },
+    {
+      "id": "printing-optics",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.schott.com/en-gb/products/optical-filter-glass-p1000266/downloads",
+      "reason": "Existing runtime still loads processed repo optical curves. Original-source replacements and external numerical validation required. No unavoidable-source exception established.",
+      "dependencies": [
+        "schott-kg3",
+        "edmund-cmy",
+        "paper-white",
+        "optional-lens"
+      ]
+    },
+    {
+      "id": "manchester-training",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://doi.org/10.48420/14877285.v3",
+      "reason": "Original dataset API v3 declares CC-BY-4.0. Match retained archive identities and retain source attribution before clearing derived inputs.",
+      "dependencies": []
+    },
+    {
+      "id": "babelcolor-training",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://babelcolor.com/colorchecker-2.htm",
+      "reason": "Original measured averages located; numeric file-specific redistribution and derived-model basis remain unestablished.",
+      "dependencies": []
+    },
+    {
+      "id": "ohta-training",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.colour-science.org/",
+      "reason": "Current provider is Colour. Original measurement source and its licence must be located; provider code licence does not clear measurement data. No fallback approved.",
+      "dependencies": []
+    },
+    {
+      "id": "it8-training",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://www.colorreference.de/testdata/index.html",
+      "reason": "Original Wolf Faust 2006 Testscan 14-5 available; profiling-development use described, embedded data/model redistribution basis still unreviewed.",
+      "dependencies": []
+    },
+    {
+      "id": "sampling-models",
+      "status": "pending",
+      "source_kind": "original",
+      "source": "https://github.com/Flemyng1999/SoftLoaf-Spectral",
+      "reason": "Frozen models incorporate all listed training data. Approval cannot be inferred from the Manchester subset alone.",
+      "dependencies": [
+        "manchester-training",
+        "babelcolor-training",
+        "ohta-training",
+        "it8-training",
+        "status-a-m"
+      ]
+    }
+  ]
+}

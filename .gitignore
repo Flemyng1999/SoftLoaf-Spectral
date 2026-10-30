@@ -1,5 +1,9 @@
 # Reproducible sources belong in Git; downloaded/restricted assets do not.
 .DS_Store
+._*
+.coverage*
+node_modules/
+playwright-report/
 __pycache__/
 *.py[cod]
 .venv/
@@ -15,3 +19,9 @@ artifacts/
 dist/
 build/
 *.egg-info/
+
+# Local video figures retain their source-specific distribution status.
+/video/assets/
+
+# Video manuscripts and figures are local only.
+/video/

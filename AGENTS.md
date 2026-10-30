@@ -22,3 +22,16 @@ license records; exclude private paths and assets with pending permissions.
 Write ordinary project documentation. Use the pre-2021 README references in
 CONTRIBUTING.md for tone and structure. Explain actual behavior, data and limits;
 do not claim features, measurements or superiority that have not been demonstrated.
+
+RAW development is limited to two stages per immutable source and frozen camera
+calibration: one half-size preview development and one full-resolution export
+development. Generate sRGB and LUT-space handoffs from the same decode. Retain
+both stages across image switches, edits, exports and restarts; rendition eviction
+must never trigger RAW decoding. Keep all RAW/hyperspectral pixels, caches and
+processing temporaries on the configured external data volume.
+
+Keep image sources, block planning/resampling, rendering, codecs, export
+publication and cache policy/maintenance in their owning modules. Application
+and UI layers orchestrate them rather than duplicating pixel processing. New
+image operations must declare whether they are pointwise, need a halo or need
+a separate analysis pass. Cache cleanup must preserve retained RAW stages.

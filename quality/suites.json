@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "public": [
+    "tests/test_reference.py",
+    "tests/test_metrics.py",
+    "tests/test_resampling.py",
+    "tests/test_film_camera.py",
+    "tests/test_reconstruction.py",
+    "tests/test_sampling_database.py",
+    "tests/test_negative_reference.py",
+    "tests/test_camera_response_sensitivity.py",
+    "tests/test_scan_lut_export.py",
+    "tests/test_scan_profile_deletion.py",
+    "tests/test_photo_jobs.py",
+    "tests/test_diagnostics.py",
+    "tests/test_preferences.py",
+    "tests/test_native_core.py::test_native_decode_retains_negative_linear_values_and_breakpoint",
+    "tests/test_native_core.py::test_native_tetrahedra_match_reference_on_six_orders_and_clamped_edges",
+    "tests/test_native_core.py::test_float32_red_fast_cube_uses_float64_interpolation_without_double_table_copy",
+    "tests/test_quality_contract.py",
+    "tests/test_compute_policy.py",
+    "tests/test_processes.py",
+    "tests/test_streaming_imageio.py",
+    "tests/test_raw_runtime.py",
+    "tests/test_cache_platform.py",
+    "tests/test_release_sources.py",
+    "tests/test_source_release.py"
+  ],
+  "integration_required": [
+    "local/film-color-slides/hyperspectral-demo/output/reversal-E100/intermediate/model.npz",
+    "local/materials/5207-v1/provenance.json",
+    "local/materials/reversal-presets-v1/velvia50.json",
+    "local/reference-assets/OpenDRT_v1.0.0_mini-config_v2.zip",
+    "artifacts/sampling-database/models/reversal.npz",
+    "artifacts/sampling-database/models/negative.npz",
+    "local/materials/status-m-iso1984/table4.json"
+  ],
+  "note": "Public checks are synthetic and independent numerical/contract tests. Full integration additionally requires licensed local materials, retained RAW fixtures and the selected GPU. Public passing does not certify those deferred checks."
+}

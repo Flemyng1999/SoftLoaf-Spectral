@@ -1,0 +1,36 @@
+{
+  "upstream": "https://github.com/RawTherapee/RawTherapee",
+  "revision": "a8a3d1bc7b419ed1c974c39276c97e618a4f9a1b",
+  "tag": "5.12",
+  "official_archive_sha256": "549b3f03f66c68d0208e1a1cba7c8dec01183c77366977e52f8897cca8e9454a",
+  "license": "Upstream GPL-3.0-or-later and component/resource-specific licenses; retained in this tree",
+  "local_changes": {
+    "CMakeLists.txt": "11caea46e51671697ae993ab28db76b2bf4d1d7b341a65938df9123a3fcb3bd8",
+    "UpdateInfo.cmake": "d42e1e5f256f35944a4172bd869b124cfbf5dc8b330747b4e8864e85ef6bcd10",
+    "ReleaseInfo.cmake": "4e28c40061f4dedb8cd048048fc2ef972ded340ac64d67ad73959d2c335a5212",
+    "rtengine/LibRaw.cmake": "0c13ea69b67a1522fbf40888e0d04e786573529ad4b49528b1249038c382644e",
+    "rtengine/rawimagesource.h": "33f950f7ad1123b66cdad15db5c3de1a5e167fba5d001c99dcfccacde90c92d6",
+    "rtengine/rawimagesource.cc": "d4abb165273f24283e093de20c30e26fcd96adca233e7ea8ba8c81fcad73bf81",
+    "rtengine/simpleprocess.cc": "ce1a609ea70100912cf833f64f5cf6b789b8d663294b86fcff9b02d0b8fc2d69",
+    "rtengine/softloaf_bayer_superpixel.h": "1b96d28544ffb9fa8675cd3075224b76a4074cb2ef63d50f7bf362e7e3977ddd",
+    "rtengine/rawimage.cc": "b0db566b1b0e2f29ee91a020ae2b7e77bc3128f3c117323e4bce1370151c5c92",
+    "rtgui/main-cli.cc": "5d76267c95c96660ef696395f2ca88cca268705783ec95e3aa5a06ac85074e25",
+    "rtengine/hilite_recon.cc": "44552a3bff530ea0adddafbc1f8f39f87e4d05d84e2ff9f0df6751d7565a918b"
+  },
+  "changes": [
+    "Explicit Bayer quartet preview before existing RT WB/DCP/ICC",
+    "Out-of-tree version generation honors explicit PROJECT_SOURCE_DIR",
+    "Pinned source-snapshot release identity",
+    "Reentrant LibRaw static archive with Apple OpenMP enabled consistently",
+    "Bounded LibRaw build jobs",
+    "Expose LibRaw sensor metadata without unpacking for production X-Trans compatibility dispatch",
+    "Record effective threads; conservative candidate X-Trans thread limits did not establish independent AP1 agreement",
+    "Generate two float ICC handoffs from one corrected RT Lab image and instrument actual RAW data loads",
+    "Emit native uncharacterized camera RGB and sensor crop geometry alongside the normal sRGB output from one original RAW decode",
+    "Remove unused namespace-scope ProcParams in highlight reconstruction; avoid reading uninitialized global Options during Windows startup"
+  ],
+  "excluded_from_snapshot": [
+    ".github automation and project-agent instructions",
+    "generated build/version files"
+  ]
+}

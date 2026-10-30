@@ -1,0 +1,431 @@
+<style>
+#softloaf-gui {
+  color-scheme: light dark;
+  --sg-bg: light-dark(#ffffff, #1c1c1e);
+  --sg-sidebar: light-dark(#eef0f4, #242427);
+  --sg-inspector: light-dark(#f7f8fa, #222225);
+  --sg-control: light-dark(#ffffff, #303034);
+  --sg-text: light-dark(#202127, #eeeeef);
+  --sg-muted: light-dark(#72757e, #a4a4ac);
+  --sg-line: light-dark(#e5e7ec, #37373d);
+  --sg-selected: light-dark(#dfe2e8, #3a3a40);
+  --sg-blue: light-dark(#007aff, #0a84ff);
+  --sg-gold: var(--sg-blue);
+  --sg-in: light-dark(#199aa5, #6fc8cf);
+  --sg-out: light-dark(#bc820c, #e2b75d);
+  --sg-r: light-dark(#c86b62, #df8a81);
+  --sg-g: light-dark(#5f9976, #8ab99a);
+  --sg-b: light-dark(#659ac3, #8abadd);
+  --sg-warn: light-dark(#9b5b1d, #e1b77c);
+  color: var(--sg-text);
+  background: var(--sg-bg);
+  border: 1px solid var(--sg-line);
+  border-radius: 14px;
+  overflow: hidden;
+  max-width: 1540px;
+  margin: 0 auto;
+  font: 400 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  box-shadow: 0 12px 36px #1823350d;
+}
+#softloaf-gui * { box-sizing: border-box; }
+#softloaf-gui [hidden] { display: none !important; }
+#softloaf-gui h1, #softloaf-gui h2, #softloaf-gui h3, #softloaf-gui p { margin: 0; }
+#softloaf-gui button, #softloaf-gui input, #softloaf-gui select, #softloaf-gui textarea { font: inherit; color: inherit; }
+#softloaf-gui button, #softloaf-gui select { border: 1px solid var(--sg-line); border-radius: 7px; background: var(--sg-control); min-height: 30px; padding: 5px 11px; }
+#softloaf-gui button:hover:not(:disabled) { background: var(--sg-selected); }
+#softloaf-gui button:disabled { opacity: .38; }
+#softloaf-gui :is(button, input, select, summary, textarea):focus-visible { outline: 2px solid var(--sg-blue); outline-offset: 3px; }
+#softloaf-gui .sg-primary { background: var(--sg-blue); color: #fff; border-color: var(--sg-blue); font-weight: 500; }
+#softloaf-gui .sg-primary:hover:not(:disabled) { background: var(--sg-blue); filter: brightness(1.06); }
+#softloaf-gui .sg-quiet { border-color: transparent; background: transparent; color: var(--sg-muted); }
+#softloaf-gui .sg-muted { color: var(--sg-muted); }
+#softloaf-gui .sg-mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+#softloaf-gui .sg-shell { display: grid; grid-template-columns: 216px minmax(0, 1fr); grid-template-rows: 62px minmax(720px, auto); }
+#softloaf-gui .sg-toolbar { grid-column: 2; display: grid; grid-template-columns: minmax(130px, 1fr) auto minmax(230px, 1fr); align-items: center; gap: 16px; padding: 12px 20px 12px 28px; border-bottom: 1px solid var(--sg-line); background: var(--sg-bg); }
+#softloaf-gui .sg-recipe-name { font-size: 15px; font-weight: 500; }
+#softloaf-gui .sg-view-switch { display: inline-flex; padding: 3px; border-radius: 9px; background: var(--sg-sidebar); }
+#softloaf-gui .sg-view-switch button { min-width: 91px; border: 0; min-height: 27px; padding: 4px 13px; background: transparent; color: var(--sg-muted); }
+#softloaf-gui .sg-view-switch button[aria-pressed=true] { background: var(--sg-control); color: var(--sg-text); box-shadow: 0 1px 4px #141a261a; }
+#softloaf-gui .sg-toolbar-actions { display: flex; justify-content: flex-end; align-items: center; gap: 7px; }
+#softloaf-gui .sg-toolbar-actions button { white-space: nowrap; font-size: 12px; }
+#softloaf-gui .sg-inspector-toggle[aria-pressed=true] { background: var(--sg-inspector); }
+#softloaf-gui .sg-flow { grid-column: 1; grid-row: 1 / 3; background: var(--sg-sidebar); padding: 22px 12px; border-right: 1px solid var(--sg-line); }
+#softloaf-gui .sg-brand { display: flex; align-items: center; gap: 9px; padding: 0 7px; margin-bottom: 33px; font-size: 14px; font-weight: 500; white-space: nowrap; }
+#softloaf-gui .sg-brand img { width: 27px; height: 27px; object-fit: contain; border-radius: 6px; }
+#softloaf-gui .sg-route-field { display: block; padding: 0 7px; margin-bottom: 29px; }
+#softloaf-gui .sg-route-field span, #softloaf-gui .sg-flow-head { display: block; color: var(--sg-muted); font-size: 12px; margin-bottom: 8px; }
+#softloaf-gui .sg-route-field select { width: 100%; min-width: 0; padding: 5px 7px; font-size: 12px; }
+#softloaf-gui .sg-flow-head { padding: 0 9px; margin-bottom: 8px; }
+#softloaf-gui .sg-node { display: block; width: 100%; text-align: left; background: transparent; border: 0; border-radius: 8px; min-height: 39px; margin: 2px 0; padding: 9px 11px; }
+#softloaf-gui .sg-node[aria-pressed=true] { background: var(--sg-selected); font-weight: 500; }
+#softloaf-gui .sg-node-name { font-size: 13px; }
+#softloaf-gui .sg-flow-note { padding: 15px 10px 0; color: var(--sg-muted); font-size: 12px; }
+#softloaf-gui .sg-workspace { grid-column: 2; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) 250px; }
+#softloaf-gui[data-inspector=closed] .sg-workspace { grid-template-columns: minmax(0, 1fr); }
+#softloaf-gui .sg-center { min-width: 0; padding: 27px 28px 32px; }
+#softloaf-gui .sg-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-bottom: 40px; }
+#softloaf-gui h1 { font-size: 23px; line-height: 1.3; font-weight: 600; letter-spacing: -.02em; }
+#softloaf-gui .sg-context { color: var(--sg-muted); font-size: 13px; margin-top: 6px; }
+#softloaf-gui .sg-sample-menu { position: relative; flex-shrink: 0; padding-top: 4px; }
+#softloaf-gui .sg-sample-menu > summary { list-style: none; border: 1px solid var(--sg-line); border-radius: 7px; padding: 6px 11px; min-width: 99px; background: var(--sg-control); font-size: 12px; }
+#softloaf-gui .sg-sample-menu > summary::-webkit-details-marker, #softloaf-gui .sg-popover > summary::-webkit-details-marker { display: none; }
+#softloaf-gui .sg-caret { color: var(--sg-muted); padding-left: 12px; }
+#softloaf-gui .sg-sample-popover, #softloaf-gui .sg-popover-panel { position: absolute; top: calc(100% + 7px); right: 0; z-index: 5; padding: 13px; min-width: 228px; border: 1px solid var(--sg-line); border-radius: 10px; background: var(--sg-control); box-shadow: 0 8px 22px #10132217; }
+#softloaf-gui .sg-sample-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+#softloaf-gui .sg-sample { width: 26px; min-height: 31px; padding: 0; border: 2px solid transparent; border-radius: 4px; background: var(--sample) !important; }
+#softloaf-gui .sg-sample[aria-pressed=true] { outline: 1px solid var(--sg-text); outline-offset: 2px; }
+#softloaf-gui .sg-inline-color { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--sg-muted); font-size: 12px; }
+#softloaf-gui input[type=color] { width: 35px; height: 26px; border: 1px solid var(--sg-line); padding: 2px; background: transparent; border-radius: 4px; }
+#softloaf-gui .sg-graphs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+#softloaf-gui[data-graph-layout=stacked] .sg-graphs { grid-template-columns: 1fr; }
+#softloaf-gui .sg-plot-panel { min-width: 0; }
+#softloaf-gui .sg-plot-panel h2 { font-size: 14px; font-weight: 500; padding-bottom: 5px; }
+#softloaf-gui .sg-chart { width: 100%; min-width: 0; }
+#softloaf-gui .sg-chart svg { width: 100%; display: block; }
+#softloaf-gui .sg-chart text { font: 400 12px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; fill: var(--sg-muted); }
+#softloaf-gui .sg-chart .sg-axis-title { fill: var(--sg-muted); }
+#softloaf-gui .sg-chart .sg-grid { stroke: var(--sg-line); stroke-width: .75; }
+#softloaf-gui .sg-chart .sg-guide { stroke: var(--sg-muted); stroke-width: 1; opacity: .5; }
+#softloaf-gui .sg-legend { display: flex; flex-wrap: wrap; gap: 5px 12px; min-height: 18px; color: var(--sg-muted); font-size: 12px; padding-left: 3px; }
+#softloaf-gui .sg-key { display: inline-block; width: 16px; border-top: 2px solid var(--sg-in); vertical-align: 3px; margin-right: 6px; }
+#softloaf-gui .sg-hover { min-height: 21px; color: var(--sg-muted); font-size: 12px; font-variant-numeric: tabular-nums; padding: 4px 3px 0; }
+#softloaf-gui .sg-graph-tools { display: flex; align-items: center; gap: 9px; margin: 20px 0 24px; }
+#softloaf-gui .sg-popover { position: relative; }
+#softloaf-gui .sg-popover > summary { list-style: none; display: block; padding: 6px 10px; border: 1px solid var(--sg-line); border-radius: 7px; font-size: 12px; background: var(--sg-control); }
+#softloaf-gui .sg-popover-panel { left: 0; right: auto; min-width: 222px; }
+#softloaf-gui .sg-popover-panel button { display: block; width: 100%; text-align: left; border: 0; background: transparent; padding: 7px 5px; font-size: 12px; }
+#softloaf-gui .sg-popover-panel label { display: flex; gap: 7px; align-items: center; font-size: 12px; }
+#softloaf-gui .sg-shape-disclaimer { display: block; padding-top: 9px; color: var(--sg-muted); font-size: 12px; }
+#softloaf-gui input[type=checkbox], #softloaf-gui input[type=range] { accent-color: var(--sg-blue); }
+#softloaf-gui .sg-material { border-top: 1px solid var(--sg-line); }
+#softloaf-gui .sg-material > summary { padding: 18px 0; font-size: 13px; font-weight: 500; }
+#softloaf-gui .sg-subtabs { display: flex; gap: 5px; border-bottom: 1px solid var(--sg-line); padding-bottom: 8px; flex-wrap: wrap; }
+#softloaf-gui .sg-subtabs button { padding: 5px 9px; border: 0; background: transparent; font-size: 12px; color: var(--sg-muted); }
+#softloaf-gui .sg-subtabs button[aria-pressed=true] { background: var(--sg-sidebar); color: var(--sg-text); }
+#softloaf-gui .sg-detail-chart { padding-top: 13px; }
+#softloaf-gui .sg-detail-label { color: var(--sg-muted); font-size: 12px; margin-bottom: 4px; }
+#softloaf-gui .sg-inspector { min-width: 0; border-left: 1px solid var(--sg-line); padding: 25px 19px; background: var(--sg-inspector); }
+#softloaf-gui .sg-inspector h2 { font-size: 14px; font-weight: 500; margin-bottom: 15px; }
+#softloaf-gui .sg-preset-row { display: flex; align-items: center; gap: 7px; margin-bottom: 28px; }
+#softloaf-gui .sg-preset-row select { flex: 1; min-width: 0; width: 0; font-size: 12px; padding-left: 8px; }
+#softloaf-gui .sg-replace { min-width: 32px; padding: 5px 8px; font-size: 18px; line-height: 1; }
+#softloaf-gui .sg-field { display: block; margin: 0 0 24px; }
+#softloaf-gui .sg-field-name { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 11px; font-size: 12px; }
+#softloaf-gui .sg-field-name output { color: var(--sg-muted); white-space: nowrap; }
+#softloaf-gui .sg-field select { width: 100%; font-size: 12px; }
+#softloaf-gui input[type=range] { display: block; width: 100%; margin: 0; }
+#softloaf-gui .sg-control-note { color: var(--sg-muted); font-size: 12px; margin-top: 16px; }
+#softloaf-gui .sg-advanced { border-top: 1px solid var(--sg-line); margin-top: 30px; padding-top: 16px; }
+#softloaf-gui .sg-advanced > summary { font-size: 12px; font-weight: 500; padding: 0 0 12px; }
+#softloaf-gui .sg-advanced h3 { font-size: 12px; font-weight: 500; margin: 17px 0 6px; }
+#softloaf-gui .sg-advanced p { font-size: 12px; color: var(--sg-muted); margin-bottom: 12px; overflow-wrap: anywhere; }
+#softloaf-gui .sg-value-row { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; font-size: 12px; }
+#softloaf-gui .sg-value-label { color: var(--sg-muted); }
+#softloaf-gui .sg-calibration { font-size: 12px; padding: 10px 0 18px; color: var(--sg-warn); }
+#softloaf-gui .sg-calibration button { margin-top: 8px; font-size: 12px; }
+#softloaf-gui .sg-preview-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 19px; }
+#softloaf-gui .sg-preview-head h2 { font-size: 15px; font-weight: 500; }
+#softloaf-gui .sg-preview-head p { color: var(--sg-muted); font-size: 12px; margin-top: 5px; }
+#softloaf-gui .sg-reference-image { min-height: 430px; display: flex; justify-content: center; align-items: center; background: var(--sg-inspector); border-radius: 8px; }
+#softloaf-gui .sg-reference-image img { max-width: 100%; max-height: 530px; object-fit: contain; display: block; }
+#softloaf-gui .sg-preview-note { color: var(--sg-muted); font-size: 12px; margin-top: 14px; }
+#softloaf-gui .sg-status { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--sg-line); padding: 11px 18px; background: var(--sg-inspector); color: var(--sg-muted); font-size: 12px; }
+#softloaf-gui .sg-toast { padding: 9px 18px; background: var(--sg-inspector); color: var(--sg-muted); border-top: 1px solid var(--sg-line); font-size: 12px; }
+#softloaf-gui .sg-toast:empty { display: none; }
+#softloaf-gui dialog { width: 590px; max-width: calc(100% - 32px); max-height: calc(100% - 32px); padding: 23px; border: 1px solid var(--sg-line); border-radius: 12px; background: var(--sg-bg); color: var(--sg-text); box-shadow: 0 20px 70px #0004; }
+#softloaf-gui dialog::backdrop { background: #0005; }
+#softloaf-gui .sg-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 15px; }
+#softloaf-gui dialog h2 { font-size: 18px; font-weight: 500; }
+#softloaf-gui dialog p { color: var(--sg-muted); font-size: 12px; margin: 12px 0; }
+#softloaf-gui dialog textarea { display: block; width: 100%; min-height: 230px; max-height: 370px; padding: 12px; border: 1px solid var(--sg-line); border-radius: 6px; background: var(--sg-inspector); font: 12px/1.5 ui-monospace, SFMono-Regular, monospace; resize: vertical; }
+#softloaf-gui .sg-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+#softloaf-gui .sg-error { color: var(--sg-warn); font-size: 12px; margin-top: 10px; }
+#softloaf-gui .sg-review-row { display: grid; grid-template-columns: 95px minmax(0, 1fr); gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--sg-line); font-size: 12px; }
+#softloaf-gui .sg-file { width: 100%; font-size: 12px; margin-bottom: 13px; }
+@media (min-width: 1330px) {
+  #softloaf-gui .sg-shell { grid-template-columns: 232px minmax(0, 1fr); grid-template-rows: 62px minmax(775px, auto); }
+  #softloaf-gui .sg-workspace { grid-template-columns: minmax(0, 1fr) 262px; }
+  #softloaf-gui .sg-center { padding: 30px 30px 36px; }
+  #softloaf-gui .sg-inspector { padding: 28px 21px; }
+}
+@media (max-width: 1120px) {
+  #softloaf-gui .sg-shell { grid-template-columns: 182px minmax(0, 1fr); }
+  #softloaf-gui .sg-workspace { grid-template-columns: minmax(0, 1fr) 224px; }
+  #softloaf-gui .sg-toolbar { grid-template-columns: minmax(95px, 1fr) auto auto; gap: 10px; padding-left: 20px; padding-right: 15px; }
+  #softloaf-gui .sg-view-switch button { min-width: 65px; padding-left: 8px; padding-right: 8px; }
+  #softloaf-gui .sg-center { padding-left: 20px; padding-right: 20px; }
+  #softloaf-gui .sg-graphs { gap: 18px; }
+  #softloaf-gui .sg-inspector { padding-left: 15px; padding-right: 15px; }
+  #softloaf-gui .sg-brand { font-size: 12px; gap: 6px; }
+  #softloaf-gui .sg-brand img { width: 25px; height: 25px; }
+}
+@media (max-width: 850px) {
+  #softloaf-gui .sg-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; min-height: 62px; padding: 12px 18px; }
+  #softloaf-gui .sg-shell { grid-template-rows: auto auto; }
+  #softloaf-gui .sg-recipe-name { flex: 1; min-width: 100px; }
+  #softloaf-gui .sg-toolbar-actions { width: 100%; }
+  #softloaf-gui .sg-workspace { grid-template-columns: minmax(0, 1fr); }
+  #softloaf-gui .sg-inspector { border-left: 0; border-top: 1px solid var(--sg-line); }
+  #softloaf-gui .sg-title-row { margin-bottom: 25px; }
+  #softloaf-gui .sg-reference-image { min-height: 310px; }
+}
+@media (max-width: 620px) {
+  #softloaf-gui .sg-shell { display: flex; flex-direction: column; }
+  #softloaf-gui .sg-toolbar { order: 0; }
+  #softloaf-gui .sg-flow { order: 1; border-right: 0; border-bottom: 1px solid var(--sg-line); padding: 14px 12px; }
+  #softloaf-gui .sg-workspace { order: 2; }
+  #softloaf-gui .sg-brand { display: none; }
+  #softloaf-gui .sg-route-field { padding: 0 4px; margin-bottom: 13px; }
+  #softloaf-gui .sg-route-field span { display: none; }
+  #softloaf-gui .sg-flow-head, #softloaf-gui .sg-flow-note { display: none; }
+  #softloaf-gui .sg-node-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 4px; }
+  #softloaf-gui .sg-node { min-height: 34px; margin: 0; padding: 7px 8px; }
+  #softloaf-gui .sg-node-name { font-size: 12px; }
+  #softloaf-gui .sg-toolbar { padding: 12px; }
+  #softloaf-gui .sg-toolbar-actions { justify-content: flex-end; }
+  #softloaf-gui .sg-center { padding: 22px 15px 26px; }
+  #softloaf-gui h1 { font-size: 19px; }
+  #softloaf-gui .sg-title-row { gap: 10px; margin-bottom: 25px; }
+  #softloaf-gui .sg-sample-menu > summary { min-width: 90px; padding: 5px 8px; }
+  #softloaf-gui .sg-graphs { grid-template-columns: minmax(0, 1fr); gap: 27px; }
+  #softloaf-gui .sg-graph-tools { margin-top: 19px; }
+  #softloaf-gui .sg-status { padding: 11px 12px; }
+  #softloaf-gui .sg-preview-head { align-items: flex-start; }
+  #softloaf-gui .sg-preview-head button { font-size: 12px; }
+}
+</style>
+<div id="softloaf-gui" data-graph-layout="parallel" data-inspector="open" aria-label="SoftLoaf Spectral 桌面界面交互设计">
+  <div class="sg-shell">
+    <nav class="sg-flow" aria-label="当前流程的固定节点">
+      <div class="sg-brand"><img src="../../artifacts/branding/softloaf-cat.png" alt="SoftLoaf 猫标">SoftLoaf Spectral</div>
+      <label class="sg-route-field"><span>当前流程</span><select id="sg-route" aria-label="当前成像流程"><option value="negative">5207 · 数字化</option><option value="print">5207 · 光学放大</option><option value="slide" selected>E100 · 透射观看</option></select></label>
+      <div class="sg-flow-head">成像节点</div><div class="sg-node-list" id="sg-nodes"></div><p class="sg-flow-note" id="sg-node-count">6 个节点 · 顺序固定</p>
+    </nav>
+    <header class="sg-toolbar">
+      <div class="sg-recipe-name" id="sg-recipe-name">未命名配方</div>
+      <div class="sg-view-switch" role="group" aria-label="工作区视图"><button type="button" data-view="spectra" aria-pressed="true" class="cursor-interaction">光谱</button><button type="button" data-view="preview" aria-pressed="false" class="cursor-interaction">照片预览</button></div>
+      <div class="sg-toolbar-actions"><button type="button" id="sg-inspector-toggle" class="sg-inspector-toggle cursor-interaction" aria-label="显示或隐藏节点设置" aria-pressed="true" aria-controls="sg-inspector">调整</button><button type="button" id="sg-save" aria-label="保存配方" class="cursor-interaction">保存</button><button type="button" id="sg-generate" aria-label="生成 65³ LUT" class="sg-primary cursor-interaction">生成 LUT</button></div>
+    </header>
+    <div class="sg-workspace" id="sg-workspace" role="region" aria-label="配方工作区">
+      <main class="sg-center">
+        <div class="sg-title-row"><div><h1 id="sg-title">胶片曝光与显影</h1><p class="sg-context" id="sg-context">E100</p></div><details class="sg-sample-menu" id="sg-sample-menu"><summary class="cursor-interaction" aria-label="选择检查样本"><span id="sg-sample-caption">18% 灰</span><span class="sg-caret" aria-hidden="true">⌄</span></summary><div class="sg-sample-popover"><div class="sg-sample-strip" id="sg-samples"></div><label class="sg-inline-color">自定测试色<input type="color" id="sg-custom-color" value="#767676" aria-label="自定义 sRGB 测试色"></label></div></details></div>
+        <section id="sg-spectrum-view" aria-label="当前节点的输入与结果">
+          <div class="sg-graphs">
+            <section class="sg-plot-panel"><h2 id="sg-input-title">输入 · 胶片入射谱</h2><div class="sg-chart" id="sg-input-chart"></div><div class="sg-legend" id="sg-input-legend"></div><div class="sg-hover" id="sg-input-hover" aria-hidden="true"></div></section>
+            <section class="sg-plot-panel"><h2 id="sg-output-title">结果 · 胶片透射率</h2><div class="sg-chart" id="sg-output-chart"></div><div class="sg-legend" id="sg-output-legend"></div><div class="sg-hover" id="sg-output-hover" aria-hidden="true"></div></section>
+          </div>
+          <div class="sg-graph-tools"><details class="sg-popover"><summary class="cursor-interaction">固定对照<span class="sg-caret" aria-hidden="true">⌄</span></summary><div class="sg-popover-panel"><button type="button" class="cursor-interaction" id="sg-pin">固定当前曲线</button><button type="button" class="cursor-interaction" id="sg-unpin" disabled>清除对照</button></div></details><details class="sg-popover"><summary class="cursor-interaction">图表选项<span class="sg-caret" aria-hidden="true">⌄</span></summary><div class="sg-popover-panel"><label><input id="sg-normalize" type="checkbox">仅比较曲线形状</label><span class="sg-shape-disclaimer" id="sg-normalization-note">保留计算幅值</span></div></details></div>
+          <details class="sg-material" id="sg-material-details"><summary class="cursor-interaction">材料数据</summary><section class="sg-details" aria-label="节点内部数据"><div class="sg-subtabs" id="sg-detail-tabs"></div><div class="sg-detail-chart"><div class="sg-detail-label" id="sg-detail-label"></div><div class="sg-chart" id="sg-detail-chart"></div><div class="sg-legend" id="sg-detail-legend"></div></div></section></details>
+        </section>
+        <section id="sg-preview-view" aria-label="照片预览" hidden><div class="sg-preview-head"><div><h2>固定参考图</h2><p>已有 E100 实验图 · 不随当前参数重算</p></div><button type="button" id="sg-raw-settings" class="cursor-interaction">照片输入设置…</button></div><div class="sg-reference-image"><img src="../../artifacts/hsi-raw-lut/scene43_r5_spectral.png" alt="已有 E100 光谱实验的花卉固定参考图"></div><p class="sg-preview-note">照片输入的 RAW、白平衡和 DCP 与材料配方独立。此设计稿尚未进行联动渲染。</p></section>
+      </main>
+      <aside class="sg-inspector" id="sg-inspector" aria-label="所选节点设置"><h2>调整</h2><div class="sg-preset-row"><select id="sg-preset" aria-label="替换当前节点预设"></select><button type="button" id="sg-replace" class="sg-replace cursor-interaction" aria-label="替换节点数据">···</button></div><div id="sg-calibration"></div><div id="sg-controls"></div><details class="sg-advanced" id="sg-advanced"><summary class="cursor-interaction">高级与数据来源</summary><h3>关于此节点</h3><p id="sg-description"></p><h3>数据来源</h3><p id="sg-source-detail"></p><p id="sg-data-warning"></p><h3>更新范围</h3><p id="sg-dependency-detail"></p><h3 id="sg-values-title">当前样本 · 有效曝光</h3><div id="sg-values"></div><button type="button" class="sg-quiet cursor-interaction" id="sg-reset">还原本节点</button></details></aside>
+    </div>
+  </div>
+  <footer class="sg-status"><span>交互设计稿 · 示意数据 · 引擎未接入</span><span id="sg-status-state" aria-live="polite">65³ · 尚未生成</span></footer>
+  <div class="sg-toast" id="sg-toast" role="status" aria-live="polite"></div>
+  <dialog id="sg-data-dialog" aria-labelledby="sg-data-title"><div class="sg-dialog-head"><h2 id="sg-data-title">替换节点数据</h2><button class="sg-quiet cursor-interaction" type="button" data-close="sg-data-dialog" aria-label="关闭替换数据窗口">关闭</button></div><p id="sg-data-help"></p><input class="sg-file" type="file" accept=".json,application/json" id="sg-import-file" aria-label="从 JSON 文件读取节点示意配置"><textarea id="sg-data-editor" aria-label="节点示意数据 JSON" spellcheck="false"></textarea><div class="sg-error" id="sg-data-error" role="alert"></div><div class="sg-dialog-actions"><button type="button" data-close="sg-data-dialog" class="cursor-interaction">取消</button><button type="button" id="sg-apply-data" class="sg-primary cursor-interaction">应用到本设计稿</button></div></dialog>
+  <dialog id="sg-export-dialog" aria-labelledby="sg-export-title"><div class="sg-dialog-head"><h2 id="sg-export-title">生成 65³ LUT</h2><button type="button" class="sg-quiet cursor-interaction" data-close="sg-export-dialog">关闭</button></div><div id="sg-export-review"></div><p>这是交互设计稿，尚未连接光谱引擎和 LUT 文件读回验证。当前仅能保存配方设置，不会生成占位 LUT。</p><div class="sg-dialog-actions"><button type="button" id="sg-review-recipe" class="cursor-interaction">查看配方 JSON</button><button type="button" class="sg-primary" disabled>引擎接入后可生成</button></div></dialog>
+  <dialog id="sg-recipe-dialog" aria-labelledby="sg-recipe-title"><div class="sg-dialog-head"><h2 id="sg-recipe-title">配方设置 · 设计稿</h2><button type="button" class="sg-quiet cursor-interaction" data-close="sg-recipe-dialog">关闭</button></div><p>这些是本交互设计稿的状态，不是可供计算引擎使用的正式材料预设。</p><textarea id="sg-recipe-editor" readonly aria-label="当前配方 JSON"></textarea></dialog>
+  <dialog id="sg-raw-dialog" aria-labelledby="sg-raw-title"><div class="sg-dialog-head"><h2 id="sg-raw-title">照片输入 · 独立于胶片配方</h2><button type="button" class="sg-quiet cursor-interaction" data-close="sg-raw-dialog">关闭</button></div><p>普通 RAW → 解码与白平衡 → 匹配的 DCP / 矩阵 → OCIO → ACEScct。这里的 DCP 属于拍摄原照片的相机，不是模拟翻拍相机。</p><label class="sg-field"><span class="sg-field-name">RAW 文件 · 仅演示入口</span><input type="file" accept=".dng,.cr2,.cr3,.nef,.arw,.raf,.rw2" id="sg-raw-file" class="sg-file"></label><p id="sg-raw-file-name">尚未选择照片。未打开照片也可以设计配方。</p><label class="sg-field"><span class="sg-field-name">相机表征</span><select aria-label="照片输入的相机配置"><option>自动匹配 DCP · 待接入</option><option>用户提供的 DCP / 矩阵 · 待接入</option></select></label><label class="sg-field"><span class="sg-field-name">RAW 白平衡</span><select aria-label="照片输入白平衡"><option>拍摄白平衡</option><option>手动白平衡 · 待接入</option></select></label><label class="sg-field"><span class="sg-field-name">RAW 输入曝光 <output id="sg-raw-exposure-value">0.00 EV</output></span><input type="range" aria-label="RAW 输入曝光" id="sg-raw-exposure" min="-3" max="3" step=".05" value="0"></label><p>原型不解码 RAW，也不应用 DCP。照片输入设置不改变材料配方；胶片曝光锚点在胶片节点中单独设置。</p></dialog>
+</div>
+<script>
+(()=>{
+const root=document.getElementById('softloaf-gui');
+const $=id=>root.querySelector('#'+id), clone=x=>JSON.parse(JSON.stringify(x));
+const wavelengths=Array.from({length:65},(_,i)=>400+i*5), rgbNames=['R','G','B'], cmNames=['C','M','Y'];
+const colors=['var(--sg-r)','var(--sg-g)','var(--sg-b)'], gauss=(x,c,w)=>Math.exp(-.5*((x-c)/w)**2), pow10=x=>10**x;
+const routes={negative:{name:'5207 · 数字化',ids:['estimate','light','negativeFilm','scanLight','sensor','invert','interface','display']},print:{name:'5207 · 光学放大',ids:['estimate','light','negativeFilm','enlarger','filter','paper','view','interface','display']},slide:{name:'E100 · 透射观看',ids:['estimate','light','slideFilm','view','interface','display']}};
+const definitions={
+estimate:{name:'光谱估计',presets:['平滑先验 A · 示意','平滑先验 B · 示意'],param:[['smooth','平滑程度',0,1,.01,.5,'']],desc:'由测试颜色得到估计反射谱。RGB 不能唯一确定真实光谱，图中曲线属于重建示意。',kind:'basis'},
+light:{name:'拍摄照明',presets:['日光形状 · 示意','暖光形状 · 示意'],param:[['exposure','拍摄照明相对强度',-2,2,.05,0,'EV']],desc:'拍摄光谱乘估计反射谱，得到胶片入射谱。这里的照明与翻拍光、放大光、观看光分开。',kind:'light'},
+negativeFilm:{name:'胶片曝光与显影',presets:['5207 · 结构示意 A','5207 · 结构示意 B'],param:[['exposure','胶片曝光锚点',-2,2,.05,0,'EV'],['slope','特性曲线斜率 · 示意',.6,1.6,.05,1,'']],desc:'各层感光积分 → 示意显影关系 → 染料密度 → 负片透射率。材料、感光谱与片基须配套替换。',kind:'film'},
+slideFilm:{name:'胶片曝光与显影',presets:['E100 · 结构示意 A','E100 · 结构示意 B'],param:[['exposure','胶片曝光锚点',-2,2,.05,0,'EV'],['slope','特性曲线斜率 · 示意',.6,1.6,.05,1,'']],desc:'各层感光积分 → 示意显影关系 → 染料密度 → 反转片透射率。输入与输出各自保留数量和单位。',kind:'film'},
+scanLight:{name:'翻拍照明',presets:['日光形状 · 示意','暖光形状 · 示意'],param:[['exposure','翻拍相对曝光',-2,2,.05,0,'EV']],desc:'翻拍光源穿过负片，得到到达模拟采集相机的光谱。更换配置或幅值后须检查匹配定标。',kind:'light'},
+sensor:{name:'模拟翻拍相机',presets:['三通道响应 A · 示意','三通道响应 B · 示意'],param:[['gain','共同通道增益',.5,2,.05,1,'×']],desc:'入射谱与三个响应分别积分，得到线性相机通道。三个积分值不再具有波长轴。',kind:'sensor'},
+invert:{name:'定标与负片反演',presets:['冻结定标 A · 示意','冻结定标 B · 示意'],param:[['balance','冻结平衡参数',-.15,.15,.01,0,'']],desc:'应用已保存定标和反演关系。换模拟设备或翻拍照明后须重新匹配；普通 RAW 的 DCP 不在这里。',kind:'calibration'},
+enlarger:{name:'放大照明',presets:['暖光形状 · 示意','日光形状 · 示意'],param:[['exposure','放大曝光',-2,2,.05,0,'EV']],desc:'放大光穿过负片。放大曝光改变相纸响应，与成品观看亮度是两件事。',kind:'light'},
+filter:{name:'放大滤色',presets:['宽带滤色 A · 示意','宽带滤色 B · 示意'],param:[['cyan','青色滤色量',0,1,.01,.12,'D'],['magenta','品红滤色量',0,1,.01,.08,'D'],['yellow','黄色滤色量',0,1,.01,.1,'D']],desc:'滤色片的谱密度决定透射率。显示过滤前后相纸入射谱，滤色量与光强不混为同一参数。',kind:'filter'},
+paper:{name:'相纸曝光与显影',presets:['Ultra Endura · 结构示意 A','Ultra Endura · 结构示意 B'],param:[['white','示意纸白反射率',.7,1,.01,.92,'']],desc:'此处只演示反射率结果的展示。尚未接入相纸显影、散射或曝光到成品光谱的真实模型。',kind:'paper'},
+view:{name:'透射观看',presets:['日光灯箱形状 · 示意','暖光灯箱形状 · 示意'],param:[['brightness','观看亮度增益',.5,3,.05,1.8,'×']],desc:'观看光乘反转片透射率或相纸反射率，得到观看光谱。随后才按观察者积分为 XYZ。',kind:'light'},
+interface:{name:'输出接口',presets:['相对 XYZ D65','相对 XYZ D65 · 保留源数据'],param:[['scale','保存的相对 Y 尺度',.5,2,.05,1,'×']],desc:'固定白点适应与亮度尺度，交给显示模块。颜色坐标没有波长轴；本节点不伪造光谱。',kind:'interface'},
+display:{name:'显示输出',presets:['OpenDRT v1.0.0 · Default','OpenDRT v1.0.0 · Umbra'],param:[],desc:'OCIO 桥接 → OpenDRT → 标准 sRGB 文件编码。此原型没有执行这些显示变换，显示值仅作界面示意。',kind:'display'}
+};
+const samples=[{name:'18% 灰',hex:'#767676',rgb:[.18,.18,.18]},{name:'肤色测试',hex:'#c99178',rgb:[.58,.31,.20]},{name:'绿叶测试',hex:'#66825c',rgb:[.10,.24,.08]},{name:'蓝色测试',hex:'#4f71ad',rgb:[.06,.12,.45]},{name:'红色测试',hex:'#b75d57',rgb:[.50,.07,.055]},{name:'高亮测试',hex:'#e4d5ad',rgb:[.8,.7,.42]}];
+let state={route:'slide',selected:'slideFilm',sample:0,customRgb:null,customHex:'#767676',configs:{},calibration:{},revision:1,dirty:false,view:'spectra',inspectorOpen:true};
+const saved=window.openai?.widgetState?.modelContent;
+if(saved?.design==='spectral-gui-v1'&&routes[saved.route]){state={...state,...saved};if(!routes[state.route].ids.includes(state.selected))state.selected=routes[state.route].ids[0];}
+let pin=null,detailTab='response',normalized=false,chartCache=new Map(),renderScheduled=false;
+const layout={graphs:'parallel'};
+function defaults(id){const d=definitions[id];return{preset:0,name:null,params:Object.fromEntries(d.param.map(p=>[p[0],p[5]])),custom:null};}
+function cfg(id){const key=state.route+':'+id;return state.configs[key]||(state.configs[key]=defaults(id));}
+function value(id,key){return cfg(id).params[key];}
+function name(id){if(id==='view'&&state.route==='print')return'成品观看';return definitions[id].name;}
+function presetName(id){const c=cfg(id),text=c.name||definitions[id].presets[c.preset];return id==='view'&&state.route==='print'?text.replace('灯箱',''):text;}
+function persist(){state.uiSerial=(state.uiSerial||0)+1;const compact=clone(state);compact.configs=Object.fromEntries(Object.entries(state.configs).filter(([,c])=>!c.custom));compact.importedDataNeedsReload=Object.values(state.configs).some(c=>c.custom);const modelContent={...compact,design:'spectral-gui-v1'};if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent,privateContent:{graphs:layout.graphs}}).catch(()=>{});}
+function toast(text){$('sg-toast').textContent=text;}
+function edited(id){state.revision++;state.dirty=true;if(['scanLight','sensor'].includes(id))state.calibration[state.route]=false;persist();render();}
+function integrate(a,b){return a.reduce((s,v,i)=>s+v*b[i]*(i===0||i===a.length-1?2.5:5),0);}
+function analyticLight(warm){const a=wavelengths.map(w=>w**-5/(Math.exp(14387770/(w*(warm?3200:6500)))-1));const m=Math.max(...a);return a.map(v=>v/m);}
+function response(wide){return[610,545,450].map((center,i)=>wavelengths.map(w=>gauss(w,center,(wide?1.2:1)*[39,34,28][i])));}
+function dyes(wide){return[625,545,445].map((center,i)=>wavelengths.map(w=>gauss(w,center,(wide?1.2:1)*[40,38,34][i])));}
+function light(id){const c=cfg(id);return c.custom?.curves?.[0]||analyticLight(id==='enlarger'?c.preset===0:c.preset===1);}
+function rawMaterial(id){const c=cfg(id);return{sens:c.custom?.sensitivity||response(c.preset===1),dye:c.custom?.dyes||dyes(c.preset===1)};}
+function calculate(){
+ const sample=state.customRgb||samples[Math.min(state.sample,5)].rgb;
+ const bases=cfg('estimate').custom?.curves||response(cfg('estimate').preset===1),smooth=value('estimate','smooth');
+ const reflectance=wavelengths.map((_,i)=>{const sum=bases.reduce((a,b)=>a+b[i],0)||1;const v=bases.reduce((s,b,k)=>s+sample[k]*b[i],0)/sum;return v*(1-.18*smooth)+sample.reduce((a,b)=>a+b,0)/3*.18*smooth;});
+ const illumination=light('light'),incident=reflectance.map((v,i)=>v*illumination[i]*2**value('light','exposure'));
+ const filmId=state.route==='slide'?'slideFilm':'negativeFilm',material=rawMaterial(filmId),filmCfg=cfg(filmId);
+ const exposure=material.sens.map(s=>integrate(incident,s)/Math.max(1e-9,integrate(illumination.map(v=>v*.18),s))*2**value(filmId,'exposure'));
+ const amounts=exposure.map(h=>{const q=1/(1+Math.exp(-value(filmId,'slope')*2*Math.log10(Math.max(h,1e-12))));return .04+2.1*(state.route==='slide'?1-q:q);});
+ const density=wavelengths.map((_,i)=>.06+material.dye.reduce((s,d,k)=>s+d[i]*amounts[k],0)),transmission=density.map(d=>pow10(-d));
+ const scanLamp=light('scanLight'),scan=transmission.map((v,i)=>v*scanLamp[i]*2**value('scanLight','exposure'));
+ const sens=cfg('sensor').custom?.curves||response(cfg('sensor').preset===1),channels=sens.map(s=>integrate(scan,s)/integrate(scanLamp,s)*value('sensor','gain'));
+ const inverseRange=cfg('invert').preset===1?1.85:2;
+ const inversed=channels.map(v=>Math.max(0,Math.min(1,1-(-Math.log10(Math.max(v,1e-9))-.1)/inverseRange+value('invert','balance'))));
+ const lamp=light('enlarger'),enlarged=transmission.map((v,i)=>v*lamp[i]*2**value('enlarger','exposure'));
+ const filterDyes=cfg('filter').custom?.curves||dyes(cfg('filter').preset===1),filterAmount=['cyan','magenta','yellow'].map(k=>value('filter',k));
+ const filterT=wavelengths.map((_,i)=>pow10(-filterDyes.reduce((s,d,k)=>s+d[i]*filterAmount[k],0))),filtered=enlarged.map((v,i)=>v*filterT[i]);
+ const paperSens=cfg('paper').custom?.sensitivity||response(cfg('paper').preset===1),paperH=paperSens.map(s=>integrate(filtered,s)/integrate(lamp,s)*8);
+ // Direct analytic reflection illustration only; not a paper scattering model.
+ const paperWhite=cfg('paper').custom?.curves?.[0]||wavelengths.map(()=>value('paper','white'));
+ const reflection=wavelengths.map((_,i)=>paperWhite[i]/(1+paperH.reduce((s,h,k)=>s+h*material.dye[k][i],0)));
+ const surface=state.route==='print'?reflection:transmission,viewLamp=light('view'),viewed=surface.map((v,i)=>v*viewLamp[i]*value('view','brightness'));
+ const displayIllustration=(state.route==='negative'?inversed:material.sens.map(s=>integrate(viewed,s)/integrate(viewLamp,s))).map(v=>Math.max(0,Math.min(1,v)));
+ // These three placeholders illustrate coordinate widgets; no CIE/OCIO claim.
+ const coordinates=displayIllustration.map(v=>v*value('interface','scale'));
+ return{sample,reflectance,illumination,incident,material,exposure,amounts,density,transmission,scanLamp,scan,sens,channels,inversed,lamp,enlarged,filterDyes,filterT,filtered,paperSens,paperH,reflection,viewLamp,surface,viewed,coordinates,displayIllustration};
+}
+function series(label,values,color='var(--sg-in)'){return{label,values,color};}
+function spectral(title,y,values,color){return{title,y,x:'波长 nm',xs:wavelengths,series:[series(title.split(' · ').pop(),values,color)],kind:'line'};}
+function bars(title,y,values,labels=rgbNames){return{title,y,labels,series:[series(y,values,'var(--sg-out)')],kind:'bar'};}
+function nodeViews(m){const id=state.selected;let a,b;
+ if(id==='estimate'){a=bars('输入 · 测试颜色','线性 RGB · 示例',m.sample);b=spectral('输出 · 估计反射谱','反射因子',m.reflectance,'var(--sg-out)');}
+ else if(id==='light'){a=spectral('输入 · 估计反射谱','反射因子',m.reflectance);b=spectral('输出 · 胶片入射谱','相对能量',m.incident,'var(--sg-out)');}
+ else if(['negativeFilm','slideFilm'].includes(id)){a=spectral('输入 · 胶片入射谱','相对能量',m.incident);b=spectral('输出 · 胶片透射率','透射率 0–1',m.transmission,'var(--sg-out)');}
+ else if(id==='scanLight'){a=spectral('输入 · 负片透射率','透射率 0–1',m.transmission);b=spectral('输出 · 到达相机的光谱','相对能量',m.scan,'var(--sg-out)');}
+ else if(id==='sensor'){a=spectral('输入 · 到达相机的光谱','相对能量',m.scan);b=bars('输出 · 线性相机通道','相对相机通道',m.channels);}
+ else if(id==='invert'){a=bars('输入 · 线性相机通道','相对相机通道',m.channels);b=bars('输出 · 反演通道示意','反演值 · 非标定颜色',m.inversed);}
+ else if(id==='enlarger'){a=spectral('输入 · 负片透射率','透射率 0–1',m.transmission);b=spectral('输出 · 滤色前光谱','相对能量',m.enlarged,'var(--sg-out)');}
+ else if(id==='filter'){a=spectral('输入 · 滤色前光谱','相对能量',m.enlarged);b=spectral('输出 · 相纸入射谱','相对能量',m.filtered,'var(--sg-out)');}
+ else if(id==='paper'){a=spectral('输入 · 相纸入射谱','相对能量',m.filtered);b=spectral('输出 · 成品反射率示意','反射率 0–1',m.reflection,'var(--sg-out)');}
+ else if(id==='view'){a=spectral(state.route==='print'?'输入 · 成品反射率':'输入 · 反转片透射率',state.route==='print'?'反射率 0–1':'透射率 0–1',m.surface);b=spectral('输出 · 观看光谱','相对能量',m.viewed,'var(--sg-out)');}
+ else if(id==='interface'){a=bars('输入 · 成像结果','坐标值 · 界面示意',m.coordinates,['X','Y','Z']);b=bars('输出 · 相对 XYZ D65','XYZ · 界面示意',m.coordinates,['X','Y','Z']);}
+ else{a=bars('输入 · 相对 XYZ D65','XYZ · 界面示意',m.coordinates,['X','Y','Z']);b=bars('输出 · 显示 RGB 位置','RGB · 未执行 OpenDRT',m.displayIllustration);}
+ return[a,b];}
+function escape(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function plot(id,spec,height=225){
+ const el=$(id),w=Math.max(210,Math.round(el.getBoundingClientRect().width)),h=height,left=49,right=15,top=28,bottom=39,pw=w-left-right,ph=h-top-bottom;
+ let all=spec.series.map(s=>({...s,values:s.values.map(Number)}));
+ if(normalized&&spec.kind==='line')all=all.map(s=>({...s,values:s.values.map(v=>v/(Math.max(...s.values)||1))}));
+ const candidates=all.flatMap(s=>s.values),ymin=Math.min(0,...candidates),ymax=Math.max(.001,...candidates)*1.08;
+ const sy=v=>top+ph-(v-ymin)/(ymax-ymin)*ph;
+ const xs=spec.xs||[],x0=xs[0]||0,x1=xs[xs.length-1]||1,sx=x=>left+(x-x0)/(x1-x0||1)*pw;
+ const fmt=v=>Math.abs(v)<.001&&v!==0?v.toExponential(1):Math.abs(v)>=10?v.toFixed(0):v.toFixed(Math.abs(v)<.1?3:1);
+ let svg=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${escape(spec.title+'；'+(spec.kind==='line'?(spec.x||'波长 nm')+'；':'')+spec.y)}"><title>${escape(spec.title)}</title><desc>${escape(spec.y)}，数据为解析示意。</desc>`;
+ [0,.5,1].forEach(t=>{const v=ymin+(ymax-ymin)*t,y=sy(v);svg+=`<path class="sg-grid" d="M${left} ${y}H${w-right}"/><text x="${left-8}" y="${y+4}" text-anchor="end">${fmt(v)}</text>`;});
+ svg+=`<text class="sg-axis-title" x="${left}" y="15">${escape(normalized&&spec.kind==='line'?'形状归一化（仅图表）':spec.y)}</text>`;
+ if(spec.kind==='bar'){
+  const vals=all[0].values;vals.forEach((v,i)=>{const bw=Math.min(38,pw/6),x=left+pw*(i+.5)/vals.length;svg+=`<rect x="${x-bw/2}" y="${sy(v)}" width="${bw}" height="${Math.max(0,sy(0)-sy(v))}" fill="${colors[i%3]}" opacity=".8"/><text x="${x}" y="${Math.max(top+12,sy(v)-7)}" text-anchor="middle">${v.toFixed(3)}</text><text class="sg-axis-title" x="${x}" y="${h-16}" text-anchor="middle">${escape(spec.labels[i])}</text>`;});
+ }else{
+  const ticks=spec.x==='波长 nm'?[400,500,600,700]:[x0,(x0+x1)/2,x1];ticks.forEach(v=>{const x=sx(v);svg+=`<path class="sg-grid" d="M${x} ${top}V${top+ph}"/><text x="${x}" y="${h-24}" text-anchor="middle">${Number(v.toFixed(1))}</text>`;});
+  all.forEach(s=>{const d=s.values.map((v,i)=>(i?'L':'M')+sx(xs[i]).toFixed(2)+' '+sy(v).toFixed(2)).join(' ');svg+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.dashed?1.4:1.8}" ${s.dashed?'stroke-dasharray="5 4" opacity=".65"':''}/>`;});
+  svg+=`<text class="sg-axis-title" x="${left+pw/2}" y="${h-5}" text-anchor="middle">${escape(spec.x)}</text><path class="sg-guide" d=""/><rect data-chart-hit="true" x="${left}" y="${top}" width="${pw}" height="${ph}" fill="transparent"/>`;
+ }
+ svg+='</svg>';el.innerHTML=svg;
+ chartCache.set(id,{spec: {...spec,series:all},w,left,pw,top,ph,sx,sy});
+ const legend=$(id.replace('-chart','-legend'));if(legend)legend.innerHTML=all.map(s=>`<span><span class="sg-key" style="border-color:${s.color};${s.dashed?'border-top-style:dashed':''}"></span>${escape(s.label)}</span>`).join('');
+}
+function detail(m){
+ const id=state.selected;let tabs,spec;
+ if(definitions[id].kind==='film'){
+  tabs=[['response','感光谱'],['characteristic','特性曲线'],['dye','染料谱']];
+  if(!tabs.some(t=>t[0]===detailTab))detailTab='response';
+  if(detailTab==='characteristic'){const xs=Array.from({length:61},(_,i)=>-3+i/12),slope=value(id,'slope');spec={title:'曝光到密度的示意关系',kind:'line',x:'相对 log₁₀ 曝光',y:'密度 D · 示意',xs,series:rgbNames.map((n,k)=>series(n,xs.map(x=>{const q=1/(1+Math.exp(-slope*2*(x+k*.05)));return .04+2.1*(id==='slideFilm'?1-q:q);}),colors[k]))};}
+  else{const vals=detailTab==='dye'?m.material.dye:m.material.sens;spec={title:detailTab==='dye'?'染料光谱密度示意':'三层感光响应示意',kind:'line',x:'波长 nm',y:detailTab==='dye'?'单位系数光谱密度 D':'相对线性感光响应',xs:wavelengths,series:vals.map((a,k)=>series((detailTab==='dye'?cmNames:rgbNames)[k],a,colors[k]))};}
+ }else if(id==='sensor'){tabs=[['response','传感器响应']];spec={title:'模拟翻拍传感器响应',kind:'line',x:'波长 nm',y:'相对能量响应',xs:wavelengths,series:m.sens.map((a,k)=>series(rgbNames[k],a,colors[k]))};}
+ else if(id==='filter'){tabs=[['response','滤色片透射率']];spec={title:'滤色片合成透射率',kind:'line',x:'波长 nm',y:'透射率 0–1',xs:wavelengths,series:[series('合成滤色',m.filterT,'var(--sg-out)')]};}
+ else if(id==='invert'){tabs=[['response','密度与反演关系']];const xs=Array.from({length:41},(_,i)=>i/20),range=cfg('invert').preset===1?1.85:2;spec={title:'冻结反演关系示意',kind:'line',x:'输入密度 D',y:'反演通道值',xs,series:[series('已保存关系',xs.map(x=>Math.max(0,Math.min(1,1-(x-.1)/range+value('invert','balance')))))]};}
+ else if(['interface','display'].includes(id)){tabs=[['response','接口数量']];spec=bars('颜色坐标不是光谱','数值 · 仅界面示意',m.coordinates,['X','Y','Z']);}
+ else if(id==='estimate'){tabs=[['response','估计光谱']];spec=spectral('估计反射谱','反射因子',m.reflectance);}
+ else if(id==='paper'){tabs=[['response','纸白与模型状态']];spec=spectral('纸白示意','反射率 0–1',wavelengths.map(()=>value('paper','white')));}
+ else{tabs=[['response','光源谱']];spec=spectral('光源谱形示意','相对 SPD',light(id));}
+ $('sg-detail-tabs').innerHTML=tabs.map(([key,text])=>`<button type="button" class="cursor-interaction" data-detail="${key}" aria-pressed="${key===detailTab}">${text}</button>`).join('');
+ $('sg-detail-label').textContent=spec.title+' · 解析示意';plot('sg-detail-chart',spec,210);
+}
+function draw(){const m=calculate(),views=nodeViews(m),height=root.clientWidth>=1250?430:root.clientWidth>=900?340:300;views.forEach((v,i)=>{const p=pin?.route===state.route&&pin?.node===state.selected?pin.views[i]:null;if(p&&p.kind===v.kind&&p.y===v.y&&p.x===v.x&&v.kind==='line')v.series.push(...p.series.map(s=>({...s,label:'固定对照',dashed:true})));const prefix=i?'sg-output':'sg-input';$(prefix+'-title').textContent=i?v.title.replace(/^输出/,'结果'):v.title;plot(prefix+'-chart',v,height);$(prefix+'-hover').textContent=v.kind==='line'?'':'积分或坐标结果，不使用波长轴';});if($('sg-material-details').open)detail(m);renderValues(m);}
+function renderValues(m){let vals=m.exposure,labels=rgbNames,title='当前样本 · 有效曝光（相对）';const id=state.selected;if(id==='sensor'||id==='invert'){vals=id==='sensor'?m.channels:m.inversed;title=id==='sensor'?'线性相机通道':'反演通道 · 界面示意';}else if(id==='paper'){vals=m.paperH;title='相纸曝光 · 界面示意';}else if(['view','interface','display'].includes(id)){vals=m.coordinates;labels=['X','Y','Z'];title='XYZ 位置 · 未接入 CIE 积分';}else if(id==='filter'){vals=['cyan','magenta','yellow'].map(k=>value(id,k));labels=cmNames;title='滤色密度参数 D';}
+ $('sg-values-title').textContent=title;$('sg-values').innerHTML=vals.map((v,i)=>`<div class="sg-value-row"><span class="sg-value-label">${labels[i]}</span><span class="sg-mono">${v.toFixed(3)}</span></div>`).join('');}
+function render(){
+ const route=routes[state.route],id=state.selected,d=definitions[id],c=cfg(id);
+ const preview=state.view==='preview',inspector=state.inspectorOpen!==false;
+ $('sg-route').value=state.route;root.dataset.inspector=inspector?'open':'closed';$('sg-inspector').hidden=!inspector;$('sg-inspector-toggle').setAttribute('aria-pressed',String(inspector));
+ root.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===(preview?'preview':'spectra'))));$('sg-spectrum-view').hidden=preview;$('sg-preview-view').hidden=!preview;$('sg-sample-menu').hidden=preview;
+ $('sg-recipe-name').textContent='未命名配方';$('sg-node-count').textContent=route.ids.length+' 个节点 · 顺序固定';
+ $('sg-nodes').innerHTML=route.ids.map(n=>`<button type="button" class="sg-node cursor-interaction" data-node="${n}" aria-pressed="${n===id}"><span class="sg-node-name">${name(n)}</span></button>`).join('');
+ $('sg-title').textContent=preview?'照片预览':name(id);$('sg-context').textContent=preview?route.name:presetName(id).replace(/ · (结构示意|示意).*/,'');$('sg-description').textContent=d.desc;
+ $('sg-preset').innerHTML=d.presets.map((s,i)=>`<option value="${i}">${escape(s)}</option>`).join('')+(c.custom?`<option value="custom">${escape(c.name||'自定义数据')}</option>`:'');$('sg-preset').value=c.custom?'custom':String(c.preset);
+ $('sg-controls').innerHTML=d.param.map(p=>`<label class="sg-field"><span class="sg-field-name"><span>${p[1].replace(/ · 示意$/,'')}</span><output class="sg-mono" id="sg-value-${p[0]}">${Number(c.params[p[0]]).toFixed(2)} ${p[6]}</output></span><input type="range" aria-label="${p[1]}" data-param="${p[0]}" min="${p[2]}" max="${p[3]}" step="${p[4]}" value="${c.params[p[0]]}"></label>`).join('')+(id==='display'?'<p class="sg-control-note">外观按配置预设切换。</p>':'');
+ const needs=state.route==='negative'&&state.calibration.negative===false;
+ $('sg-calibration').innerHTML=needs&&['scanLight','sensor','invert'].includes(id)?'<div class="sg-calibration" role="status">翻拍条件已变更，原定标需要检查。<button type="button" id="sg-match-calibration" class="cursor-interaction">选择匹配定标…</button></div>':'';
+ $('sg-source-detail').textContent=c.custom?'用户导入的交互示意配置，未经材料与许可核验。':'解析曲线示意；不包含 Kodak 实测感光谱、特性曲线或染料数据。光源以黑体形状演示，不声称等同标准 D65/D50。';
+ $('sg-dependency-detail').textContent=id==='display'?'只更新显示处理。内部胶片 LUT 可复用；包含显示的一体 LUT 需要重新生成。':'本节点和下游需要重算。取样点、曲线对照和图表归一化不改变 LUT 配方。';
+ $('sg-data-warning').textContent=id==='paper'?'相纸散射与曝光—成品模型未接入。当前只是反射曲线展示示意。':(['interface','display'].includes(id)?'XYZ、OCIO 与 OpenDRT 未执行，数值只用于界面位置示意。':'示意数据，非实测材料响应。计算引擎未接入。');
+ $('sg-status-state').textContent=needs?'65³ · 翻拍定标待匹配':state.dirty?'65³ · 配方已修改':'65³ · 尚未生成';
+ $('sg-samples').innerHTML=samples.map((s,i)=>`<button type="button" class="sg-sample cursor-interaction" style="--sample:${s.hex}" data-sample="${i}" aria-label="${s.name}" aria-pressed="${!state.customRgb&&state.sample===i}"></button>`).join('');
+ $('sg-sample-caption').textContent=state.customRgb?'自定测试色':samples[state.sample]?.name||'18% 灰';
+ $('sg-normalize').checked=normalized;$('sg-normalization-note').textContent=normalized?'仅影响图表，不改计算或 LUT':'保留计算幅值';$('sg-unpin').disabled=!pin;
+ draw();requestAnimationFrame(draw);
+}
+function openData(){const id=state.selected,d=definitions[id],m=calculate();let custom=cfg(id).custom;
+ if(!custom){custom={};if(d.kind==='film')custom={sensitivity:m.material.sens,dyes:m.material.dye};else if(d.kind==='light')custom={curves:[light(id)]};else if(id==='sensor')custom={curves:m.sens};else if(id==='filter')custom={curves:m.filterDyes};else if(id==='estimate')custom={curves:response(false)};else if(id==='paper')custom={curves:[wavelengths.map(()=>value(id,'white'))],sensitivity:m.paperSens};}
+ const spectralData=Object.keys(custom).some(k=>['curves','sensitivity','dyes'].includes(k));
+ const doc={schema:'softloaf-gui-demo-v1',node:id,name:'自定义 '+name(id)+' · 未核验',...(spectralData?{wavelengths_nm:wavelengths}:{}),params:cfg(id).params,...custom};
+ $('sg-data-title').textContent='替换：'+name(id);$('sg-data-help').textContent=spectralData?'仅替换此节点的交互示意配置。波长须为 400–720 nm、每 5 nm 一点；数组需完整、有限且非负。正式材料导入还需单位、响应量、测量条件、特性曲线、来源及许可。':'此节点没有波长曲线，仅替换示意配置和已声明的参数。正式版须读取匹配的定标、接口或 OCIO 配置；本设计稿不执行这些变换。';$('sg-data-editor').value=JSON.stringify(doc,null,2);$('sg-data-error').textContent='';$('sg-import-file').value='';$('sg-data-dialog').showModal();}
+ function applyData(){try{const data=JSON.parse($('sg-data-editor').value),id=state.selected;
+  if(data.schema!=='softloaf-gui-demo-v1'||data.node!==id)throw Error('配置类型或节点不匹配。');
+  if(typeof data.name!=='string'||!data.name.trim()||data.name.length>70)throw Error('请提供不超过 70 字的配置名称。');
+  const expected=definitions[id].kind==='film'?{sensitivity:3,dyes:3}:id==='sensor'||id==='estimate'||id==='filter'?{curves:3}:id==='paper'?{curves:1,sensitivity:3}:definitions[id].kind==='light'?{curves:1}:{};
+  if(Object.keys(expected).length&&(!Array.isArray(data.wavelengths_nm)||data.wavelengths_nm.length!==65||data.wavelengths_nm.some((v,i)=>v!==wavelengths[i])))throw Error('波长须为 400–720 nm、每 5 nm 一点。');
+  for(const [key,count] of Object.entries(expected)){if(!Array.isArray(data[key])||data[key].length!==count||data[key].some(a=>!Array.isArray(a)||a.length!==65||a.some(v=>typeof v!=='number'||!Number.isFinite(v)||v<0)))throw Error(key+' 需要 '+count+' 条完整、非负的 65 点曲线。');if(data[key].some(a=>!a.some(v=>v>0)))throw Error('曲线不能全部为零。');if((key==='curves'&&id==='paper')&&data[key].some(a=>a.some(v=>v>1)))throw Error('纸白反射率不能大于 1。');}
+  const next=defaults(id);for(const p of definitions[id].param){const v=data.params?.[p[0]];if(typeof v!=='number'||!Number.isFinite(v)||v<p[2]||v>p[3])throw Error('参数 '+p[1]+' 超出允许范围。');next.params[p[0]]=v;}
+  next.custom=Object.fromEntries(Object.keys(expected).map(k=>[k,data[k]]));next.name=data.name.trim();state.configs[state.route+':'+id]=next;$('sg-data-dialog').close();edited(id);toast('已替换本设计稿中的节点数据；正式材料仍需独立核验。');
+ }catch(e){$('sg-data-error').textContent=e.message;}}
+function review(){const needs=state.route==='negative'&&state.calibration.negative===false;const rows=[['当前流程',routes[state.route].name],['LUT 网格','65³ · 四面体插值'],['输入','ACEScct AP1/D60 · 范围 [-0.25, 0.75]'],['内部输出','相对观看 XYZ D65 · 不含 OpenDRT'],['显示输出','OCIO + OpenDRT v1.0.0 → 标准 sRGB'],['定标状态',needs?'翻拍条件已变更，需匹配定标':'正式引擎未接入，尚未验证'],['生成前检查','固定所有定标；float64 参考；文件读回；至少 99% 像素各通道误差 ≤ 2/255']];$('sg-export-review').innerHTML=rows.map(([k,v])=>`<div class="sg-review-row"><span class="sg-muted">${k}</span><span>${escape(v)}</span></div>`).join('');$('sg-export-dialog').showModal();}
+root.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.view){state.view=b.dataset.view;persist();render();}
+ else if(b.dataset.node){state.selected=b.dataset.node;state.view='spectra';detailTab='response';persist();render();}
+ else if(b.dataset.detail){detailTab=b.dataset.detail;draw();}
+ else if(b.dataset.sample!==undefined){state.sample=Number(b.dataset.sample);state.customRgb=null;$('sg-sample-menu').open=false;persist();render();}
+ else if(b.dataset.close)$(b.dataset.close).close();
+ else if(b.id==='sg-save'){state.dirty=false;persist();render();toast(Object.values(state.configs).some(c=>c.custom)?'设置已保存在本设计稿；自定义曲线仅保留在本次打开期间，请查看配方 JSON 留存。':'配方状态已保存在本设计稿中。尚未生成或保存 LUT 文件。');}
+ else if(b.id==='sg-generate')review();
+ else if(b.id==='sg-inspector-toggle'){state.inspectorOpen=state.inspectorOpen===false;persist();render();}
+ else if(b.id==='sg-raw-settings')$('sg-raw-dialog').showModal();
+ else if(b.id==='sg-replace')openData();
+ else if(b.id==='sg-apply-data')applyData();
+ else if(b.id==='sg-review-recipe'){$('sg-recipe-editor').value=JSON.stringify({schema:'softloaf-gui-state-v1',...state,export:{grid:65,interpolation:'tetrahedral',input:'ACEScct AP1/D60',domain:[-.25,.75],output:'relative viewed XYZ D65',display:'separate OCIO/OpenDRT',engineConnected:false}},null,2);$('sg-export-dialog').close();$('sg-recipe-dialog').showModal();}
+ else if(b.id==='sg-reset'){state.configs[state.route+':'+state.selected]=defaults(state.selected);edited(state.selected);}
+ else if(b.id==='sg-pin'){pin={route:state.route,node:state.selected,views:clone(nodeViews(calculate()))};b.closest('details').open=false;render();toast('已固定当前节点曲线；只在数量与单位一致时叠加比较。');}
+ else if(b.id==='sg-unpin'){pin=null;b.closest('details').open=false;render();}
+ else if(b.id==='sg-match-calibration'){state.selected='invert';render();toast('请在正式版本选择与翻拍光源、响应和通道尺度匹配的已保存定标；本设计稿不执行拟合。');}
+});
+$('sg-route').addEventListener('change',e=>{state.route=e.target.value;state.selected=state.route==='slide'?'slideFilm':'negativeFilm';state.view='spectra';detailTab='response';persist();render();});
+$('sg-material-details').addEventListener('toggle',()=>{if($('sg-material-details').open)requestAnimationFrame(draw);});
+$('sg-preset').addEventListener('change',e=>{if(e.target.value==='custom')return;const c=cfg(state.selected);c.preset=Number(e.target.value);c.name=null;c.custom=null;edited(state.selected);});
+$('sg-controls').addEventListener('input',e=>{if(!e.target.dataset.param)return;const key=e.target.dataset.param;cfg(state.selected).params[key]=Number(e.target.value);state.revision++;state.dirty=true;if(['scanLight','sensor'].includes(state.selected))state.calibration.negative=false;const p=definitions[state.selected].param.find(p=>p[0]===key);$('sg-value-'+key).textContent=Number(e.target.value).toFixed(2)+' '+p[6];draw();$('sg-status-state').textContent=state.calibration.negative===false&&state.route==='negative'?'65³ · 翻拍定标待匹配':'65³ · 配方已修改';});
+$('sg-controls').addEventListener('change',()=>{persist();render();});
+$('sg-normalize').addEventListener('change',e=>{normalized=e.target.checked;render();});
+$('sg-custom-color').addEventListener('input',e=>{const hex=e.target.value;state.customHex=hex;state.customRgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);persist();render();});
+$('sg-import-file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;if(file.size>120000){$('sg-data-error').textContent='示意配置文件须小于 120 KB。';return;}try{$('sg-data-editor').value=await file.text();$('sg-data-error').textContent='';}catch{$('sg-data-error').textContent='读取失败，请粘贴 JSON 文本。';}});
+$('sg-raw-file').addEventListener('change',e=>{$('sg-raw-file-name').textContent=e.target.files[0]?'已选择 '+e.target.files[0].name+'；原型未解码此文件。':'尚未选择照片。';});
+$('sg-raw-exposure').addEventListener('input',e=>{$('sg-raw-exposure-value').textContent=Number(e.target.value).toFixed(2)+' EV';});
+root.addEventListener('pointermove',e=>{const box=e.target.closest('.sg-chart');if(!box||!box.id)return;const c=chartCache.get(box.id);if(!c||c.spec.kind!=='line')return;const svg=box.querySelector('svg'),rect=svg.getBoundingClientRect(),x=(e.clientX-rect.left)*c.w/rect.width,t=Math.max(0,Math.min(1,(x-c.left)/c.pw)),xs=c.spec.xs,p=t*(xs.length-1),i=Math.min(xs.length-2,Math.floor(p)),f=p-i,xval=xs[i]*(1-f)+xs[i+1]*f;const guide=svg.querySelector('.sg-guide');if(guide)guide.setAttribute('d',`M${c.sx(xval)} ${c.top}V${c.top+c.ph}`);const hover=$(box.id.replace('-chart','-hover'));if(hover)hover.textContent=(c.spec.x==='波长 nm'?xval.toFixed(1)+' nm':xval.toFixed(2))+' · '+c.spec.series.map(s=>s.label+' '+(s.values[i]*(1-f)+s.values[i+1]*f).toFixed(3)).join(' / ');});
+new ResizeObserver(()=>{if(renderScheduled)return;renderScheduled=true;requestAnimationFrame(()=>{renderScheduled=false;draw();});}).observe(root);
+window.addEventListener('openai:set_globals',e=>{const incoming=e.detail?.globals?.widgetState?.modelContent;if(incoming?.design==='spectral-gui-v1'&&routes[incoming.route]&&(incoming.uiSerial||0)>=(state.uiSerial||0)){const imported=Object.fromEntries(Object.entries(state.configs).filter(([,c])=>c.custom));state={...state,...incoming,configs:{...incoming.configs,...imported}};render();}});
+render();
+if(state.importedDataNeedsReload)toast('上次导入的自定义曲线需要重新导入；当前使用示意预设。');
+if(globalThis.Tweak){const t=new Tweak({container:root,onChange:()=>{root.dataset.graphLayout=layout.graphs;requestAnimationFrame(draw);}});t.addSelect(layout,'graphs',{label:'输入与结果的排列',options:[{label:'并列对照',value:'parallel'},{label:'上下对照',value:'stacked'}]});}
+})();
+</script>

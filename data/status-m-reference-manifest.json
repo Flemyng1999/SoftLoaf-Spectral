@@ -1,0 +1,9 @@
+{
+  "schema": "softloaf.local-density-identities/1",
+  "reference": "ISO 5/3:1984 Table 4, printed p5 / PDF p7",
+  "source_url": "https://cdn.standards.iteh.ai/samples/20101/642e3ed0adfe43be85e67b2c413cca56/ISO-5-3-1984.pdf",
+  "pdf_sha256": "0566ec1097ed23310993420fd876ad4d099d6d064e75029245b1a421c204623c",
+  "table_sha256": "420b5e3293bbdc911d57bef706cde34a7b8fa18b82f44edc50d4e04089eb240f",
+  "extraction": "experiments/extract_status_m.py; independently checked against ANSI/ISO 5-3:1995 Table 4",
+  "rights": "Only identities bundled. PDF and numeric source remain local pending redistribution review."
+}

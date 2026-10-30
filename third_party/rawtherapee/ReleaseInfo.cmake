@@ -1,0 +1,6 @@
+set(GIT_DESCRIBE "5.12")
+set(GIT_BRANCH "5.12-softloaf-preview1")
+set(GIT_COMMIT "a8a3d1bc")
+set(GIT_COMMIT_DATE "2025-05-28")
+set(GIT_COMMITS_SINCE_TAG "0")
+set(GIT_NUMERIC_VERSION_BS "5.12.0")

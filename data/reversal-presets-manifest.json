@@ -1,0 +1,51 @@
+{
+  "schema": "softloaf.reversal-presets/1",
+  "recorded_on": "2026-10-28",
+  "materials": [
+    {
+      "id": "velvia100",
+      "name": "Fujifilm Velvia 100",
+      "process": "E-6",
+      "density_metric": "Status A",
+      "source": {
+        "url": "https://asset.fujifilm.com/www/in/files/2020-07/053a4dd52b58d6f75cd3ad35dd03998c/films_velvia-100_datasheet_01.pdf",
+        "sha256": "4c57a27b978311ca2ef819f2bf2d74c757639d27f9f0bd94e5f49c4b1c3d5902",
+        "document": "AF3-202E, February 2005, p8"
+      },
+      "file": "velvia100.json",
+      "sha256": "5b86c6aa5456e2b0d25cb60b4dff1f96b6bf1c9347f52258984ddb42bac67a02",
+      "plot_file": "velvia100-plot.json",
+      "plot_sha256": "f3424557ab99941e6fa9e0573104795aef06d86ef2d01024d1f71e1aa0a97e8c"
+    },
+    {
+      "id": "velvia50",
+      "name": "Fujifilm Velvia 50",
+      "process": "E-6",
+      "density_metric": "Status A",
+      "source": {
+        "url": "https://asset.fujifilm.com/www/us/files/2020-03/742f83fe2440fce58fbcc08f7370a7e6/AF3-0221E2Velvia50PIB.pdf",
+        "sha256": "bebfb4305fd3edc5e3505a9a0f4a0a1078da1db7672aacb4aa1bac1de3d64cfd",
+        "document": "AF3-0221E2 (KAMIQ-07.3-FP), p8"
+      },
+      "file": "velvia50.json",
+      "sha256": "aeb0a14397f6a68721e861e25821294fecb41a42a5aa17c90b73dea22c879550",
+      "plot_file": "velvia50-plot.json",
+      "plot_sha256": "f001638f885fa0eb5a71fb7393c775677a8352a6c8c2ed0925bc1baddd013905"
+    },
+    {
+      "id": "provia100f",
+      "name": "Fujifilm Provia 100F",
+      "process": "E-6",
+      "density_metric": "Status A",
+      "source": {
+        "url": "https://asset.fujifilm.com/www/in/files/2020-07/0b154ed25442c231feccf22032620306/films_provia-100f_datasheet_01.pdf",
+        "sha256": "e28d54e76e8fcdf44c8ffacc930b5b8f2ea54a7cdaeedfcc91790e68eb599de8",
+        "document": "AF3-036E (EIGI-00.10-HB), p6"
+      },
+      "file": "provia100f.json",
+      "sha256": "19e6769a22c065f00f1ac1a26fcc37514e3e44c58a1c5d24df199901cbd7dc0f",
+      "plot_file": "provia100f-plot.json",
+      "plot_sha256": "cc1daca76e950bcdb9d2e03d808676d4d0a6dab42a42a06caf01ce899379671b"
+    }
+  ]
+}

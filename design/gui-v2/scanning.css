@@ -1,0 +1,59 @@
+.app[data-mode=scan] .sidebar>:not(.brand):not(#scan-profile-sidebar){display:none!important}
+.app[data-mode=scan] .toolbar-actions,.app[data-mode=scan] #recipe-name{display:none!important}
+.scan-heading{display:none;font-size:16px}.app[data-mode=scan] .scan-heading{display:block}
+.app:not([data-mode=scan]) #scan-profile-sidebar{display:none!important}
+#scan-profile-sidebar{display:grid;gap:12px}.scan-workspace{min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.scan-top{display:flex;gap:14px;align-items:center;padding:14px 22px;border-bottom:1px solid var(--line)}#scan-original{margin-left:auto}
+.scan-top .scan-tool{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:0 0 34px;padding:6px;border-radius:7px;color:var(--muted)}
+.scan-tool svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+.scan-top .scan-tool:hover:not(:disabled){color:var(--blue);background:light-dark(#e1e9f4,#273548)}
+.scan-top .scan-tool:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.scan-body{display:grid;grid-template-columns:minmax(0,1fr) 252px;flex:1;min-height:0}
+.scan-viewer{display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:auto;padding:18px;min-width:0;background:light-dark(#eceef1,#171819)}
+.scan-surface{position:relative;display:inline-grid;max-width:100%;line-height:0;touch-action:none}
+.scan-surface img{display:block;max-width:100%;max-height:calc(100dvh - 310px);width:auto;height:auto;object-fit:contain}
+.scan-surface svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.scan-edit{background:var(--panel);border-left:1px solid var(--line);padding:20px 17px;overflow:auto}.scan-edit h2{margin-bottom:12px}.scan-edit>.field{margin-bottom:12px}.scan-edit input,.scan-edit select{width:100%;margin-top:7px}.scan-edit button{width:100%;margin-top:8px}.scan-downloads{display:flex;flex-wrap:wrap;gap:14px;margin:14px 0}.scan-downloads a{color:var(--blue)}
+.scan-reference{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;font-size:12px}
+.scan-reference summary{cursor:pointer;font-size:13px;font-weight:600;border-radius:4px}.scan-reference summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.scan-reference table{width:100%;border-collapse:collapse;margin:12px 0 10px}.scan-reference caption{text-align:left;color:var(--muted);font-size:11px;padding-bottom:8px}
+.scan-reference th,.scan-reference td{padding:6px 0;border-bottom:1px solid var(--line);text-align:left}.scan-reference tbody th{font-weight:400}
+.scan-reference th:last-child,.scan-reference td:last-child{text-align:right;font-variant-numeric:tabular-nums}.scan-reference thead th{font-weight:500;color:var(--muted);font-size:11px}
+.scan-reference .help{font-size:11px;line-height:1.6;margin:8px 0 0}
+.scan-strip{border-top:1px solid var(--line);padding:8px 16px;background:var(--panel)}.scan-strip summary{cursor:pointer;color:var(--muted);font-size:12px}.scan-strip .filmstrip-rail{min-height:98px;max-height:120px}
+#scan-calibration-dialog{width:760px}#scan-calibration-dialog .scan-surface{display:grid;justify-content:center;margin-top:16px}#scan-calibration-dialog .scan-surface img{max-height:min(43dvh,calc(100dvh - 485px));margin:auto}#scan-calibration-dialog .field input{width:100%}.scan-imports{display:grid;grid-template-columns:200px minmax(0,1fr);align-items:center;gap:10px}.scan-imports span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.scan-chart-guidance{display:flex;align-items:center;gap:16px;margin-top:12px}.scan-chart-guidance>svg{width:132px;height:96px;flex:0 0 132px;background:#252629;border-radius:5px;padding:5px}.scan-chart-guidance p{margin:4px 0;line-height:1.5;font-size:13px}.scan-chart-guidance .help{font-size:11px}.scan-chart-tools{display:flex;align-items:center;gap:8px}.scan-chart-tools button{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;padding:4px}.scan-chart-tools svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.chart-highlight{fill:none;stroke:#fff;stroke-width:2;paint-order:stroke;filter:drop-shadow(0 0 2px #1680ff)}.scan-pending{height:76px;display:grid;place-items:center;color:var(--muted);font-size:11px}
+@media(max-width:900px){.scan-body{grid-template-columns:minmax(0,1fr) 220px}.scan-edit{padding:14px}}
+
+.app[data-mode=scan] #save-state,.app[data-mode=scan] #undo-delete-recipe{display:none}
+
+#scan-geometry-dialog{width:850px}#scan-flat-dialog{width:560px}
+.scan-geometry-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end}
+.scan-geometry-controls input:not([type=checkbox]),.scan-geometry-controls select,#scan-flat-choice,#scan-calibration-flat{width:100%;margin-top:6px}
+.scan-geometry-controls .field{margin:0}.scan-geometry-controls [hidden]{display:none}
+.scan-geometry-actions{display:flex;align-items:center;gap:14px;margin:14px 0}
+#scan-geometry-surface{display:grid;justify-content:center;min-height:140px;background:light-dark(#eceef1,#171819)}
+#scan-geometry-image{max-height:40dvh;margin:auto}#scan-geometry-surface svg{pointer-events:none}
+#scan-flat-dialog .field{display:block;margin-top:18px}
+@media(max-width:900px){.scan-top{gap:8px;padding:10px}.scan-geometry-controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Calibration is a short task with an always-visible next action. */
+#scan-calibration-dialog.scan-wizard[open]{display:flex;flex-direction:column;width:min(1000px,calc(100vw - 40px));height:min(780px,calc(100dvh - 40px));max-height:calc(100dvh - 40px);padding:0;overflow:hidden}
+.scan-wizard .dialog-head{padding:20px 24px 12px;margin:0;flex:none}
+.scan-wizard-steps{list-style:none;display:flex;gap:24px;padding:0 24px 14px;margin:0;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px;flex:none}
+.scan-wizard-steps [aria-current=step]{color:var(--blue);font-weight:600}.scan-wizard-steps .complete{color:var(--text)}
+.scan-wizard-content{flex:1;min-height:0;overflow:auto;padding:22px 24px}.scan-wizard-content h3{font-size:16px;font-weight:600;margin-bottom:8px}.scan-wizard-content .help{line-height:1.6}
+.scan-source-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px 14px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:18px;margin-top:18px}.scan-source-card>label{grid-column:1/-1;font-weight:500}.scan-source-card>.help{grid-column:1/-1}.scan-source-card select{width:100%}.scan-format-help{margin-top:18px}.scan-format-help summary{cursor:pointer;color:var(--muted);font-size:12px}.scan-format-help p{margin:10px 0}
+.scan-wizard-footer{flex:none;border-top:1px solid var(--line);padding:12px 24px;background:var(--panel)}.scan-wizard-footer .dialog-actions{margin:0;justify-content:flex-end}.scan-wizard #scan-calibration-error{margin:0 24px 10px;flex:none;max-height:56px;overflow:auto}.scan-wizard #scan-calibration-error:empty{display:none}
+.scan-wizard-content:has(.scan-position-step:not([hidden])){display:flex;overflow:hidden;padding-top:12px;padding-bottom:12px}.scan-position-step{display:flex;flex-direction:column;flex:1;min-width:0;min-height:0}.scan-chart-toolbar{display:flex;align-items:center;gap:6px;flex:none;margin-bottom:10px}.scan-chart-toolbar>span{flex:1;font-weight:500}.scan-chart-toolbar button{font-size:12px}
+.scan-position-layout{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:18px;flex:1;min-height:0}.scan-position-guide{overflow:auto;font-size:12px}.scan-position-guide h3{font-size:14px}.scan-position-guide>svg{width:100%;background:#26282b;border-radius:6px;padding:7px;margin:7px 0}.scan-position-guide>.quiet{margin-top:8px;font-size:12px}.scan-position-guide .help{font-size:12px}
+#scan-chart-panel{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;min-width:0;background:light-dark(#e8eaed,#191a1b);border-radius:8px;overflow:hidden}
+#scan-calibration-dialog #scan-chart-surface{display:block;position:relative;flex:none;margin:0;max-width:none;line-height:0}
+#scan-calibration-dialog #scan-chart-image{position:absolute;top:50%;left:50%;max-width:none;max-height:none;object-fit:fill;margin:0;cursor:crosshair;user-select:none}
+#scan-chart-overlay{inset:0;width:100%;height:100%}
+.scan-task-progress{display:flex;align-items:center;gap:12px;min-width:180px;font-size:12px;color:var(--muted)}.scan-task-progress>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px}.scan-task-progress progress{width:150px;height:5px;accent-color:var(--blue)}.scan-wizard-footer .scan-task-progress{margin-bottom:10px;justify-content:space-between}.scan-wizard-footer progress{width:38%}.statusbar:has(.scan-task-progress:not([hidden])) .status-message{flex:1;min-width:0}.statusbar:has(.scan-task-progress:not([hidden])) #compute-status{display:none}
+#scan-flat-dialog [data-scan-progress-slot],#scan-geometry-dialog [data-scan-progress-slot]{margin-top:14px}
+@media(max-width:740px){.scan-position-layout{grid-template-columns:minmax(0,1fr) 150px;gap:10px}.scan-source-card{padding:12px}.scan-wizard-content{padding:16px}.scan-chart-toolbar button{padding:4px}.scan-wizard-steps{gap:12px}.scan-task-progress>span{max-width:140px}.scan-task-progress progress{width:100px}}
+.statusbar:has(.scan-task-progress:not([hidden])) .status-message{display:none}.statusbar>.scan-task-progress{flex:1}.statusbar>.scan-task-progress>span{max-width:none}.statusbar>.scan-task-progress progress{margin-left:auto;width:min(240px,35vw)}
+#scan-chart-overlay .scan-corner-handle{pointer-events:all;fill:white;stroke:var(--blue);stroke-width:.004;cursor:move}
+#scan-chart-perspective[aria-pressed=true]{color:var(--blue)}
+.scan-top .scan-tool[aria-pressed=true]{background:var(--selected);color:var(--blue);border-color:transparent}

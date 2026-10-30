@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/assets/softloaf-cat.png">
+<title>面包光谱</title>
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#fff,#1c1c1e);--side:light-dark(#eff0f4,#252528);--panel:light-dark(#f7f8fa,#222225);--control:light-dark(#fff,#303034);--text:light-dark(#212229,#eeeef0);--muted:light-dark(#6c7079,#aaaab2);--line:light-dark(#e2e5eb,#39393f);--selected:light-dark(#dce8f8,#263d58);--blue:light-dark(#076bdc,#258cff);--teal:light-dark(#208d94,#6dc7cb);--amber:light-dark(#ac751b,#e2b564);--warning:light-dark(#985b16,#e0b779);--error:light-dark(#af3434,#ed9696)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}button,input,select,textarea{font:inherit;color:inherit}button,select,input[type=text],input[type=number]{border:1px solid var(--line);background:var(--control);border-radius:7px;min-height:32px;padding:5px 10px}button{cursor:pointer}button:disabled{opacity:.42;cursor:default}button:hover:not(:disabled){background:var(--side)}button.primary,.download-primary{background:var(--blue);color:white;border-color:var(--blue)}button.primary:hover:not(:disabled){filter:brightness(1.07);background:var(--blue)}button.quiet{border-color:transparent;background:transparent;color:var(--muted)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}[hidden]{display:none!important}h1,h2,h3,p{margin:0}h1{font-size:21px;font-weight:600}h2{font-size:15px;font-weight:600}h3{font-size:13px;font-weight:500}.muted{color:var(--muted)}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums}.small{font-size:12px}.app{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:100vh}.sidebar{background:var(--side);border-right:1px solid var(--line);padding:22px 13px;display:flex;flex-direction:column;gap:24px}.brand{display:flex;gap:10px;align-items:center;font-size:15px;font-weight:600;padding:0 6px}.brand img{width:30px;height:30px;border-radius:7px}.side-heading{font-size:12px;color:var(--muted);padding:0 9px;margin-bottom:8px}.recipes{display:grid;gap:5px}.recipe-item{display:block;width:100%;text-align:left;background:transparent;border:0;padding:10px 11px;border-radius:8px}.recipe-item[aria-pressed=true]{background:var(--selected)}.recipe-item strong{display:block;font-size:13px;font-weight:500;overflow-wrap:anywhere}.recipe-item span{display:block;margin-top:3px;color:var(--muted);font-size:12px}.sidebar details{border-top:1px solid var(--line);padding-top:18px}.sidebar summary{font-weight:500;cursor:pointer;padding:0 7px 10px}.node-list{display:grid;gap:3px}.node-list button{border:0;background:transparent;text-align:left;font-size:12px}.node-list button[aria-pressed=true]{background:var(--selected)}.side-actions{margin-top:auto;display:grid;gap:8px}.main{min-width:0}.toolbar{min-height:68px;display:flex;gap:15px;align-items:center;padding:14px 23px;border-bottom:1px solid var(--line)}.name-wrap{display:flex;align-items:center;gap:12px;min-width:0;flex:1}.name-wrap input{font-size:16px;font-weight:500;min-width:130px;width:min(350px,100%);background:transparent;border-color:transparent;padding-left:0}.name-wrap input:hover,.name-wrap input:focus{border-color:var(--line);background:var(--control);padding-left:8px}.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 286px;min-height:calc(100vh - 108px)}.canvas{min-width:0;padding:21px 23px 24px}.test-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}.test-controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:8px}.test-controls select{min-width:180px}.test-options{position:relative}.test-options summary{cursor:pointer;color:var(--blue);list-style:none}.test-options-panel{position:absolute;top:calc(100% + 9px);left:0;z-index:10;width:280px;padding:17px;background:var(--control);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 28px #0002}.test-options-panel label{display:block;margin:10px 0}.test-options-panel input{width:100%}.test-meta{font-size:12px;color:var(--muted)}.pictures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.pictures[data-compare=no]{grid-template-columns:minmax(0,1fr)}.pictures[data-compare=no] .picture{width:100%;max-width:660px;margin:0 auto}.picture{min-width:0}.picture-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:7px;font-size:12px}.picture-head strong{font-size:13px;font-weight:500}.image-frame{position:relative;background:var(--panel);border-radius:7px;overflow:hidden;min-height:160px}.image-frame img{display:block;width:100%;height:auto;cursor:crosshair}.crosshair{position:absolute;width:23px;height:23px;margin:-11px 0 0 -11px;pointer-events:none;filter:drop-shadow(0 1px 2px #0008)}.crosshair:before,.crosshair:after{content:"";position:absolute;background:white}.crosshair:before{height:1px;width:23px;top:11px;left:0}.crosshair:after{height:23px;width:1px;top:0;left:11px}.image-action{display:flex;justify-content:center;gap:8px;margin-top:10px}.image-action button{font-size:12px}.preview-status{font-size:12px;color:var(--muted);margin-top:10px;min-height:19px}.cause{padding:16px 4px 13px;color:var(--muted);text-align:center;font-size:12px;min-height:49px}.diagnostics{border-top:1px solid var(--line);padding-top:14px}.diagnostics>summary{cursor:pointer;display:list-item;font-size:15px;font-weight:600;padding:0 0 13px}.diagnostic-header{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}.diagnostic-header select{max-width:270px;font-size:12px}.plot-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:21px}.plot-title{font-size:12px;font-weight:500;margin-bottom:5px}.plot{min-width:0;min-height:200px}.plot svg{display:block;width:100%}.plot text{font:11px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:var(--muted)}.plot .grid{stroke:var(--line);stroke-width:.7}.plot .axis-title{fill:var(--muted)}.plot-legend{font-size:12px;color:var(--muted);margin-top:7px;display:flex;gap:16px;flex-wrap:wrap}.legend-line{display:inline-block;width:23px;border-top:2px solid var(--teal);vertical-align:3px;margin-right:6px}.legend-line.dashed{border-top-style:dashed}.channel-row{display:grid;grid-template-columns:30px 1fr 1fr;gap:10px;padding:12px 2px;border-bottom:1px solid var(--line);font-size:12px}.channel-row span{text-align:right}.quantity{font-size:12px;color:var(--muted);padding-bottom:12px}.inspector{min-width:0;background:var(--panel);border-left:1px solid var(--line);padding:22px 19px}.inspector>h2{margin-bottom:24px}.field{display:block;margin-bottom:24px}.field-name{display:flex;justify-content:space-between;gap:10px;margin-bottom:9px;font-size:12px}.field select{width:100%;min-width:0}.field input[type=range]{display:block;width:100%;accent-color:var(--blue)}.exposure-row{display:grid;grid-template-columns:minmax(0,1fr) 52px 52px;gap:7px;margin-bottom:14px}.exposure-row input{width:100%;font-size:15px;font-variant-numeric:tabular-nums}.help{font-size:12px;color:var(--muted);margin-top:9px}.section{padding-top:22px;margin-top:22px;border-top:1px solid var(--line)}.inspector details summary{cursor:pointer;font-size:12px;margin:14px 0}.inspector details p{font-size:12px;color:var(--muted);margin:9px 0}.inspector details label{display:block;font-size:12px;margin:13px 0}.inspector details input{width:100%}.notice{border:1px solid var(--line);border-radius:9px;padding:18px;background:var(--panel);margin:12px 0;color:var(--text)}.notice h2{margin-bottom:9px}.notice p{font-size:13px;color:var(--muted);margin:8px 0}.notice button{margin-top:12px}.error{color:var(--error)}.statusbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:15px;align-items:center;border-top:1px solid var(--line);padding:8px 16px;background:var(--panel);font-size:12px;line-height:18px;color:var(--muted)}.statusbar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toast:empty{display:none}.footer-notes{font-size:12px;color:var(--muted);margin-top:15px}.details-json{white-space:pre-wrap;overflow-wrap:anywhere;max-height:260px;overflow:auto;font:11px/1.6 ui-monospace,SFMono-Regular,monospace}dialog{width:620px;max-width:calc(100% - 32px);max-height:calc(100% - 32px);padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);box-shadow:0 20px 70px #0004}dialog::backdrop{background:#0005}.dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:16px}.dialog-head h2{font-size:19px}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;flex-wrap:wrap}dialog p{font-size:12px;color:var(--muted);margin:12px 0}dialog textarea{width:100%;min-height:200px;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:7px;font:12px/1.6 ui-monospace,SFMono-Regular,monospace;resize:vertical}dialog .field{margin:15px 0}dialog .field input{width:100%}.purpose{display:block;padding:13px 0;border-bottom:1px solid var(--line);font-size:13px}.purpose input{margin-right:8px}.purpose small{display:block;margin:6px 0 0 23px;color:var(--muted);font-size:12px}.download-primary{display:inline-block;text-decoration:none;padding:8px 14px;border-radius:7px;margin:12px 0}.download-list a{color:var(--blue);font-size:12px;margin-right:14px;display:inline-block;margin-bottom:6px}.export-results{font-size:12px;overflow-wrap:anywhere}.review-row{display:grid;grid-template-columns:95px 1fr;gap:13px;padding:9px 0;border-bottom:1px solid var(--line)}
+@media(min-width:1400px){.app{grid-template-columns:238px minmax(0,1fr)}.workspace{grid-template-columns:minmax(0,1fr) 310px}.toolbar{padding-left:27px}.canvas{padding:23px 27px}.inspector{padding:23px}.pictures[data-compare=no] .picture{max-width:620px}}
+@media(max-width:1100px){.app{grid-template-columns:180px minmax(0,1fr)}.workspace{grid-template-columns:minmax(0,1fr) 238px}.toolbar{padding:12px 16px;gap:9px}.toolbar-actions{gap:5px}.toolbar-actions button{font-size:12px;padding:5px 8px}.name-wrap{gap:6px}.name-wrap input{font-size:14px}.canvas{padding:19px 17px}.inspector{padding:19px 14px}.brand{font-size:12px;gap:6px}.brand img{width:25px;height:25px}.pictures{gap:11px}.plot-pair{gap:12px}.test-meta{width:100%}.exposure-row{grid-template-columns:minmax(0,1fr) 42px 42px;gap:5px}}
+@media(max-width:850px){.workspace{grid-template-columns:minmax(0,1fr)}.inspector{border-left:0;border-top:1px solid var(--line)}.inspector>h2{margin-bottom:18px}.toolbar{flex-wrap:wrap}.toolbar-actions{margin-left:auto}.pictures{grid-template-columns:repeat(2,minmax(0,1fr))}.name-wrap{width:100%;flex:auto}}
+@media(max-width:620px){.app{display:block}.sidebar{padding:13px;border-right:0;border-bottom:1px solid var(--line);gap:13px}.brand{font-size:14px}.recipes{display:flex;gap:5px;flex-wrap:wrap}.recipe-item{width:auto;flex:1;min-width:120px}.recipe-item strong{font-size:12px}.recipe-item span{font-size:11px}.sidebar details{padding-top:9px}.sidebar summary{padding-bottom:3px}.node-list{grid-template-columns:repeat(2,minmax(0,1fr))}.side-heading{display:none}.side-actions{display:flex;gap:7px;margin:0}.side-actions button{flex:1;font-size:12px}.toolbar{padding:12px}.toolbar-actions{width:100%;justify-content:flex-end}.name-wrap input{width:100%;max-width:none}.canvas{padding:17px 13px}.pictures{grid-template-columns:minmax(0,1fr)}.plot-pair{grid-template-columns:minmax(0,1fr)}.test-controls select{min-width:0;max-width:100%}.test-meta{font-size:11px}.picture-head{font-size:11px}.picture-head strong{font-size:12px}.preview-status{font-size:11px}.workspace{min-height:0}.test-options-panel{left:auto;right:0;max-width:270px}.review-row{grid-template-columns:80px 1fr}.statusbar{padding:10px 12px}.plot{min-height:215px}.cause{text-align:left;padding-left:0}.test-header h1{font-size:20px}}
+
+.spectral-entry{width:100%;color:var(--blue);border-color:var(--blue);padding:8px 10px;text-align:left}.spectral-entry-help{margin-bottom:23px}.view-spectrum-entry{margin-top:-18px;display:block}.spectral-editor{border-top:1px solid var(--line);padding-top:16px;margin-top:12px}.spectral-editor-head,.spectral-editor-tools,.spectral-editor-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.spectral-editor-head{justify-content:space-between;margin-bottom:14px}.spectral-editor-head p{margin-top:4px}.spectral-editor-tools{margin-bottom:8px}.spectral-editor-tools select{min-width:155px}.spectral-meta{display:grid;grid-template-columns:1fr 1.5fr;gap:14px;margin:14px 0}.spectral-meta label{font-size:12px;color:var(--muted)}.spectral-meta input{display:block;width:100%;margin-top:5px}.spectral-graphs{display:grid;grid-template-columns:1fr 1fr;gap:22px}.spectral-graphs>section{min-width:0}.spectral-plot-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.spectrum-legend{display:flex;gap:16px;font-size:12px;margin-bottom:15px}.spectrum-legend span:before{content:"";display:inline-block;width:18px;border-top:2px solid currentColor;vertical-align:middle;margin-right:6px}.spectrum-plot{touch-action:none;cursor:default;min-height:225px}.spectrum-plot svg{display:block;width:100%;overflow:visible}.spectrum-point-controls{display:grid;grid-template-columns:1fr 1fr auto 1.6fr;gap:8px;margin-top:14px;align-items:end}.spectrum-point-controls label,.spectrum-scale-controls label{font-size:12px;color:var(--muted)}.spectrum-point-controls input,.spectrum-point-controls select{display:block;width:100%;margin-top:5px;min-width:0}.spectrum-point-nav{display:flex;gap:3px}.spectrum-scale-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-top:12px}.spectrum-scale-controls input{margin-left:8px;width:80px}.spectral-editor-actions{justify-content:flex-end;margin-top:15px}.spectral-editor #spectrum-error{margin-top:12px;white-space:pre-wrap}.spectral-mode .pictures{max-width:540px;margin:0 auto}.spectral-mode .pictures[data-compare=no] .picture{max-width:200px}.spectral-mode .preview-status{margin-top:8px}.spectral-mode .cause{padding:8px 0;min-height:0}.spectral-mode .image-frame{min-height:0}.spectral-mode .test-header{margin-bottom:12px}
+@media(max-width:1100px){.spectral-graphs{gap:12px}.spectral-meta{grid-template-columns:1fr}.spectrum-point-controls{grid-template-columns:1fr 1fr auto}.spectrum-point-controls label:last-child{grid-column:1/-1}.spectral-editor-tools button{font-size:12px}.spectral-editor-tools{gap:5px}}
+@media(max-width:620px){.spectral-graphs{grid-template-columns:1fr}.spectral-editor-actions{justify-content:flex-start}.spectral-meta{gap:8px}.spectral-mode .pictures{max-width:280px}.spectral-mode .pictures[data-compare=yes]{grid-template-columns:1fr 1fr;max-width:100%}.spectrum-scale-controls input{margin-left:4px}}
+.spectrum-meta-details{margin:10px 0;font-size:12px;color:var(--muted)}.spectrum-meta-details summary{cursor:pointer}.spectral-editor-actions{position:sticky;bottom:0;background:var(--bg);padding:10px 0;border-top:1px solid var(--line);z-index:2}
+
+/* Node-first layout: one selected stage, its data, and its controls. */
+.route-section select{width:100%;margin-top:8px;min-width:0}.route-section .side-heading{display:block;padding:0 7px}.route-section p{margin:8px 5px 0}.route-section p:empty{display:none}.sidebar{gap:18px}.sidebar .node-navigation{border-top:1px solid var(--line);padding-top:17px}.node-navigation-title{font-size:12px;color:var(--muted);font-weight:400;padding:0 7px 10px}.node-list{gap:2px}.node-list button{font-size:13px;padding:9px 9px;display:flex;gap:10px;align-items:center}.node-list button:before{content:attr(data-step);font-size:11px;font-variant-numeric:tabular-nums;color:var(--muted);min-width:12px}.recipe-library{font-size:12px}.recipe-library .recipe-item{padding:6px}.recipe-item span{font-size:11px}.view-switch{display:flex;padding:2px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}.view-switch button{min-height:27px;padding:3px 13px;background:transparent;border:0;color:var(--muted);font-size:12px}.view-switch button[aria-pressed=true]{background:var(--control);color:var(--text);box-shadow:0 1px 3px #0001}.name-wrap input{max-width:300px}.name-wrap{gap:8px}.node-tabs{display:flex;gap:20px;border-bottom:1px solid var(--line);margin:12px 0 27px;padding:0 2px}.node-tabs button{background:none;border:0;border-radius:0;padding:7px 0 10px;color:var(--muted);font-size:13px}.node-tabs button[aria-selected=true]{color:var(--text);box-shadow:inset 0 -2px var(--blue)}.comparison-menu{position:relative;font-size:12px;color:var(--blue)}.comparison-menu summary{cursor:pointer;list-style:none}.comparison-menu>div{position:absolute;top:calc(100% + 9px);left:0;min-width:155px;background:var(--control);border:1px solid var(--line);border-radius:8px;padding:8px;z-index:12;box-shadow:0 8px 25px #0002}.comparison-menu button{display:block;width:100%;margin:2px 0;text-align:left;border:0;background:transparent;font-size:12px}.test-header{margin-bottom:0}.test-controls{margin-top:15px;font-size:12px}.test-controls select{min-width:0}.test-controls #test-input{max-width:155px}.test-meta{align-self:end;max-width:210px;text-align:right}#node-subtitle{margin-top:5px}.canvas{padding-top:30px}.diagnostics{border:0;padding-top:0}.diagnostics>summary,#node-select{display:none}.diagnostic-header{margin-bottom:28px}.diagnostics .plot{min-height:300px}.diagnostics .plot svg{min-height:280px}.plot-pair{gap:30px}.plot-title{font-size:13px}.plot-legend{margin-top:20px}.inspector{padding-top:31px}.inspector>h2{font-size:15px;margin-bottom:25px}.inspector .section{border:0;padding-top:0;margin-top:0}.inspector #node-inspector-note{line-height:1.8;margin-top:0}.source-actions{display:flex;gap:4px;flex-wrap:wrap;margin:15px 0}.source-actions button{font-size:12px;padding:5px 8px}.spectral-meta{display:block}.spectral-meta label{display:block;margin:10px 0}.spectrum-meta-details{margin:14px 0 22px}.spectrum-point-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.spectrum-point-nav{align-self:end}.spectrum-point-controls label:last-child{grid-column:auto}.spectrum-point-controls input{font-size:12px}.spectrum-point-controls select{max-width:100%;font-size:11px}.spectrum-scale-controls{margin-top:20px;display:block}.spectrum-scale-controls label{display:block}.spectrum-scale-controls input{display:block;margin:6px 0 8px;width:100%}.spectrum-scale-controls button{width:100%;font-size:12px}.spectrum-scale-controls #spectrum-count{display:block;margin-top:9px}.spectral-editor-actions{position:static;display:flex;gap:3px;justify-content:flex-start;margin-top:19px;padding:0;border:0}.spectral-editor-actions #spectrum-apply{order:-1;width:100%;margin-bottom:6px}.spectral-editor-actions button.quiet{font-size:11px;padding:3px 7px}.spectral-editor{border:0;padding:0;margin:0}.spectral-editor-head,.spectral-editor-tools,.spectral-editor>.footer-notes{display:none}.spectral-graphs{gap:30px}.spectral-graphs .plot{min-height:300px}.spectrum-plot svg{min-height:280px}.spectral-graphs h3{font-size:13px;margin-bottom:15px}.spectral-graphs p{margin-top:18px;line-height:1.7}#spectrum-draft-state{font-size:12px;color:var(--muted);margin-bottom:12px}#spectrum-description{margin-bottom:13px;line-height:1.7}.image-action:empty{display:none}
+.workspace[data-main-view=spectra] #pictures,.workspace[data-main-view=spectra] #preview-status,.workspace[data-main-view=spectra] #cause{display:none}
+.workspace[data-main-view=photo] #spectral-editor,.workspace[data-main-view=photo] #diagnostics{display:none!important}
+.workspace[data-main-view=photo] .pictures{max-width:none;margin-top:28px}.workspace[data-main-view=photo] .pictures[data-compare=no] .picture{max-width:660px}.workspace[data-main-view=photo] #spectral-inspector{display:none!important}
+@media(max-width:1100px){.toolbar{gap:9px}.view-switch button{padding:3px 8px}.test-meta{width:auto}.node-tabs{gap:14px}.node-tabs button{font-size:12px}.plot-pair,.spectral-graphs{gap:15px}.diagnostics .plot,.spectral-graphs .plot{min-height:240px}.diagnostics .plot svg,.spectrum-plot svg{min-height:230px}.canvas{padding-top:24px}}
+@media(max-width:850px){.inspector{padding-top:22px}.test-meta{text-align:left}.name-wrap input{max-width:none}.spectrum-point-controls{max-width:440px}.spectrum-scale-controls{max-width:440px}}
+@media(max-width:620px){.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:15px}.sidebar .brand{grid-column:1/-1}.node-navigation{grid-column:1/-1}.node-list{grid-template-columns:1fr 1fr}.sidebar .side-actions{grid-column:1/-1;display:flex;flex-wrap:wrap}.recipe-library{width:100%}.sidebar .route-section{grid-column:1/-1}.canvas{padding-top:22px}.test-controls{gap:9px}.test-meta{margin-top:10px;width:100%;max-width:none}.node-tabs{gap:17px;margin-bottom:20px}.plot-pair,.spectral-graphs{grid-template-columns:1fr}.view-switch{margin-right:auto}.toolbar-actions{width:auto}.toolbar .name-wrap{width:100%}.spectral-graphs .plot{min-height:230px}}
+#spectrum-precision{font-size:12px;margin:18px 0}#spectrum-precision>summary{cursor:pointer}.spectrum-point-controls{margin-top:16px}#spectral-inspector .field-name{margin-bottom:7px}.spectrum-scale-controls{margin-top:18px}
+/* The window owns the viewport; only the workspace columns scroll. */
+@media(min-width:851px){
+ html,body{height:100%;overflow:hidden}
+ .toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+ .toolbar-actions{justify-self:end}
+ .name-wrap input{min-width:0;max-width:100%}
+ .app{height:100vh;height:100dvh;min-height:0;overflow:hidden}
+ .sidebar{min-height:0;overflow-y:auto;overscroll-behavior:contain}
+ .main{display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:0;overflow:hidden}
+ .workspace{min-height:0;overflow:hidden}
+ .canvas,.inspector{min-height:0;overflow-y:auto;overscroll-behavior:contain}
+ .statusbar{min-width:0}
+ .statusbar span{min-width:0;overflow-wrap:anywhere}
+}
+.spectrum-plot svg{cursor:default;touch-action:auto}
+
+/* Photo mode is an image editor, independent of the spectral-node inspector. */
+.app[data-mode=photo] .route-section,.app[data-mode=photo] .node-navigation,.app[data-mode=photo] .recipe-library{display:none}
+.app[data-mode=photo] .test-header h1,.app[data-mode=photo] #node-subtitle,.app[data-mode=photo] .test-options,.app[data-mode=photo] #sample-select,.app[data-mode=photo] #input-identity{display:none!important}
+.app[data-mode=photo] .canvas{display:flex;flex-direction:column;overflow:hidden;padding:0}
+.app[data-mode=photo] .test-header{padding:14px 18px;border-bottom:1px solid var(--line);margin:0;flex:none}
+.app[data-mode=photo] .test-controls{margin:0}
+.app[data-mode=photo] #preview-area{display:flex;flex-direction:column;flex:1;min-height:0}
+.app[data-mode=photo] #pictures{flex:1;min-height:0;margin:0;padding:20px;max-width:none;align-items:stretch}
+.app[data-mode=photo] .picture{display:flex;flex-direction:column;min-height:0;width:100%;max-width:none!important}
+.app[data-mode=photo] .image-frame{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;background:transparent}
+.app[data-mode=photo] .image-frame img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain}
+.app[data-mode=photo] .crosshair,.app[data-mode=photo] #cause,.app[data-mode=photo] #preview-status,.app[data-mode=photo] .image-action{display:none!important}
+.app[data-mode=photo] #pictures[data-photo-view=result]{grid-template-columns:minmax(0,1fr)}
+.app[data-mode=photo] #pictures[data-photo-view=result] #baseline-card{display:none}
+.app[data-mode=photo] #pictures[data-photo-view=reference]{grid-template-columns:minmax(0,1fr)}
+.app[data-mode=photo] #pictures[data-photo-view=reference] .picture:not(#baseline-card){display:none}
+.app[data-mode=photo] #pictures[data-photo-view=compare]{grid-template-columns:repeat(2,minmax(0,1fr))}
+#photo-view-tools{display:flex;gap:2px;padding:2px;background:var(--panel);border:1px solid var(--line);border-radius:7px}
+#photo-view-tools button{border:0;background:transparent;font-size:12px;min-height:27px}
+#photo-view-tools button[aria-pressed=true]{background:var(--control);box-shadow:0 1px 3px #0002}
+#photo-editbar h2{margin-bottom:24px}#photo-editbar .field{margin-bottom:22px}#photo-editbar output{float:right;color:var(--muted);font-variant-numeric:tabular-nums}#photo-editbar input[type=range],#photo-editbar select{display:block;width:100%;margin-top:9px}#photo-editbar #export-photo{width:100%;margin-top:24px}
+#photo-recipe-sidebar .side-heading{display:block;padding-left:8px;margin-bottom:12px}
+.app[data-mode=photo] #pictures:not([data-photo-view=compare]) .picture-head{display:none}
+
+/* Materials are the primary workspace; computed samples are a secondary tab. */
+.workspace[data-main-view=spectra] .test-controls,.workspace[data-main-view=spectra] .test-meta{display:none}
+.spectral-graphs{grid-template-columns:minmax(0,1fr)}
+.spectral-graphs>section:last-child{display:none}
+.spectral-graphs .plot{min-height:360px}
+.spectral-graphs .plot svg{min-height:340px}
+.plot-pair{grid-template-columns:minmax(0,1fr)}
+.node-tabs{flex-wrap:wrap;gap:18px}
+
+.spectral-plot-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.spectral-plot-head h3{margin:0}
+.spectral-channel-tools{display:flex;align-items:center;gap:10px;margin-left:auto}
+
+.new-route{display:flex;align-items:flex-start;gap:12px;padding:16px;margin:9px 0;border:1px solid var(--line);border-radius:9px;cursor:pointer}.new-route:has(input:checked){border-color:var(--blue);background:var(--selected)}.new-route input{margin-top:4px;accent-color:var(--blue)}.new-route strong{font-size:14px;font-weight:600}.new-route small{display:block;margin-top:5px;color:var(--muted);font-size:12px}
+.display-process-summary{padding-bottom:15px;border-bottom:1px solid var(--line)}.display-input{padding:15px 0;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.display-step{border-top:1px solid var(--line);padding:19px 0}.display-step header{display:flex;align-items:center;gap:10px;margin-bottom:12px}.display-step-number{color:var(--muted);font-size:12px;width:22px}.display-matrix-equation{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.display-matrix{border-collapse:collapse;border-left:1px solid var(--muted);border-right:1px solid var(--muted);font-size:12px}.display-matrix td{padding:4px 12px;text-align:right}.display-offset{display:grid;font-size:12px;gap:6px}.display-operation-meta{color:var(--muted);font-size:12px;margin-bottom:10px}.display-step-values{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:11px}.display-step-values>span{display:grid;gap:4px}.display-step-values .mono{color:var(--text)}.display-curve{display:block;width:100%;height:120px!important;min-height:0!important}.display-process{max-width:850px}.display-process svg text{font-size:9px}
+#export-dialog{width:440px}#export-grid{width:100%}#export-current{color:var(--text);margin-bottom:22px}.export-space-row{display:flex;justify-content:space-between;gap:14px;font-size:12px;color:var(--muted);padding:0 0 10px}#export-download{margin:0;padding:6px 12px;border-radius:7px;font-size:13px;text-decoration:none}#export-state:empty{display:none}
+.sample-picker{position:relative;font-size:12px}.sample-picker>summary{cursor:pointer;list-style:none;padding:4px 0;display:flex;align-items:center;gap:8px}.sample-picker>summary::-webkit-details-marker{display:none}.sample-picker>summary:after{content:"⌄";color:var(--muted)}.sample-drawer{position:absolute;z-index:15;left:0;top:calc(100% + 6px);width:264px;max-width:calc(100vw - 48px);padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--control);box-shadow:0 8px 28px #0002}.sample-swatches{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.sample-swatch{position:relative;min-height:29px;aspect-ratio:1.2;padding:0;border:1px solid #0002;border-radius:4px;background:var(--swatch)}.sample-swatch:hover:not(:disabled){background:var(--swatch);filter:brightness(1.08)}.sample-swatch[aria-pressed=true]{outline:2px solid var(--blue);outline-offset:2px}.sample-swatch span{position:absolute;bottom:2px;left:3px;font-size:8px;color:white;text-shadow:0 1px 3px #000,0 0 2px #000}.sample-drawer .quiet{margin-top:10px;padding:4px 0;min-height:24px;font-size:12px}
+.display-formula{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.8;margin:12px 0}.display-toe-table{margin:12px 0}.display-toe-table summary{cursor:pointer;font-size:12px;color:var(--muted)}.display-toe-table table{margin-top:10px}.display-toe-table th{font-size:11px;font-weight:500;color:var(--muted)}
+
+/* Sidebar rows keep selection visible under the pointer and never move. */
+.sidebar :is(.recipe-item,.node-list button){cursor:default;user-select:none;-webkit-user-select:none;transition:background-color 100ms ease-out;outline-offset:-2px;}
+.sidebar :is(.recipe-item,.node-list button):hover:not(:disabled){background:light-dark(#e3e6ec,#323238);}
+.sidebar :is(.recipe-item,.node-list button)[aria-pressed=true]{background:var(--selected);}
+.sidebar :is(.recipe-item,.node-list button)[aria-pressed=true]:hover:not(:disabled){background:light-dark(#d5e4f7,#2d4968);}
+.sidebar :is(.recipe-item,.node-list button):active:not(:disabled){background:light-dark(#d4d9e2,#3c3d45);transition-duration:0s;}
+.sidebar :is(.recipe-item,.node-list button)[aria-pressed=true]:active:not(:disabled){background:light-dark(#c7daf3,#355675);}
+.sidebar :is(.recipe-item,.node-list button):focus-visible{outline:2px solid var(--blue);outline-offset:-2px;}
+@media(prefers-reduced-motion:reduce){.sidebar :is(.recipe-item,.node-list button){transition:none;}}
+
+.recipe-context-menu{position:fixed;z-index:100;min-width:150px;padding:5px;border:1px solid var(--line);border-radius:8px;background:var(--control);box-shadow:0 8px 26px #0003;}
+.recipe-context-menu button{display:block;width:100%;min-height:29px;padding:4px 10px;border:0;background:transparent;text-align:left;color:var(--error);border-radius:4px;}
+.recipe-context-menu button:hover:not(:disabled),.recipe-context-menu button:focus-visible{background:var(--blue);color:#fff;outline:0;}
+.sidebar .recipe-item[data-context-target=true]{box-shadow:inset 0 0 0 1px var(--line);}
+.empty-workspace{display:grid;place-items:center;min-height:0;text-align:center;padding:24px;}
+.empty-workspace p{margin:10px 0 22px;color:var(--muted);}.empty-workspace button+button{margin-left:8px;}
+.app[data-empty=true] :is(.route-section,.node-navigation){display:none;}
+.statusbar{grid-template-columns:minmax(0,1fr) auto auto auto;}
+#undo-delete-recipe:not(:hover):not(:focus-visible),#scan-restore-profile:not(:hover):not(:focus-visible){color:var(--text);}
+.filmstrip{flex:none;border-top:1px solid var(--line);background:var(--panel);padding:9px 16px 6px;min-width:0}
+.filmstrip-meta{display:flex;gap:12px;color:var(--muted);font-size:11px;height:20px;align-items:center;min-width:0}.filmstrip-meta #filmstrip-name{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:50%}#import-progress{margin-left:auto}
+.filmstrip-rail{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:thin;overscroll-behavior-x:contain;min-height:100px}
+.filmstrip-item{flex:0 0 100px;width:100px;border:2px solid transparent;background:transparent;padding:3px;border-radius:6px;text-align:center;min-height:84px}
+.filmstrip-item:hover:not(:disabled){background:var(--side)}.filmstrip-item[aria-pressed=true]{border-color:var(--blue);background:var(--selected)}
+.filmstrip-item img{display:block;width:90px;height:62px;object-fit:contain;pointer-events:none}.filmstrip-item span{display:block;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px;pointer-events:none}
+@media(max-height:650px){.filmstrip-item{min-height:64px}.filmstrip-item img{height:42px}.filmstrip-rail{min-height:80px}}
+/* Sidebar visibility changes layout only; scan and photo preferences are separate. */
+.app:is([data-mode=photo],[data-mode=scan])[data-recipes-collapsed=true]{grid-template-columns:minmax(0,1fr)}
+.panel-toggle{display:inline-flex;align-items:center;justify-content:center;flex:none;width:32px;min-height:30px;padding:4px!important}
+.name-wrap:has(.panel-toggle:not([hidden])){gap:10px}
+.filmstrip-meta{height:24px;gap:10px}
+#toggle-filmstrip{display:inline-flex;align-items:center;gap:5px;min-height:24px;padding:2px 3px;font-size:11px;white-space:nowrap;color:var(--muted)}
+#toggle-filmstrip[aria-expanded=false] svg{transform:rotate(180deg)}
+.filmstrip[data-collapsed=true]{padding-top:5px;padding-bottom:5px}
+#cache-settings-dialog{width:490px}#cache-settings-dialog .cache-summary,.cache-inline{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px}.cache-summary span{color:var(--muted);font-size:12px}.cache-meter{height:5px;background:var(--line);border-radius:3px;margin:12px 0 20px;overflow:hidden}.cache-meter span{display:block;height:100%;background:var(--blue)}#cache-policy .field{display:flex;justify-content:space-between;align-items:center;gap:16px}#cache-policy select{width:175px}#cache-policy input{width:85px}#cache-policy .cache-inline{margin:12px 0}#cache-policy details{font-size:12px;margin:16px 0}.cache-location,.cache-protected{padding:16px 0;border-top:1px solid var(--line)}#cache-path{font-size:12px;overflow-wrap:anywhere;margin:7px 0 12px;color:var(--muted)}.cache-buttons{display:flex;gap:8px;flex-wrap:wrap}.cache-buttons button{font-size:12px}.cache-protected{font-size:13px}.cache-protected strong{float:right}.cache-protected p{margin-bottom:0}#cache-progress{width:100%}#cache-location-form{border-top:1px solid var(--line);padding-top:10px}
+</style><link rel="stylesheet" href="/assets/scanning.css">
+<div class="app" id="workbench">
+<aside class="sidebar" id="recipe-sidebar"><div class="brand"><img src="/assets/softloaf-cat.png" alt="SoftLoaf 猫标">面包光谱</div><section id="scan-profile-sidebar" hidden></section><section id="photo-recipe-sidebar" hidden><h2 class="side-heading">配方</h2><div id="photo-recipe-list" class="recipes"></div></section><section class="route-section"><label for="recipe-select" class="side-heading">配方</label><select id="recipe-select" aria-label="配方选择"></select><p id="recipe-process" class="small muted"></p></section><section class="node-navigation" aria-labelledby="node-navigation-title"><h2 id="node-navigation-title" class="node-navigation-title">流程节点</h2><div class="node-list" id="node-list"></div></section><div class="side-actions"><details class="recipe-library"><summary>已打开的配方</summary><div class="recipes" id="recipe-list"></div></details><button id="open-settings" class="quiet">设置…</button><button id="open-recipe">打开配方…</button><button id="duplicate-recipe">新建配方…</button><input id="recipe-file" type="file" accept=".json,application/json" hidden></div></aside>
+<div class="main"><header class="toolbar"><div class="name-wrap"><button id="toggle-recipes" class="panel-toggle quiet" type="button" aria-label="收起配方栏" title="收起配方栏" aria-controls="recipe-sidebar" aria-expanded="true" hidden><svg width="19" height="19" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2" y="3" width="16" height="14" rx="2.5" stroke="currentColor" stroke-width="1.35"/><path d="M7 3v14" stroke="currentColor" stroke-width="1.2"/><path d="M4.3 6h.5M4.3 9h.5M4.3 12h.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/></svg></button><strong class="scan-heading">负片正相</strong><input id="recipe-name" type="text" aria-label="配方名称" maxlength="200"></div><div class="view-switch" role="group" aria-label="工作区视图"><button id="node-view" aria-pressed="true">光谱</button><button id="photo-view" aria-pressed="false">试片</button><button id="scan-view" aria-pressed="false" hidden>负片正相</button></div><div class="toolbar-actions"><button id="undo" disabled>撤销</button><button id="save-recipe">保存配方</button><button id="export-open" class="primary">导出 LUT…</button></div><button id="open-app-settings" class="panel-toggle quiet" type="button" aria-label="设置" title="设置"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.2"/><path d="M7 3v4M13 8v4M8 13v4" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></button></header><section id="empty-workspace" class="empty-workspace" hidden><div><h1>还没有配方</h1><p>新建一份，或打开已有配方。</p><div><button id="empty-open-recipe">打开配方…</button><button id="empty-new-recipe" class="primary">新建配方…</button></div></div></section><section id="scan-workspace" class="scan-workspace" hidden></section><div class="workspace" id="workspace"><main class="canvas"><div class="test-header"><div><h1 id="node-title">胶片曝光与显影</h1><p id="node-subtitle" class="muted small"></p><div class="test-controls"><select id="test-input" aria-label="试片"></select><button id="open-photo" hidden>导入照片…</button><button id="batch-export" hidden>批量导出…</button><input id="photo-file" type="file" multiple accept=".png,.jpg,.jpeg" hidden><details class="test-options"><summary>试片设置</summary><div class="test-options-panel"><label>试片输入曝光 <output id="input-ev-value" class="mono">0.00 EV</output><input id="input-ev" type="range" min="-4" max="4" step=".1" value="0" aria-label="试片输入曝光"></label><p class="help">只影响这张试片，A/B 同时使用；不写入通用 LUT。</p><p class="help">RAW 由 RawTherapee 开发；PNG / JPEG 按内嵌 ICC 读取，无 ICC 时按 sRGB 解释。</p></div></details><select id="sample-select" aria-label="代表性色样" hidden></select><details class="comparison-menu"><summary>配方对照</summary><div id="comparison-controls"></div></details></div></div><span class="test-meta" id="input-identity">同一输入与取样点</span><div id="photo-view-tools" hidden role="group" aria-label="照片对照方式"><button data-photo-view="compare">对比</button><button data-photo-view="reference">原图</button><button data-photo-view="result" aria-pressed="true">结果</button></div></div>
+<div id="node-tabs" class="node-tabs" role="tablist" aria-label="当前节点的数据"></div><section id="unsupported" class="notice" hidden><h2>这份配方仍是草案</h2><p id="unsupported-message"></p><p id="draft-node-note"></p><p>可以调整共用负片曝光、切换成像终点，并保存草案。当前不能预览或生成 LUT。</p><button id="restore-working">回到上一份可计算配方</button></section>
+<section id="preview-area"><div class="pictures" id="pictures" data-compare="no"><article class="picture" id="baseline-card" hidden><div class="picture-head"><strong id="baseline-title">A · 对照配方</strong><span id="baseline-version" class="muted mono"></span></div><div class="image-frame" id="baseline-frame"><img id="baseline-image" alt="同一试片在对照配方下的真实计算结果"><span class="crosshair" id="baseline-crosshair"></span></div><div class="image-action"><button id="use-baseline">采用 A</button></div></article><article class="picture"><div class="picture-head"><strong id="current-title">当前配方</strong><span id="current-version" class="muted mono"></span></div><div class="image-frame" id="current-frame"><img id="current-image" alt="当前配方的真实计算结果"><span class="crosshair" id="current-crosshair"></span></div><div class="image-action"><button id="set-baseline">设当前为对照</button><button id="export-photo" hidden>导出照片…</button><button id="clear-baseline" class="quiet" hidden>清除对照</button></div></article></div><div class="preview-status" id="preview-status" aria-live="polite">正在读取完整配方与试片…</div><p class="cause" id="cause">改一个条件，在同一试片上观察结果和成因。</p><section id="spectral-editor" class="spectral-editor" hidden aria-label="材料与光谱编辑器">
+  <div class="spectral-editor-head"><div><h2>材料与光谱</h2><p id="spectrum-draft-state" class="muted small"></p></div><button id="spectrum-close" class="quiet">收起</button></div>
+  <div class="spectral-editor-tools"><select id="spectrum-target" aria-label="要编辑的源数据"><option value="viewing">观看光源</option><option value="sensitivity">胶片感光谱</option><option value="characteristic">胶片特性曲线</option><option value="dyes">染料密度谱</option></select><button id="spectrum-import">导入 CSV…</button><button id="spectrum-export" class="quiet">下载 CSV 模板</button><input type="file" id="spectrum-file" accept=".csv,text/csv" hidden></div>
+  <p id="spectrum-description" class="help"></p>
+  <details class="spectrum-meta-details"><summary id="spectrum-meta-title">名称与来源</summary><div class="spectral-meta"><label>名称<input id="spectrum-name" type="text" aria-label="光谱或材料名称"></label><label>来源<input id="spectrum-source" type="text" aria-label="光谱或材料来源"></label></div></details>
+  <div class="spectral-graphs"><section><div class="spectral-plot-head"><h3 id="spectrum-source-title">感光光谱</h3><div id="spectrum-legend" class="spectrum-legend" aria-label="曲线图例"></div></div><div id="spectrum-plot" class="plot spectrum-plot"></div><p class="small muted"><span id="spectrum-sampling"></span></p></section><section><h3 id="spectrum-result-name">计算结果 · 只读</h3><div id="spectrum-result" class="plot"></div><p id="spectrum-result-status" class="small muted"></p></section></div>
+  <details class="footer-notes"><summary>导入格式与计算约定</summary><p id="spectrum-format"></p><p>按照固定 CSV 表头导入完整网格；不提供手工曲线编辑。光谱横轴为 nm，特性曲线横轴为 log 曝光。所有改动随配方保存，生成 LUT 时重新检查精度。自定义胶片是模型变体，不代表原厂胶片实测效果。</p></details>
+  <p id="spectrum-error" class="error small" role="alert"></p><div class="spectral-editor-actions"><button id="spectrum-reset" class="quiet">恢复参考</button><button id="spectrum-reload" class="quiet">重新载入</button><button id="spectrum-apply" class="primary" disabled>应用修改</button></div>
+</section>
+<details class="diagnostics" id="diagnostics"><summary>为什么会变化？</summary><div class="diagnostic-header"><details id="diagnostic-samples" class="sample-picker"><summary><span class="muted small" id="selected-point">当前取样</span></summary><div class="sample-drawer"><div id="diagnostic-sample-options" class="sample-swatches" role="group" aria-label="24 色卡"></div><button id="diagnostic-sample-reset" class="quiet" type="button">使用试片取样</button></div></details><select id="node-select" aria-label="检查成像节点"></select></div><div class="plot-pair"><section><h3 class="plot-title" id="input-plot-title">输入</h3><div class="plot" id="input-plot"></div></section><section><div class="spectral-plot-head"><h3 class="plot-title" id="output-plot-title">结果</h3><div id="xyz-reference-legend" class="spectral-channel-tools small" hidden><span style="color:#c95753">X · x̄</span><span style="color:#32866a">Y · ȳ</span><span style="color:#537bc0">Z · z̄</span></div></div><div class="plot" id="output-plot"></div></section></div></details></section><section id="filmstrip" class="filmstrip" aria-label="照片胶片条" hidden><div class="filmstrip-meta"><button id="toggle-filmstrip" class="quiet" type="button" aria-label="收起胶片条" title="收起胶片条" aria-controls="filmstrip-rail" aria-expanded="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m3 4.5 3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>胶片条</span></button><span id="filmstrip-count"></span><span id="filmstrip-name"></span><span id="import-progress" role="status"></span></div><div id="filmstrip-rail" class="filmstrip-rail" role="group" aria-label="已导入的照片"></div></section></main>
+<aside class="inspector"><section id="photo-editbar" hidden><h2>调整</h2><div id="photo-negative-controls"><label class="field">胶片<select id="photo-stock" aria-label="试片胶片材料"></select></label><label class="field">正相方式<select id="photo-endpoint" aria-label="试片负片正相方式"><option value="negative">APD → ACES</option><option value="print">光学放大</option></select></label><label class="field" id="photo-paper-field" hidden>相纸<select id="photo-paper-stock" aria-label="试片相纸材料"></select><span id="photo-paper-note" class="help"></span></label><p id="photo-positive-scope" class="help" hidden>C-41 的 APD 正相为实验组合。</p></div><label class="field">胶片曝光 <output id="photo-film-value"></output><input type="range" id="photo-film-ev" aria-label="照片模式胶片曝光" min="-4" max="4" step=".1"></label><label class="field" id="photo-scene-kind-field">拍摄光源<select id="photo-scene-kind" aria-label="照片模式拍摄光源"><option value="CIE_D">标准日光</option><option value="Planck">钨丝光 · 黑体近似</option></select></label><label class="field"><span id="photo-scene-temperature-label">拍摄日光</span> <output id="photo-daylight-value"></output><input type="range" id="photo-daylight" aria-label="照片模式日光色温" min="4000" max="10000" step="100"></label><label class="field">观看光<select id="photo-viewing" aria-label="照片模式观看光"><option value="D50">D50</option><option value="D65">D65</option><option value="custom">已导入的光谱</option></select></label><label class="field">观看亮度 <output id="photo-gain-value"></output><input type="range" id="photo-gain" aria-label="照片模式观看亮度" min=".1" max="8" step=".1"></label><label class="field">输出目标<select id="photo-display-target" aria-label="照片模式输出目标"></select></label><label class="field">显示外观<select id="photo-display" aria-label="照片模式显示外观"><option value="Default">OpenDRT Default</option><option value="Umbra">OpenDRT Umbra</option></select></label><label class="field">照片输入曝光 <output id="photo-input-value"></output><input type="range" id="photo-input-ev" aria-label="照片输入曝光" min="-4" max="4" step=".1"></label><p class="help">照片输入曝光只作用于当前照片，不写入通用 LUT。</p><button id="photo-spectral-recipe" class="quiet">查看光谱配方</button></section><h2 id="inspector-title">胶片曝光与显影</h2><p id="node-inspector-note" class="help"></p><section id="scene-section" class="field" hidden><label class="field" id="scene-kind-field">拍摄光源<select id="scene-kind" aria-label="拍摄光源模型"><option value="CIE_D">标准日光</option><option value="Planck">钨丝光 · 黑体近似</option></select></label><label for="scene-temperature" id="scene-temperature-label" class="field-name">日光色温</label><input id="scene-temperature" aria-label="拍摄日光色温" type="range" min="4000" max="10000" step="100" value="6500"><label><input id="scene-temperature-number" aria-label="拍摄日光色温 K" type="number" min="4000" max="10000" step="100" value="6500"> K</label><p class="help" id="scene-light-help">4000 K 暖日光 · 6500 K D65 · 10000 K 冷日光。光谱采用 CIE 标准日光模型。</p></section><button id="spectral-open" hidden class="spectral-entry" disabled>材料与光谱…</button><p class="help spectral-entry-help" hidden>替换曲线、编辑采样、导入数据</p><label class="field" id="film-stock-field"><span class="field-name">胶片</span><select id="stock" aria-label="胶片材料"><option>E100</option></select></label><label class="field" id="paper-stock-field" hidden><span class="field-name">相纸</span><select id="paper-stock" aria-label="相纸材料"></select><span id="paper-material-note" class="help"></span></label><p id="material-provenance-note" class="help" hidden></p><div class="field" id="film-exposure-field"><span class="field-name">胶片曝光</span><div class="exposure-row"><input id="film-ev-number" type="number" min="-4" max="4" step=".1" aria-label="胶片曝光 EV"><button id="film-minus" aria-label="胶片少曝光半挡">−0.5</button><button id="film-plus" aria-label="胶片多曝光半挡">+0.5</button></div><input id="film-ev" type="range" min="-4" max="4" step=".1" aria-label="胶片曝光滑块"><p class="help">随配方进入 LUT。</p></div><label class="field" id="endpoint-field" hidden><span class="field-name">正相方式</span><select id="endpoint" aria-label="负片正相方式"><option value="negative">APD → ACES</option><option value="print">光学放大</option></select><p class="help">可独立选择；保留材料与曝光。</p></label><div class="section" id="viewing-section"><details id="view-color-details" class="footer-notes"><summary>颜色计算详情</summary><pre id="view-color-values" class="details-json"></pre></details><label class="field"><span class="field-name">观看光</span><select id="view-light" aria-label="观看光源"></select></label><button id="view-spectrum-open" class="quiet view-spectrum-entry" disabled>编辑观看光谱…</button><details id="view-advanced"><summary>高级观看设置</summary><label>观看增益 <input id="view-gain" type="number" min=".1" max="8" step=".1" aria-label="观看增益"></label><p>观看光只影响观看阶段，胶片透射谱保持不变。当前使用固定 D50 适应参考，不声称自动人眼适应。</p></details></div><div class="section" id="display-section"><label class="field"><span class="field-name">输出目标</span><select id="display-target" aria-label="输出目标"></select></label><label class="field"><span class="field-name">显示外观</span><select id="display-view" aria-label="显示外观"></select></label><p class="help">在胶片计算后应用。</p></div><div id="spectral-inspector" hidden></div></aside></div><footer class="statusbar"><span id="toast" class="status-message" role="status" aria-live="polite">正在连接本机计算参考…</span><span id="save-state" class="muted small">未保存</span><span id="compute-status">尚未计算</span><span id="model-status" hidden></span></footer></div></div>
+
+<div id="recipe-context-menu" class="recipe-context-menu" role="menu" aria-label="配方操作" hidden><button type="button" id="delete-recipe" role="menuitem">删除</button><button type="button" id="undo-delete-recipe" role="menuitem" hidden>恢复上次删除</button></div>
+<dialog id="new-recipe-dialog" aria-labelledby="new-recipe-title">
+<div class="dialog-head"><h2 id="new-recipe-title">新建配方</h2><button type="button" data-close="new-recipe-dialog" class="quiet">取消</button></div>
+<p>选择流程，材料可随时替换。</p>
+<form id="new-recipe-form"><p id="new-recipe-error" class="error" role="alert" hidden></p>
+<label class="new-route"><input type="radio" name="new-route" value="slide" checked><span><strong>反转片 · 透射观看</strong><small>默认 E100</small></span></label>
+<label class="new-route"><input type="radio" name="new-route" value="negative"><span><strong>负片 · APD 输出</strong><small>默认 5207</small></span></label>
+<label class="new-route"><input type="radio" name="new-route" value="print"><span><strong>负片 · 光学放大</strong><small>默认 5207 + Ultra Endura</small></span></label>
+<label class="field" id="new-material-field" hidden>材料配方<select id="new-material" aria-label="新配方的胶片材料"></select></label>
+<p class="help" id="new-material-note" hidden></p>
+<div class="dialog-actions"><button type="button" data-close="new-recipe-dialog">取消</button><button id="create-recipe" class="primary" type="submit">创建配方</button></div>
+</form></dialog>
+<dialog id="export-dialog" aria-labelledby="export-title">
+<div class="dialog-head"><h2 id="export-title">导出 LUT</h2><button data-close="export-dialog" class="quiet">关闭</button></div>
+<p id="export-current"></p>
+<label class="field"><span class="field-name">LUT 尺寸</span><input id="export-grid" aria-label="LUT 边长" type="number" min="2" max="129" step="1" value="65" list="lut-sizes"><datalist id="lut-sizes"><option value="17"><option value="33"><option value="65"><option value="129"></datalist></label>
+<div class="export-space-row"><span>色彩空间</span><span id="export-space"></span></div>
+<p id="export-state" class="help" aria-live="polite"></p>
+<div class="dialog-actions"><button data-close="export-dialog">取消</button><button class="primary" id="export-run">生成 LUT</button><a id="export-download" class="download-primary" download hidden>保存 LUT…</a></div>
+</dialog>
+<dialog id="photo-dialog" aria-labelledby="photo-title"><div class="dialog-head"><h2 id="photo-title">导出照片</h2><button data-close="photo-dialog" class="quiet">关闭</button></div><p id="photo-export-state" aria-live="polite"></p><div id="photo-downloads" class="export-results"></div><button id="photo-job-cancel" hidden>停止导出</button><p class="help">原始尺寸 PNG，内嵌匹配的色彩配置。</p></dialog>
+<script src="/assets/scan-calibration.js"></script><script src="/assets/scanning.js"></script><script src="/assets/rendition-cache.js"></script><script src="/assets/cache-settings.js"></script><script src="/assets/i18n-en.js"></script><script src="/assets/i18n.js"></script><script src="/assets/preview-requests.js"></script><script src="/assets/paper-presets.js"></script><script src="/assets/photo-queue.js"></script><script src="/assets/diagnostic-samples.js"></script><script src="/assets/spectral-csv.js"></script><script src="/assets/spectral-editor.js"></script>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id),copy=x=>JSON.parse(JSON.stringify(x)),uid=()=>globalThis.crypto?.randomUUID?.()||('recipe-'+Date.now()+'-'+Math.random().toString(36).slice(2));
+let sessionRevision=0,sessionQueue=Promise.resolve(),sessionKey='',sessionConflict=false;
+let deletedDocuments=[],deleteBusy=false,recipeMenuId=null,recipeMenuOrigin=null;
+let photoImporting=false,photoExporting=false,photoView='compare',photoQueue=null,photoSelectionSerial=0,photoJobId=null;
+let documentEpoch=0,spectralEditor=null,diagnosticSampler=null,mainView='spectra',nodeTab='result';
+let bootstrap=null,documents=[],active=null,baseline=null,history=[],lastWorking=null,result=null,resultMeta=null,selectedNode='film',busy=false,computeError='',evalSeq=0,exportJob=null,exportResult=null,exportPreparing=false,saveKey=null,action='改一个条件，在同一试片上观察结果和成因。';
+let testInput={id:'chart',exposure_ev:0},selection={x:.5,y:.5,sample_id:'gray18'},editQueue=Promise.resolve(),redrawQueued=false;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const key=r=>JSON.stringify(r);
+function supported(r){
+ if(!bootstrap?.capabilities?.routes?.some(t=>t.id===r?.route&&t.computable))return false;
+ if(r?.route==='slide'){if(r?.film?.stock==='E100')return true;const p=r?.film?.custom_material?.provenance;return p?.stock_id===r?.film?.stock&&p?.density_metric==='Status A'&&p?.process==='E-6';}
+ const p=r?.film?.custom_material?.provenance;
+ if(r?.film?.stock==='5207'&&!p)return true;
+ return p?.stock_id===r?.film?.stock&&p?.density_metric==='Status M'&&['ECN-2','C-41'].includes(p?.process);
+}
+const nodeNames={light:'拍摄照明',film:'胶片曝光与显影',view:'透射观看',display:'显示输出'};
+const quantities={relative_energy_spd:'相对能量光谱',linear_AP1_D60:'线性 AP1 / D60',estimated_spectral_reflectance_factor:'估计反射因子',relative_spectral_exposure:'相对光谱曝光',spectral_transmittance:'胶片透射率',spectral_reflectance:'相纸反射率',relative_paper_exposure_spectrum:'相纸光谱曝光',academy_printing_density:'APD 密度',APD_spectral_weights:'标准 APD 响应',cie1931_xyz_matching_functions:'XYZ 配色函数',relative_viewed_spectral_radiance:'观看光谱',adapted_XYZ_D65:'相对 XYZ D65',standard_encoded_sRGB:'标准编码 sRGB','encoded_sRGB':'标准编码 sRGB','encoded_Display P3':'Display P3 RGB','encoded_Rec.1886':'Rec.709 / Rec.1886 RGB'};
+const routeNodes={negative:{light:'拍摄照明',film:'胶片曝光与显影',apd:'APD 密度',interface:'标准输出',display:'显示输出'},print:{light:'拍摄照明',film:'胶片曝光与显影',enlarger:'放大照明',filter:'放大滤色',paper:'相纸曝光与显影',view:'成品观看',display:'显示外观'}};
+const draftNeeds={light:'需要拍摄光源 SPD；与胶片感光积分保持一致。',film:'需要配套的感光谱、特性曲线、染料与片基模型。',apd:'负片透射谱按标准 APD 响应积分得到三通道密度；标准权重、波段与归一化数据尚未接入。',enlarger:'需要放大光源 SPD 与固定曝光。',filter:'需要滤色片透射谱和 CMY 滤色量。',paper:'需要 Ultra Endura 配套感光、特性与成品反射模型。',view:'需要成品观看光源和明确的观察条件。',interface:'需要来源空间、白点与相对 Y 尺度。',display:'需要接在已验证材料输出后的 OCIO/OpenDRT 显示链。'};
+const nodeLabels=()=>routeNodes[active?.route]||nodeNames;
+function announce(text,error=false){$('toast').textContent=text;$('toast').title=text;$('toast').classList.toggle('error',error);}
+function errors(body){return body?.error?.message||body?.issues?.map(i=>i.message).join('；')||'操作失败，请检查配方。';}
+async function api(path,payload,signal){const response=await fetch(path,{signal,method:payload===undefined?'GET':'POST',headers:payload===undefined?{}:{'Content-Type':'application/json'},body:payload===undefined?undefined:JSON.stringify(payload)});let body;try{body=await response.json();}catch{throw Object.assign(new Error('本机服务未返回有效 JSON。'),{body:{}});}if(!response.ok||body.ok===false)throw Object.assign(new Error(errors(body)),{body,status:response.status});return body;}
+function remember(){if(!active)return;const d=documents.find(d=>d.id===active.id);if(d){d.recipe=copy(active);d.baseline=copy(baseline);d.history=copy(history);d.saveKey=saveKey;}}
+function dirty(){return active&&saveKey!==key(active);}
+function newRecipeFromTemplate(route,templates,id){
+ const source=templates.find(t=>t.id===route&&t.available);
+ if(!source)throw Error('所选流程的内置材料尚未就绪。');
+ const recipe=JSON.parse(JSON.stringify(source.recipe));
+ recipe.id=id;recipe.revision=1;recipe.name=({'slide':'透射观看','negative':'APD 输出','print':'光学放大'})[route]+' · 新配方';
+ recipe.display.target=recipe.display.target||'sRGB';
+ return recipe;
+}
+function negativeMaterialEntries(presets){
+ const stocks=new Map();
+ for(const p of presets){
+  const stock=p.recipe.film.stock,previous=stocks.get(stock);
+  if(!previous||p.recipe.route==='print')stocks.set(stock,{...p,id:stock});
+ }
+ return Array.from(stocks.values());
+}
+function setPositiveMethod(recipe,route){
+ if(recipe.route==='slide'||!['negative','print'].includes(route))throw Error('反转片与负片材料不能互换。');
+ const defaults={negative:'ACES 2.0 - SDR 100 nits',print:'Display Encoding'};
+ if(recipe.display.view===defaults[recipe.route])recipe.display.view=defaults[route];
+ recipe.route=route;
+}
+function replaceNegativeMaterial(recipe,stock,material){
+ if(recipe.route==='slide')throw Error('反转片需要独立的材料定义。');
+ recipe.film.stock=stock;
+ if(stock==='5207'&&material?.provenance?.stock_id!=='5207')delete recipe.film.custom_material;
+ else recipe.film.custom_material=JSON.parse(JSON.stringify(material));
+}
+function replaceReversalMaterial(recipe,stock,material){
+ if(recipe.route!=='slide')throw Error('反转片材料需要独立的透射观看流程。');
+ if(stock!=='E100'&&(material?.provenance?.process!=='E-6'||material.provenance.stock_id!==stock))throw Error('反转片材料身份不匹配。');
+ recipe.film.stock=stock;if(stock==='E100')delete recipe.film.custom_material;else recipe.film.custom_material=JSON.parse(JSON.stringify(material));
+}
+function newRecipeFromPreset(route,presets,presetId,id){
+ const selected=presets.find(p=>p.id===presetId||p.recipe.film.stock===presetId);
+ if(route==='slide'){if(!selected||selected.route!=='slide')throw Error('反转片材料不属于此流程。');const r=JSON.parse(JSON.stringify(selected.recipe));r.id=id;r.revision=1;return r;}
+ const entry=selected&&negativeMaterialEntries(presets).find(p=>p.id===selected.recipe.film.stock);
+ if(!entry||!['negative','print'].includes(route))throw Error('所选负片材料不可用。');
+ const recipe=JSON.parse(JSON.stringify(entry.recipe));setPositiveMethod(recipe,route);
+ recipe.id=id;recipe.revision=1;recipe.name=(recipe.film.custom_material.name||recipe.film.stock)+' · '+(route==='negative'?'APD':'光学放大');return recipe;
+}
+function renderNewMaterials(){
+ const route=$('new-recipe-dialog').querySelector('input[name=new-route]:checked').value,previous=$('new-material').value;
+ const entries=route==='slide'?(bootstrap.reversal_presets||[]):negativeMaterialEntries(bootstrap.recipe_presets||[]);
+ $('new-material-field').hidden=!entries.length;
+ $('new-material').innerHTML='<option value="">默认材料</option>'+(route==='slide'?['E-6']:['ECN-2','C-41']).map(process=>{
+  const group=entries.filter(p=>p.process===process);
+  if(process==='ECN-2'&&!group.some(p=>p.id==='5207'))group.unshift({id:'5207',recipe:{film:{custom_material:{name:'Kodak VISION3 250D · 5207'}}}});
+  return group.length?`<optgroup label="${esc(process+(route==='slide'?' · Status A':' · Status M'))}">${group.map(p=>`<option value="${esc(p.id)}">${esc(p.recipe.film.custom_material.name+' · 实验')}</option>`).join('')}</optgroup>`:'';
+ }).join('');
+ if(entries.some(p=>p.id===previous))$('new-material').value=previous;
+ renderNewMaterialNote();
+}
+function renderNewMaterialNote(){
+ const route=$('new-recipe-dialog').querySelector('input[name=new-route]:checked').value;
+ const entry=(route==='slide'?(bootstrap.reversal_presets||[]):negativeMaterialEntries(bootstrap.recipe_presets||[])).find(p=>p.id===$('new-material').value);
+ const scope=entry?.process==='C-41'&&route==='negative'?' APD 正相为实验组合。':'';
+ $('new-material-note').hidden=!entry;$('new-material-note').textContent=(entry?.summary||'')+scope;
+}
+function renderMaterialSelectors(){
+ const slide=active.route==='slide',entries=slide?(bootstrap.reversal_presets||[]):negativeMaterialEntries(bootstrap.recipe_presets||[]);
+ let options=slide?'<option value="E100">Kodak E100</option>'+entries.map(p=>`<option value="${esc(p.id)}">${esc(p.id===active.film.stock?(active.film.custom_material?.name||p.name):p.name)}</option>`).join(''):['ECN-2','C-41'].map(process=>{
+  const group=entries.filter(p=>p.process===process);
+  if(process==='ECN-2'&&!group.some(p=>p.id==='5207'))group.unshift({id:'5207',recipe:{film:{custom_material:{name:'Kodak VISION3 250D · 5207'}}}});
+  return group.length?`<optgroup label="${esc(process+' · Status M')}">${group.map(p=>`<option value="${esc(p.id)}">${esc(p.id===active.film.stock?(active.film.custom_material?.name||p.recipe.film.custom_material.name):p.recipe.film.custom_material.name)}</option>`).join('')}</optgroup>`:'';
+ }).join('');
+ if(active.film.stock!==(slide?'E100':'5207')&&!entries.some(p=>p.id===active.film.stock))options+=`<option disabled hidden value="${esc(active.film.stock)}">${esc(active.film.custom_material?.name||active.film.stock)}</option>`;
+ for(const id of ['stock','photo-stock']){const el=$(id);if(el.innerHTML!==options)el.innerHTML=options;el.value=active.film.stock;el.disabled=slide&&!entries.length;}
+ renderPaperSelectors();
+ $('photo-negative-controls').hidden=false;$('photo-endpoint').closest('label').hidden=slide;$('photo-endpoint').value=active.route;
+}
+function renderPaperSelectors(){
+ const entries=bootstrap.paper_presets||[],choice=paperChoice(active),custom=active.printing?.custom_material;
+ let options='<option value="Ultra Endura">Kodak Ultra Endura</option>'+entries.map(e=>`<option value="${esc(e.id)}">${esc(e.id===choice?(custom?.name||e.name):e.name)}</option>`).join('');
+ if(choice!=='Ultra Endura'&&!entries.some(e=>e.id===choice))options+=`<option value="${esc(choice)}" hidden>${esc(custom?.name||'自定义相纸')}</option>`;
+ for(const id of ['paper-stock','photo-paper-stock']){const el=$(id);if(el.innerHTML!==options)el.innerHTML=options;el.value=choice;}
+ const note=custom?.provenance?.summary||'';
+ for(const id of ['paper-material-note','photo-paper-note']){$(id).textContent=note;$(id).hidden=!note;}
+ $('photo-paper-field').hidden=active.route!=='print';
+}
+function renderRecipeSelector(){
+ const names={slide:'反转片 · 透射观看',negative:'负片 · APD 输出',print:'负片 · 光学放大'};
+ const groups=Object.entries(names).map(([route,label])=>{
+  const entries=documents.filter(d=>(d.id===active?.id?active:d.recipe).route===route);
+  return entries.length?`<optgroup label="${esc(label)}">${entries.map(d=>`<option value="${esc(d.id)}">${esc(d.id===active?.id?active.name:d.recipe.name)}</option>`).join('')}</optgroup>`:'';
+ });
+ const options=groups.join('');if($('recipe-select').innerHTML!==options)$('recipe-select').innerHTML=options;$('recipe-select').value=active?.id||'';
+ $('recipe-select').title=active?.name||'';$('recipe-process').textContent=names[active?.route]||'';
+}
+function syncSidebarButtons(container,items,selectedId,kind){
+ const wanted=new Set(items.map(item=>item.id));
+ const existing=new Map(Array.from(container.children).map(button=>[button.dataset[kind],button]));
+ for(const button of Array.from(container.children))if(!wanted.has(button.dataset[kind]))button.remove();
+ items.forEach((item,index)=>{
+  let button=existing.get(item.id);
+  if(!button){button=document.createElement('button');button.type='button';button.className=kind==='document'?'recipe-item':'node-item';button.dataset[kind]=item.id;
+   if(kind==='document')button.append(document.createElement('strong'),document.createElement('span'));
+  }
+  if(kind==='document'){
+   for(const [tag,value] of [['strong',item.label],['span',item.detail]]){const child=button.querySelector(tag);if(child.textContent!==value)child.textContent=value;}
+  }else if(button.textContent!==item.label)button.textContent=item.label;
+  button.setAttribute('aria-pressed',String(item.id===selectedId));button.tabIndex=item.id===selectedId?0:-1;
+  if(kind==='node')button.dataset.step=String(index+1);
+  if(container.children[index]!==button)container.insertBefore(button,container.children[index]||null);
+ });
+}
+function renderLibrary(){
+ renderRecipeSelector();
+ const items=documents.map(d=>{const r=d.id===active?.id?active:d.recipe;return {id:d.id,label:r.name,detail:supported(r)?({'slide':'反转片 · 透射观看','negative':'负片 · APD 输出','print':'负片 · 光学放大'}[r.route]):'材料未就绪'};});
+ for(const id of ['recipe-list','photo-recipe-list'])syncSidebarButtons($(id),items,active?.id,'document');
+}
+function setActive(id,rememberCurrent=true){spectralEditor?.close();nodeTab='result';documentEpoch++;if(rememberCurrent)remember();const d=documents.find(d=>d.id===id);if(!d)return;active=copy(d.recipe);baseline=copy(d.baseline);history=copy(d.history||[]);saveKey=d.saveKey||null;selectedNode='film';computeError='';action='在这份配方上修改条件，试片输入保持独立。';render();evaluate();if(mainView==='spectra')showNode('film');}
+function addDocument(recipe,saved=false){
+ remember();const r=copy(recipe),existing=documents.find(d=>d.id===r.id);
+ if(existing&&saved){
+  if(key(existing.recipe)!==key(r))existing.history.push(copy(existing.recipe));
+  existing.recipe=r;existing.saveKey=key(r);existing.baseline=null;
+  setActive(existing.id,false);return;
+ }
+ if(existing)r.id=uid();
+ const d={id:r.id,recipe:r,baseline:null,history:[],saveKey:saved?key(r):null};
+ documents.push(d);setActive(d.id);
+}
+function focusRecipe(id){
+ const list=$(mainView==='photo'?'photo-recipe-list':'recipe-list');
+ const row=Array.from(list.children).find(button=>button.dataset.document===id);
+ if(row?.getClientRects().length)row.focus({preventScroll:true});
+ else $(active?'recipe-select':'empty-new-recipe').focus();
+}
+function closeRecipeMenu(restoreFocus=false){
+ const origin=recipeMenuOrigin;$('recipe-context-menu').hidden=true;
+ if(origin)delete origin.dataset.contextTarget;
+ recipeMenuId=null;recipeMenuOrigin=null;
+ if(restoreFocus&&origin?.isConnected)origin.focus({preventScroll:true});
+}
+function openRecipeMenu(row,x,y){
+ if(row?!documents.some(d=>d.id===row.dataset.document):!deletedDocuments.length)return;
+ closeRecipeMenu();recipeMenuId=row?.dataset.document||null;recipeMenuOrigin=row;if(row)row.dataset.contextTarget='true';
+ const menu=$('recipe-context-menu');menu.hidden=false;$('delete-recipe').hidden=!row;$('undo-delete-recipe').hidden=!deletedDocuments.length;$('delete-recipe').disabled=deleteBusy||!bootstrap?.capabilities.recipe_deletion;
+ $('delete-recipe').title=bootstrap?.capabilities.recipe_deletion?'':'请重启应用载入配方管理。';
+ menu.style.left=Math.max(8,Math.min(x,innerWidth-menu.offsetWidth-8))+'px';
+ menu.style.top=Math.max(8,Math.min(y,innerHeight-menu.offsetHeight-8))+'px';
+ menu.querySelector('button:not([hidden])').focus({preventScroll:true});
+}
+async function deleteRecipe(id){
+ if(deleteBusy)return;deleteBusy=true;
+ try{
+  await editQueue;
+  const index=documents.findIndex(d=>d.id===id);if(index<0)return;
+  if(id===active?.id&&spectralEditor?.hasPending()){
+   announce('请先应用或还原光谱草稿，再删除配方。',true);showNodeTab(spectralEditor.target());return;
+  }
+  remember();const document=copy(documents[index]),wasActive=id===active?.id;
+  documents.splice(index,1);deletedDocuments.push({id:uid(),index,document});
+  if(wasActive){
+   const neighbor=documents[Math.min(index,documents.length-1)];
+   if(neighbor)setActive(neighbor.id,false);
+   else {spectralEditor?.close();documentEpoch++;evalSeq++;active=null;baseline=null;history=[];saveKey=null;result=null;resultMeta=null;busy=false;render();}
+  }else render();
+  announce('已删除「'+document.recipe.name+'」。');focusRecipe(active?.id);
+ }finally{deleteBusy=false;render();}
+}
+async function undoDeletedRecipe(){
+ if(deleteBusy||!deletedDocuments.length)return;
+ await editQueue;
+ if(documents.length>=64){announce('当前最多打开 64 份配方，请先删除其他配方再恢复。',true);return;}
+ remember();const entry=deletedDocuments.pop(),document=copy(entry.document);
+ if(documents.some(d=>d.id===document.id)){
+  document.id=uid();document.recipe.id=document.id;document.saveKey=null;
+  document.history=(document.history||[]).map(r=>({...r,id:document.id}));
+ }
+ documents.splice(Math.min(entry.index,documents.length),0,document);
+ if(spectralEditor?.hasPending())render();else setActive(document.id,false);
+ announce('已恢复「'+document.recipe.name+'」。');focusRecipe(active?.id);
+}
+function queueEdit(mutator,cause){
+ const targetId=active?.id,epoch=documentEpoch;
+ editQueue=editQueue.then(async()=>{
+  if(!active||active.id!==targetId||documentEpoch!==epoch)return;
+  const original=key(active),next=copy(active);
+  try{
+  mutator(next);
+  next.name=String(next.name||'').trim();if(key(next)===original)return;
+  next.revision=active.revision+1;
+   const validated=await api('/api/validate',{recipe:next});
+   if(documentEpoch!==epoch||key(active)!==original)return;
+   history.push(copy(active));active=validated.normalized_recipe;
+   action=cause||'配方已更新；输入试片和取样点保持不变。';
+   if(!nodeLabels()[selectedNode]){selectedNode='film';nodeTab='result';spectralEditor?.close();}
+   remember();render();evaluate();
+  }catch(e){if(documentEpoch===epoch){announce(e.message,true);render();}}
+ }).catch(e=>announce(e.message,true));return editQueue;
+}
+function syncValue(id,value){const el=$(id);if(document.activeElement!==el)el.value=value;}
+function render(){
+ const scanMode=mainView==='scan';$('workbench').dataset.mode=mainView;$('scan-workspace').hidden=!scanMode;$('scan-profile-sidebar').hidden=!scanMode;$('scan-view').setAttribute('aria-pressed',String(scanMode));
+ renderPhotoPanels();
+ if(scanMode){$('workspace').hidden=true;$('empty-workspace').hidden=true;$('node-view').setAttribute('aria-pressed','false');$('photo-view').setAttribute('aria-pressed','false');scanUI.show();return;}scanUI.hide();
+ const empty=!active;$('workbench').dataset.empty=String(empty);$('workspace').hidden=empty;$('empty-workspace').hidden=!empty;$('recipe-name').placeholder=empty?'未打开配方':'';
+ for(const id of ['recipe-name','node-view','photo-view','save-recipe','export-open','recipe-select'])$(id).disabled=empty;
+ $('undo-delete-recipe').hidden=!deletedDocuments.length;$('undo-delete-recipe').disabled=deleteBusy;
+ if(empty){renderLibrary();syncSidebarButtons($('node-list'),[],null,'node');$('recipe-name').value='';$('recipe-name').placeholder='未打开配方';$('undo').disabled=true;$('save-state').textContent='';$('compute-status').textContent='未打开配方';persistSession();return;}
+ renderLibrary();syncValue('recipe-name',active.name);$('save-state').textContent=dirty()?'未保存':'已生成配方文件';$('undo').disabled=!history.length;renderMaterialSelectors();syncValue('film-ev-number',Number(active.film.exposure_ev).toFixed(2));$('film-ev').value=active.film.exposure_ev;syncValue('view-gain',active.viewing.gain);$('endpoint-field').hidden=active.route==='slide';$('endpoint').value=active.route==='print'?'print':'negative';$('view-light').querySelector('option[value=custom]').textContent=active.viewing.illuminant==='custom'?(active.viewing.custom_spd?.name||'自定义光源')+'（自定义）':'自定义光谱…';$('view-light').value=active.viewing.illuminant;$('display-view').value=active.display.view;$('display-target').value=active.display.target||'sRGB';$('set-baseline').disabled=!supported(active)||busy;$('use-baseline').disabled=!baseline||!supported(active);$('clear-baseline').hidden=!baseline;$('export-open').disabled=!supported(active);$('restore-working').disabled=!lastWorking;
+ $('node-select').value=selectedNode;$('draft-node-note').textContent=active.route==='slide'?'':'当前节点 · '+(nodeLabels()[selectedNode]||'')+'：'+(active.route==='negative'&&selectedNode==='interface'?'固定 APD/ADX-to-ACES 1.2 变换；标准参数和来源记录在计算详情。':draftNeeds[selectedNode]||'对应模型尚未实现。');syncSidebarButtons($('node-list'),Object.entries(nodeLabels()).map(([id,label])=>({id,label})),selectedNode,'node');
+ const unavailable=!supported(active);$('unsupported').hidden=!unavailable;$('preview-area').hidden=unavailable;$('unsupported-message').textContent=computeError||'5207 材料、标准 APD 输出和相纸模型尚未实现。';$('model-status').textContent=unavailable?'5207 草案 · 未进行成像计算':active.film.custom_material?'自定义材料 · RGB 估计 · 实际 OCIO / OpenDRT':'E100 光谱参考 · RGB 估计 · 实际 OCIO / OpenDRT';$('material-provenance-note').textContent=(active.film.custom_material?.provenance?.summary||'')+(active.route==='negative'&&active.film.custom_material?.provenance?.process==='C-41'?' APD 正相为实验组合。':'');$('material-provenance-note').hidden=!active.film.custom_material?.provenance?.summary;$('compute-status').textContent=unavailable?'草案可保存；不可导出':busy?'正在计算当前版本…':computeError?'计算失败，保留上次结果':resultMeta?'':'尚未计算';$('cause').textContent=action;
+ persistSession();renderPhotoControls();renderPreview();if(!unavailable)requestAnimationFrame(renderDiagnostics);renderExport();renderNodeLayout();spectralEditor?.render();}
+function renderPreview(){const have=result?.current?.preview?.data_url,reference=result?.reference;const comparable=!!(reference||result?.baseline)?.preview?.data_url;$('baseline-card').hidden=!comparable;$('pictures').dataset.compare=comparable?'yes':'no';$('pictures').dataset.photoView=photoView;document.querySelectorAll('[data-photo-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.photoView===photoView)));$('current-title').textContent=comparable?'B · 当前配方':'当前配方';if(have){if($('current-image').getAttribute('src')!==result.current.preview.data_url)$('current-image').src=result.current.preview.data_url;$('current-image').dataset.placeholder='false';$('current-version').textContent=(busy?resultMeta.recipe.name+' · ':'')+'r'+resultMeta.recipe.revision+(busy?' · 上次结果':'');}else{const thumbnail=mainView==='photo'&&busy&&bootstrap.inputs.find(i=>i.id===testInput.id)?.thumbnail;if(thumbnail){$('current-image').src=thumbnail;$('current-image').dataset.placeholder='true';$('current-title').textContent='正在准备效果';}else $('current-image').removeAttribute('src');$('current-version').textContent='等待计算';}if(comparable){const url=(reference||result.baseline).preview.data_url;if($('baseline-image').getAttribute('src')!==url)$('baseline-image').src=url;$('baseline-title').textContent=reference?.label||'A · 对照配方';$('baseline-version').textContent=reference?(reference.method==='RawTherapee_RAW_to_sRGB'?'RawTherapee → sRGB':reference.has_measured_spectrum?'光谱 → XYZ → sRGB':'RGB → XYZ → sRGB'):'r'+resultMeta.baseline.revision;}
+ const sel=resultMeta?.selection||selection;let x=sel.x??.5,y=sel.y??.5;if(testInput.id==='chart'){const i=Math.max(0,bootstrap.samples.findIndex(s=>s.id===(sel.sample_id||bootstrap.samples[0].id))),columns=bootstrap.chart_layout?.columns||3,rows=bootstrap.chart_layout?.rows||2;x=(i%columns+.5)/columns;y=(Math.floor(i/columns)+.5)/rows;}for(const id of ['current-crosshair','baseline-crosshair']){$(id).style.left=x*100+'%';$(id).style.top=y*100+'%';}
+ $('preview-status').textContent=busy?(have?'更新中；暂显示 '+resultMeta.recipe.name+' r'+resultMeta.recipe.revision+' 的上次结果。':'正在计算真实预览…'):computeError?'当前计算未完成：'+computeError:have?(reference?'A 为原始输入的固定参考；B 为当前胶片配方。点击任一图像，使用同一取样点。':'图像与下方诊断来自同一次真实计算。点击任一图像，A/B 使用相同取样点。'):'正在准备试片…';const photo=bootstrap.inputs.find(i=>i.id===testInput.id);$('input-identity').textContent=(photo?.kind==='imported_raw_photo'?'RawTherapee · 线性 AP1 / D60':photo?.kind==='imported_rgb_photo'?(photo.interpretation.assumed_srgb?'未标记 RGB，按 sRGB 解释':'内嵌 ICC → sRGB')+' · '+photo.width+' × '+photo.height+' · 预览已缩小':(result?.conditions.preview_input_method==='measured_spectral'?'实测光谱直接计算':'普通 RGB 近似'))+' · 输入曝光 '+Number(testInput.exposure_ev).toFixed(2)+' EV';$('input-ev-value').textContent=Number(testInput.exposure_ev).toFixed(2)+' EV';$('sample-select').hidden=testInput.id!=='chart';$('input-ev').value=testInput.exposure_ev;$('test-input').value=testInput.id;$('sample-select').value=selection.sample_id||bootstrap.samples[0].id;}
+const previewTasks=createLatestPreviewTask(evaluateFrame);
+const photoFrames=createRenditionCache();
+let prefetchTimer=null,prefetchController=null,prefetchGeneration=0;
+function frameRequest(input=copy(testInput),point=copy(selection)){
+ const r=copy(active),a=!bootstrap?.capabilities.fixed_scene_reference&&baseline&&supported(baseline)?copy(baseline):null;
+ const payload={recipe:r,baseline:a,input,selection:point,preview_transport:'url'};
+ return {r,a,input,point,payload,key:key(payload)};
+}
+function rememberFrame(frame,data){
+ const images=[],previews=[data.current?.preview,(data.reference||data.baseline)?.preview].filter(Boolean);
+ let bytes=0;for(const preview of previews){bytes+=preview.width*preview.height*4;if(typeof Image!=='undefined'){const image=new Image();image.decoding='async';image.src=preview.data_url;images.push(image);}}
+ photoFrames.put(frame.key,{data,images,meta:{recipe:frame.r,baseline:frame.a,input:frame.input,selection:data.selection||frame.point}},bytes);
+ return Promise.all(images.map(image=>image.decode?.().catch(()=>{})));
+}
+function presentFrame(frame,data,meta){
+ result=data;resultMeta=meta||{recipe:frame.r,baseline:frame.a,input:frame.input,selection:data.selection||frame.point};
+ lastWorking=copy(frame.r);busy=false;computeError='';render();schedulePhotoPrefetch();
+}
+function cancelPhotoPrefetch(){
+ prefetchGeneration++;if(prefetchTimer!==null){clearTimeout(prefetchTimer);prefetchTimer=null;}
+ prefetchController?.abort();prefetchController=null;
+}
+function schedulePhotoPrefetch(){
+ if(typeof mainView==='undefined'||mainView!=='photo'||!photoQueue||photoImporting||busy)return;
+ const generation=prefetchGeneration;
+ prefetchTimer=setTimeout(async()=>{
+  prefetchTimer=null;const ids=photoFrames.neighbors(photoQueue.stripItems().map(i=>i.id),testInput.id);
+  for(const id of ids){
+   if(generation!==prefetchGeneration||mainView!=='photo'||busy)return;
+   const input={id,exposure_ev:photoQueue.snapshot().exposures[id]||0},point={x:.5,y:.5,sample_id:bootstrap.samples[0].id},frame=frameRequest(input,point);
+   if(photoFrames.get(frame.key))continue;
+   const controller=new AbortController();prefetchController=controller;
+   try{const data=await api('/api/evaluate',{...frame.payload,priority:'prefetch'},controller.signal);
+    if(generation!==prefetchGeneration)return;await rememberFrame(frame,data);
+   }catch{}finally{if(prefetchController===controller)prefetchController=null;}
+  }
+ },200);
+}
+function evaluate(){
+ diagnosticSampler?.refresh();const request=++evalSeq;cancelPhotoPrefetch();
+ if(supported(active)){
+  const frame=frameRequest(),cached=photoFrames.get(frame.key);
+  if(cached){presentFrame(frame,cached.data,cached.meta);return Promise.resolve(cached.data);}
+ }
+ return previewTasks.submit(request);
+}
+async function evaluateFrame(request){
+ if(request!==evalSeq)return;
+ if(!supported(active)){busy=false;result=null;resultMeta=null;render();return;}
+ const frame=frameRequest(),{r}=frame,cached=photoFrames.get(frame.key);
+ if(cached){presentFrame(frame,cached.data,cached.meta);return;}
+ if(resultMeta?.input?.id!==frame.input.id){result=null;resultMeta=null;}
+ busy=true;computeError='';render();
+ try{
+  const data=await api('/api/evaluate',frame.payload);rememberFrame(frame,data);
+  if(request!==evalSeq||active.id!==r.id||active.revision!==r.revision)return;
+  presentFrame(frame,data);
+ }catch(e){if(request!==evalSeq)return;busy=false;computeError=e.message;if(!result)announce('计算未完成：'+e.message,true);render();}
+}
+function graph(elId,spec,old,color){const el=$(elId);if(!spec){el.innerHTML='<p class="muted small">等待此取样点的计算结果。</p>';return;}const title=quantities[spec.quantity]||spec.quantity,unit=({relative:'相对量',fraction:'0–1','relative per nm':'相对量 / nm','relative Y':'相对 Y'})[spec.unit]||spec.unit||'';if(spec.kind==='channels'){if(!Array.isArray(spec.labels)){el.textContent='数值格式无效，请重新计算。';return;}const match=old?.kind==='channels'&&old.quantity===spec.quantity&&old.unit===spec.unit;el.innerHTML=`<div class="quantity">${esc(title)} · ${esc(unit)}</div>`+spec.labels.map((label,i)=>`<div class="channel-row"><b>${esc(label)}</b><span class="mono muted">${match?'A '+Number(old.values[i]).toFixed(5):''}</span><span class="mono">${match?'B ':''}${Number(spec.values[i]).toFixed(5)}</span></div>`).join('')+'<p class="help">积分或坐标结果，不使用波长轴。</p>';return;}
+ const band=spectralDisplayBand(spec.quantity);const matching=old?.kind==='spectrum'&&old.quantity===spec.quantity&&old.unit===spec.unit,series=spec.series.map(s=>({...s,xs:spec.wavelengths_nm,old:false}));if(matching)series.push(...old.series.map(s=>({...s,xs:old.wavelengths_nm,old:true})));for(let i=0;i<series.length;i++){const visible=spectralDisplaySamples(series[i].xs,series[i].values,...band);series[i]={...series[i],...visible};}const width=Math.max(220,Math.floor(el.clientWidth)),height=300,L=53,R=17,T=33,B=39,W=width-L-R,H=height-T-B,xmin=band[0],xmax=band[1],min=Math.min(0,...series.flatMap(s=>s.values)),max=Math.max(.000001,...series.flatMap(s=>s.values))*1.06,sx=x=>L+(x-xmin)/(xmax-xmin)*W,sy=y=>T+H-(y-min)/(max-min)*H;let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(title+'，'+unit)}"><title>${esc(title)}</title><text class="axis-title" x="${L}" y="15">${esc(title+' · '+unit)}</text>`;for(const t of [0,.5,1]){const v=min+t*(max-min),y=sy(v);svg+=`<path class="grid" d="M${L} ${y}H${width-R}"/><text x="${L-8}" y="${y+4}" text-anchor="end">${Math.abs(v)<.001&&v!==0?v.toExponential(1):v.toFixed(v<.1?3:1)}</text>`;}for(const x of [...Array.from({length:Math.floor((xmax-xmin)/100)+1},(_,i)=>xmin+i*100),...(xmax%100?[xmax]:[])]){const p=sx(x);svg+=`<path class="grid" d="M${p} ${T}V${T+H}"/><text x="${p}" y="${height-23}" text-anchor="middle">${Math.round(x)}</text>`;}for(const s of series){const d=s.values.map((v,i)=>(i?'L':'M')+sx(s.xs[i]).toFixed(2)+' '+sy(v).toFixed(2)).join(' ');svg+=`<path d="${d}" fill="none" stroke="${spec.quantity==='cie1931_xyz_matching_functions'?({X:'#c95753',Y:'#32866a',Z:'#537bc0'})[s.name]:({R:'#c95753',G:'#32866a',B:'#537bc0',C:'#228eaa',M:'#a56aa2',Y:'#ad8a29'})[s.name]||color}" stroke-width="${s.old?1.5:1.9}" ${s.old?'stroke-dasharray="5 4" opacity=".65"':''}/>`;}svg+=`<text class="axis-title" x="${L+W/2}" y="${height-4}" text-anchor="middle">波长 nm</text></svg>`;el.innerHTML=svg;}
+function renderDisplayProcess(trace){
+ if(!trace)return '<p class="muted">正在读取当前转换…</p>';
+ const apd=trace.pipeline==='APD_to_XYZ';
+ const value=v=>Number.isFinite(v)?Number(v).toFixed(6):'—';
+ const vector=v=>`<span class="mono">${v.map(value).join('　')}</span>`;
+ const curve=record=>{
+  if(!record)return '';
+  const values=record.output.flat().filter(Number.isFinite),low=Math.min(0,...values),high=Math.max(1e-6,...values),span=high-low||1;
+  const W=500,H=108,L=48,R=12,T=8,B=23,sx=x=>L+x*(W-L-R),sy=y=>T+(high-y)/span*(H-T-B);
+  let svg=`<svg class="display-curve" viewBox="0 0 ${W} ${H}" role="img" aria-label="等分量输入剖面"><path d="M${L} ${T}V${H-B}H${W-R}" fill="none" stroke="var(--line)"/>`;
+  for(let c=0;c<3;c++){
+   let gap=true,path='';record.input.forEach((x,i)=>{const y=record.output[i][c];if(!Number.isFinite(y)){gap=true;return;}path+=(gap?'M':'L')+sx(x).toFixed(2)+' '+sy(y).toFixed(2)+' ';gap=false;});
+   svg+=`<path d="${path}" fill="none" stroke="${['#c95753','#32866a','#537bc0'][c]}" stroke-width="1.5"/>`;
+  }
+  return svg+`<text x="${L-7}" y="${T+7}" text-anchor="end">${value(high)}</text><text x="${L-7}" y="${H-B}" text-anchor="end">${value(low)}</text><text x="${L}" y="${H-4}">0</text><text x="${W-R}" y="${H-4}" text-anchor="end">1</text><text x="${W/2}" y="${H-4}" text-anchor="middle">等分量输入 v₁ = v₂ = v₃</text></svg>`;
+ };
+ const titles={MatrixTransform:'矩阵变换',Lut1DTransform:'一维查找表',Lut3DTransform:'三维查找表',ExponentWithLinearTransform:'分段传递函数',LogTransform:'对数变换',GradingRGBCurveTransform:'RGB 曲线',FixedFunctionTransform:'ACES 固定变换',RangeTransform:'范围限制'};
+ const steps=trace.steps.map((step,i)=>{
+  let content=step.formula?`<div class="display-formula mono">${esc(step.formula)}</div>`:'';
+  if(step.kind==='matrix'){
+   content=`<div class="display-matrix-equation"><table class="display-matrix mono" aria-label="执行矩阵 ${i+1}"><tbody>${step.matrix.slice(0,3).map(row=>'<tr>'+row.slice(0,3).map(v=>`<td>${value(v)}</td>`).join('')+'</tr>').join('')}</tbody></table><span>× v +</span><span class="display-offset mono">${step.offset.slice(0,3).map(v=>`<span>${value(v)}</span>`).join('')}</span></div><p class="small muted">列向量：v′ = M × v + b</p>`;
+  }else if(step.kind==='formula'){
+   if(step.parameters)content+=Object.entries(step.parameters).map(([name,v])=>`<p class="small muted">${esc(name)} ${vector(v)}</p>`).join('');
+   if(step.branches)content+=`<p class="small muted">${step.branches.map((v,c)=>['R','G','B'][c]+'：'+esc(v)).join('　')}</p>`;
+   if(step.table)content+=`<details class="display-toe-table"><summary>趾部查表 · ${step.table.length} 点</summary><table class="display-matrix mono"><thead><tr>${step.table_labels.map(v=>`<th>${esc(v)}</th>`).join('')}</tr></thead><tbody>${step.table.map(row=>'<tr>'+row.map(v=>`<td>${value(v)}</td>`).join('')+'</tr>').join('')}</tbody></table></details>`;
+   if(step.note)content+=`<p class="help">${esc(step.note)}</p>`;
+  }else if(step.kind!=='clamp'){
+   const shape=step.kind==='lut3d'?`${step.grid}³ LUT`:step.kind==='lut1d'?`${step.length.toLocaleString()} 点 LUT`:step.style||'';
+   content=`<div class="display-operation-meta">${esc(shape)}${step.kind.startsWith('lut')?' · '+esc(({INTERP_TETRAHEDRAL:'四面体插值',INTERP_LINEAR:'线性插值',INTERP_DEFAULT:'OCIO 默认插值'})[step.interpolation]||step.interpolation.replace('INTERP_','')):''}${step.direction==='inverse'?' · 反向执行':''}</div>${curve(step.curve)}`;
+  }else content='<p class="small muted">将最终编码 RGB 限定在 0–1。</p>';
+  return `<section class="display-step"><header><span class="display-step-number">${i+1}</span><h3>${esc(step.title||titles[step.operator]||step.operator)}</h3></header>${content}<div class="display-step-values"><span>输入 ${vector(step.input)}</span><span>输出 ${vector(step.output)}</span></div></section>`;
+ }).join('');
+ const summary=apd?trace.label:'XYZ · D65 → '+(bootstrap.capabilities.display_views.find(v=>v.id===trace.view)?.label||trace.view)+' → '+trace.target;
+ return `<div class="display-process"><div class="display-process-summary"><strong>${esc(summary)}</strong><p class="help">${apd?'当前取样的逐步计算 · '+esc(trace.reference):'当前取样点沿实际 OCIO 运算逐步计算。矩阵已合并相邻运算；曲线为等分量输入剖面，不代表完整三维映射。'}</p></div><div class="display-input">${esc(apd?trace.input_label:'输入 XYZ')} ${vector(apd?trace.input:trace.input_xyz_d65)}</div>${steps}<div class="display-input"><strong>${esc(apd?trace.output_label:trace.target+' · D65 · 编码 RGB')}</strong> ${vector(trace.output)}</div></div>`;
+}
+function renderDiagnosticSamples(){
+ const picker=$('diagnostic-samples');picker.hidden=mainView!=='spectra'||!['result','process'].includes(nodeTab);
+ if(!bootstrap)return;
+ const selected=diagnosticSampler?.selected();
+ $('diagnostic-sample-options').innerHTML=bootstrap.samples.map(s=>{
+  const rgb=s.input_srgb.map(v=>Math.round(Math.max(0,Math.min(1,v))*255));
+  return `<button type="button" class="sample-swatch" data-diagnostic-sample="${esc(s.id)}" title="${esc(s.name)}" aria-label="${esc(s.name)}" aria-pressed="${selected===s.id}" style="--swatch:rgb(${rgb.join(',')})"><span>${esc(s.name.slice(0,2))}</span></button>`;
+ }).join('');
+ $('diagnostic-sample-reset').hidden=!selected;
+}
+function renderDiagnostics(){
+ renderDiagnosticSamples();
+ const observer=nodeTab==='observer',source=nodeTab==='source'||observer;
+ const chosen=diagnosticSampler?.selected(),snapshot=chosen&&!source?diagnosticSampler.get():result;
+ const current=snapshot?.current?.nodes?.[selectedNode],old=snapshot?.baseline?.nodes?.[selectedNode];
+ let data=observer?bootstrap?.spectral_assets?.xyz_observer:source?(selectedNode==='light'?current?.input:current?.details?.standard_products):current?.output;
+ let title=observer?'XYZ 配色函数 · CIE 1931 2°':source?(selectedNode==='light'?(active.scene.illuminant==='Planck'?'钨丝光谱（黑体近似） · ':'标准日光光谱 · ')+(active.scene.temperature_k||6500)+' K':'标准 APD 响应'):quantities[data?.quantity]||'计算结果';
+ const status=diagnosticSampler?.status(),point=chosen?{sample_id:chosen}:resultMeta?.selection;
+ $('selected-point').textContent=(point?.sample_id?'取样：'+(bootstrap.samples.find(s=>s.id===point.sample_id)?.name||point.sample_id):'取样点：'+Math.round((point?.x??.5)*100)+'% / '+Math.round((point?.y??.5)*100)+'%')+(chosen&&status?.pending?' · 计算中…':chosen&&status?.error?' · 计算失败，请重试':'');
+ $('xyz-reference-legend').hidden=!observer;
+ $('input-plot').parentElement.hidden=true;$('output-plot-title').textContent=title;
+ if(['display','interface'].includes(selectedNode)&&nodeTab==='process'){
+  $('output-plot-title').textContent=selectedNode==='interface'?'APD 到 XYZ':'XYZ 到显示 RGB';
+  $('output-plot').innerHTML=renderDisplayProcess(current?.details?.process);
+ }else graph('output-plot',data,source?null:old?.output,'var(--teal)');
+ $('output-plot').parentElement.querySelector('.xyz-reference-note')?.remove();
+ if(observer){const note=document.createElement('p');note.className='help xyz-reference-note';note.textContent='标准观察者配色函数；单个 XYZ 颜色没有唯一对应光谱。';$('output-plot').after(note);}
+ $('view-color-values').textContent=snapshot?JSON.stringify({observer:snapshot.conditions.observer,adaptation:snapshot.conditions.adaptation,XYZ_D65:snapshot.current?.sample?.xyz_d65},null,2):'';
+}
+function downloadJSON(recipe){const blob=new Blob([JSON.stringify(recipe,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(recipe.name.replace(/[\\/:*?"<>|]/g,'-')||'recipe')+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);}
+async function save(){
+ if(!active)return;
+ if(spectralEditor?.hasPending()){announce('还有未应用的光谱草稿。请先应用到配方，再保存。',true);showNodeTab(spectralEditor.target());return;}
+ const targetId=active?.id,epoch=documentEpoch;
+ const enteredName=$('recipe-name').value.trim();
+ if(enteredName&&enteredName!==active.name)await queueEdit(r=>r.name=enteredName,'配方已命名，成像条件保持不变。');
+ await editQueue;
+ if(active?.id!==targetId||documentEpoch!==epoch)return;
+ const snapshot=copy(active),original=key(snapshot);
+ try{
+  const v=await api('/api/validate',{recipe:snapshot});
+  const frozen=v.normalized_recipe;downloadJSON(frozen);
+  const doc=documents.find(d=>d.id===targetId);
+  if(doc)doc.saveKey=key(frozen);
+  if(documentEpoch===epoch&&active.id===targetId){
+   if(key(active)===original)active=frozen;
+   saveKey=key(frozen);remember();render();
+  }
+  announce('已发起 r'+frozen.revision+' 配方 JSON 下载；后续修改不会被覆盖。');
+ }catch(e){announce(e.message,true);}
+}
+async function openRecipe(file){if(!file)return;try{if(file.size>4000000)throw Error('配方文件超过 4 MB。');const loaded=JSON.parse(await file.text()),v=await api('/api/validate',{recipe:loaded});addDocument(v.normalized_recipe,true);announce(v.computable?'已验证并打开配方。':'已打开配方；对应材料尚未就绪。');}catch(e){announce('没有替换当前配方：'+e.message,true);}finally{$('recipe-file').value='';}}
+function exportLabel(){const frozen=exportResult?.frozen||exportJob?.recipe;if(!frozen)return'';const rev=frozen.revision,id=frozen.recipe_id||frozen.id,same=active&&active.id===id&&active.revision===rev&&resultMeta&&key(active)===key(resultMeta.recipe)&&!!exportResult?.frozen?.fingerprint&&exportResult.frozen.fingerprint===result?.version?.fingerprint;return '冻结版本 r'+rev+(same?' · 当前版本':' · 当前配方已有其他版本，不能视为当前版本导出完成');}
+function exportSnapshotMatchesCurrent(){
+ const f=exportResult?.frozen;
+ return !!(f&&active&&f.recipe_id===active.id&&f.revision===active.revision&&f.fingerprint&&f.fingerprint===result?.version?.fingerprint&&resultMeta&&key(active)===key(resultMeta.recipe));
+}
+function renderExport(){
+ if(!$('export-dialog').open)return;if(!active){$('export-dialog').close();return;}
+ const el=$('export-state'),download=$('export-download'),run=$('export-run');
+ $('export-current').textContent=active.name;$('export-space').textContent='ACEScct / AP1 → '+(active.display.target||'sRGB');
+ $('export-grid').disabled=!!exportJob||exportPreparing;run.disabled=exportPreparing||!!exportJob||!supported(active);run.hidden=false;download.hidden=true;el.className='help';
+ if(exportPreparing){el.textContent='正在准备…';return;}
+ if(exportJob){el.textContent='正在生成 '+exportJob.grid+'³ LUT…';return;}
+ if(!exportResult){el.textContent='';return;}
+ if(!exportResult.ok||!exportResult.verification?.integrity_passed){el.textContent=exportResult.error?.message||'导出失败，请重试。';el.className='error';return;}
+ if(!exportSnapshotMatchesCurrent()){el.textContent='配方已更改，请重新生成。';return;}
+ const check=exportResult.verification.independent_ocio;
+ el.textContent=check?'插值：≤2/255 '+(check.fraction_within_2_codes_float*100).toFixed(2)+'% · 最大 '+check.max_abs_code_float.toFixed(2)+'/255':'';
+ const file=exportResult.files?.find(f=>f.name==='recipe.cube');
+ if(file){download.href=file.url;download.download=active.name.replace(/[\\/:*?"<>|]/g,'-')+'.cube';download.hidden=false;run.hidden=true;}
+}
+async function runExport(){if(spectralEditor?.hasPending()){announce('还有未应用的光谱草稿。请先应用到配方，再生成 LUT。',true);$('export-dialog').close();showNodeTab(spectralEditor.target());return;}if(exportJob||exportPreparing)return;const targetId=active?.id,epoch=documentEpoch;exportPreparing=true;renderExport();await editQueue;exportPreparing=false;if(active?.id!==targetId||documentEpoch!==epoch||!supported(active)){renderExport();announce('配方已切换，请重新确认导出对象。',true);return;}renderExport();if(!$('export-grid').reportValidity())return;const recipe=copy(active),purpose='display',grid=Number($('export-grid').value),request_id=uid();exportJob={recipe,purpose,grid,request_id};exportResult=null;renderExport();$('compute-status').textContent='正在生成 LUT…';try{const response=await fetch('/api/export',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({recipe,purpose,grid,request_id})});const body=await response.json();exportResult={...body,purpose,grid};if(!response.ok||!body.ok){exportResult.ok=false;if(!body.error)exportResult.error={message:'导出未通过。'};}else if(!body.verification?.integrity_passed){exportResult.ok=false;exportResult.error={message:'文件读回没有通过，不提供下载。'};exportResult.files=[];}}catch(e){exportResult={ok:false,error:{message:e.message},frozen:{recipe_id:recipe.id,revision:recipe.revision},files:[],purpose};}finally{exportJob=null;renderExport();render();announce(exportResult.ok?'LUT 已生成，可保存。':'冻结 r'+recipe.revision+' 生成失败，请查看实际原因。',!exportResult.ok);}}
+function nodeInspectionTabs(node,route,sceneKind='CIE_D',printingPipeline='legacy-v1'){
+ const computed=['result','计算结果'];
+ if(node==='display')return [['process','转换过程'],computed];
+ if(node==='light')return [['source',sceneKind==='Planck'?'钨丝光谱 · 黑体近似':'标准日光光谱'],computed];
+ if(node==='film')return [['sensitivity','感光光谱'],['characteristic','特性曲线'],['dyes','染料光谱'],...(route!=='slide'?[['base','片基光谱']]:[]),computed];
+ if(node==='paper')return [['paper_sensitivity','感光光谱'],['paper_characteristic','特性曲线'],['paper_dyes','染料光谱'],['paper_base','白底光谱'],computed];
+ if(node==='view')return [['viewing','观看光谱'],['observer','XYZ 配色函数'],computed];
+ if(node==='interface')return [['process','APD → XYZ'],['observer','XYZ 配色函数'],computed];
+ if(node==='enlarger')return [['enlarger','灯光谱'],...(printingPipeline==='spectral-v2'?[['heat','隔热玻璃'],['lens','镜头透射']]:[]),computed];
+ if(node==='filter')return [['filters','滤色光谱'],computed];
+ if(node==='apd')return [['source','标准 APD 响应'],computed];
+ return [computed];
+}
+function showNode(id){
+ selectedNode=id;nodeTab='result';mainView='spectra';spectralEditor?.close();showNodeTab(nodeInspectionTabs(id,active.route)[0][0]);
+}
+function showNodeTab(id){
+ mainView='spectra';const previous=nodeTab;nodeTab=id;
+ if(['result','source','observer','process'].includes(id))spectralEditor?.close();else if(!spectralEditor?.open(id))nodeTab=previous;
+ render();if(['result','process'].includes(nodeTab))diagnosticSampler?.refresh();
+}
+function selectRecipe(id){
+ if(id===active?.id||!documents.some(d=>d.id===id))return;
+ setActive(id);
+}
+function renderNodeLayout(){
+ if(!active)return;renderDiagnosticSamples();
+ const label=nodeLabels()[selectedNode]||'成像节点',editing=!['result','source','observer','process'].includes(nodeTab)&&mainView==='spectra';
+ $('workspace').dataset.mainView=mainView;$('workspace').dataset.inspection=nodeTab==='result'?'result':'source';$('workbench').dataset.mode=mainView;const photoMode=mainView==='photo';$('photo-recipe-sidebar').hidden=!photoMode;$('photo-editbar').hidden=!photoMode;$('photo-view-tools').hidden=!photoMode;renderPhotoPanels();
+ $('node-title').textContent=mainView==='photo'?'试片预览':label;
+ $('node-subtitle').textContent=selectedNode==='film'?(active.film.custom_material?.name||active.film.stock):selectedNode==='paper'?(active.printing.custom_material?.name||bootstrap?.spectral_assets?.paper?.name||'Ultra Endura'):'';
+ $('node-view').setAttribute('aria-pressed',String(mainView==='spectra'));
+ $('photo-view').setAttribute('aria-pressed',String(mainView==='photo'));
+ $('diagnostics').open=true;
+ const tabs=nodeInspectionTabs(selectedNode,active.route,active.scene.illuminant,active.printing?.pipeline);
+ $('node-tabs').hidden=mainView==='photo'||!supported(active);
+ $('node-tabs').innerHTML=tabs.map(([id,text])=>`<button role="tab" data-node-tab="${id}" aria-selected="${nodeTab===id}">${text}${spectralEditor?.pendingTargets().includes(id)?' · 待应用':''}</button>`).join('');
+ $('inspector-title').textContent=label;
+ $('scene-section').hidden=photoMode||selectedNode!=='light';
+ renderSceneLightControls();const sceneK=active.scene.temperature_k||6500;syncValue('scene-temperature-number',sceneK);$('scene-temperature').value=sceneK;
+ $('film-stock-field').hidden=photoMode||selectedNode!=='film';
+ $('paper-stock-field').hidden=photoMode||active.route!=='print'||selectedNode!=='paper';
+ $('material-provenance-note').hidden=photoMode||selectedNode!=='film'||!active.film.custom_material?.provenance?.summary;
+ $('film-exposure-field').hidden=photoMode||selectedNode!=='film';
+ $('viewing-section').hidden=photoMode||selectedNode!=='view';
+ $('view-advanced').hidden=false;
+ $('view-spectrum-open').hidden=true;
+ $('display-section').hidden=photoMode||selectedNode!=='display';
+ $('endpoint-field').hidden=photoMode||selectedNode!=='film'||active.route==='slide';
+ $('photo-positive-scope').hidden=active.route!=='negative'||active.film.custom_material?.provenance?.process!=='C-41';
+ $('spectral-inspector').hidden=!editing||!supported(active);
+ const notes={enlarger:active.printing?.pipeline==='spectral-v2'?'灯光、隔热玻璃、镜头透射与滤色依次相乘；预闪曝光另行相加。均使用固定配方设置。':'旧配方保留模拟钨丝光与理想吸收滤色。可明确切换光谱光路；原设置可以撤销恢复。',filter:active.printing?.pipeline==='spectral-v2'?'二向色滤片采用透射率与部分插入模型；控制量并非实测放大机刻度。':'旧配方的理想吸收滤色，采用相纸染料形状。可在放大照明切换光谱光路。',paper:'所选相纸采用独立 Status A 原厂曲线。纸白、散射与荧光尚缺配套实测。',light:'按色温生成标准日光模拟光谱；改变拍摄照明后重新计算 B，A 保持原始场景参考。',interface:'CIE 1931 2°；按当前观看条件积分，再通过固定 D50 参考适应到 D65。',display:active.route==='negative'?'APD 标准输入转换后，默认使用 ACES 2.0 显示。':'默认用色度转换呈现材料颜色；ACES 与 OpenDRT 可作为额外外观。'};
+ if(active.route==='negative'){notes.apd='采用标准 Academy Printing Density。标准响应固定；输出为三通道密度 D，不是显示 RGB。';notes.interface='APD → ADX16 浮点码值 → ACES2065-1（AP0 / D60）→ XYZ D65。展示当前取样的逐步计算。';}
+ renderPrintingControls(photoMode,editing);
+ $('node-inspector-note').hidden=photoMode||!notes[selectedNode];$('inspector-title').hidden=photoMode;
+ $('node-inspector-note').textContent=notes[selectedNode]||'';
+ $('node-list').querySelectorAll('button').forEach((button,i)=>{button.dataset.step=String(i+1);});
+}
+
+const printingControls=document.createElement('section');printingControls.id='printing-controls';printingControls.hidden=true;printingControls.innerHTML=`<label class="field">放大机<select id="printer-pipeline" aria-label="放大机光路"><option value="legacy-v1">简化光路 · 旧配方</option><option value="spectral-v2">光谱光路 · KG3／二向色</option></select></label><details id="printer-optics-details"><summary>光路与预闪光</summary><label class="field">隔热玻璃<select id="printer-heat" aria-label="隔热玻璃"><option value="KG3">Schott KG3</option><option value="none">无／已包含在光源中</option><option value="custom">导入 CSV…</option></select></label><label class="field">镜头透射<select id="printer-lens" aria-label="放大镜头透射"><option value="none">无／已包含在光源中</option><option value="reference-lens">参考镜头 · 非放大镜头实测</option><option value="custom">导入 CSV…</option></select></label><label class="field">预闪曝光 <output id="printer-preflash-value"></output><input id="printer-preflash" aria-label="相纸预闪曝光" type="range" min="0" max="1" step=".001"></label><div id="preflash-filters">${['C','M','Y'].map((c,i)=>`<label class="field">预闪 ${c} <output id="preflash-filter-${i}-value"></output><input id="preflash-filter-${i}" aria-label="预闪 ${c} 滤色" type="range" min="0" max="2" step=".01"></label>`).join('')}</div><p class="help">透射曲线可在图中导入 CSV。光源已包含的组件应旁路。</p></details><label class="field">放大光色温 <output id="printer-k-value"></output><input id="printer-k" aria-label="放大光色温" type="range" min="2500" max="5000" step="50"></label><label class="field">放大曝光 <output id="printer-ev-value"></output><input id="printer-ev" aria-label="放大曝光" type="range" min="-4" max="4" step=".1"></label><div id="printer-filters">${['C','M','Y'].map((c,i)=>`<label class="field">${c} 滤色密度 <output id="printer-filter-${i}-value"></output><input id="printer-filter-${i}" aria-label="${c} 滤色密度" type="range" min="0" max="2" step=".01"></label>`).join('')}</div>`;
+$('viewing-section').before(printingControls);
+function renderPrintingControls(photoMode,editing){
+ const visible=active.route==='print'&&(photoMode||['enlarger','filter'].includes(selectedNode));printingControls.hidden=!visible;if(!visible)return;
+ const p=active.printing,modern=p.pipeline==='spectral-v2';
+ syncValue('printer-pipeline',p.pipeline||'legacy-v1');$('printer-pipeline').querySelector('option[value="spectral-v2"]').disabled=!bootstrap.printing_defaults;
+ $('printer-optics-details').hidden=!modern||(!photoMode&&selectedNode!=='enlarger');
+ if(modern){syncValue('printer-heat',p.optics.heat);syncValue('printer-lens',p.optics.lens);syncValue('printer-preflash',p.preflash.exposure);$('printer-preflash-value').textContent=(p.preflash.exposure*100).toFixed(1)+'%';$('preflash-filters').hidden=!p.preflash.exposure;p.preflash.filters.forEach((v,i)=>{syncValue('preflash-filter-'+i,v);$('preflash-filter-'+i+'-value').textContent=v.toFixed(2);});}
+ syncValue('printer-k',p.temperature_k||3200);$('printer-k-value').textContent=p.light==='custom'?'CSV（滑块切回色温）':(p.temperature_k||3200)+' K';syncValue('printer-ev',p.exposure_ev||0);$('printer-ev-value').textContent=Number(p.exposure_ev||0).toFixed(1)+' EV';$('printer-k').closest('label').hidden=!photoMode&&selectedNode==='filter';$('printer-ev').closest('label').hidden=!photoMode&&selectedNode==='filter';$('printer-filters').hidden=!photoMode&&selectedNode!=='filter';
+ (p.filters||[0,0,0]).forEach((v,i)=>{const control=$('printer-filter-'+i);control.closest('label').firstChild.textContent=['C','M','Y'][i]+(modern?' 滤色控制 ':' 滤色密度 ');control.setAttribute('aria-label',['C','M','Y'][i]+(modern?' 滤色控制':' 滤色密度'));syncValue('printer-filter-'+i,v);$('printer-filter-'+i+'-value').textContent=Number(v).toFixed(2)+(modern?' · 控制量':' D');});
+}
+$('printer-pipeline').onchange=e=>{
+ const pipeline=e.target.value;
+ materialEdit(r=>{const paper=r.printing.custom_material;
+  r.printing=pipeline==='spectral-v2'?copy(bootstrap.printing_defaults_by_stock?.[r.film.stock]||bootstrap.printing_defaults):{pipeline:'legacy-v1',light:'Planck',temperature_k:3200,exposure_ev:0,filters:[0,0,0],paper:'Ultra Endura'};
+  if(paper)r.printing.custom_material=paper;
+ },'已更换放大机光路并填入其起始设置；可撤销恢复原配方。');
+};
+for(const role of ['heat','lens'])$('printer-'+role).onchange=e=>{
+ const value=e.target.value;if(value==='custom'){mainView='spectra';selectedNode='enlarger';showNodeTab(role);return;}
+ materialEdit(r=>{r.printing.optics[role]=value;delete r.printing.optics['custom_'+role];},'已更换光路组件，相纸曝光重新积分。');
+};
+$('printer-preflash').oninput=e=>$('printer-preflash-value').textContent=(Number(e.target.value)*100).toFixed(1)+'%';
+$('printer-preflash').onchange=e=>{const value=Number(e.target.value);queueEdit(r=>r.printing.preflash.exposure=value,'预闪光在显影前叠加到相纸曝光。');};
+for(let i=0;i<3;i++)$('preflash-filter-'+i).onchange=e=>{const value=Number(e.target.value);queueEdit(r=>r.printing.preflash.filters[i]=value,'已更新预闪光滤色。');};
+$('printer-k').oninput=e=>$('printer-k-value').textContent=e.target.value+' K';$('printer-k').onchange=e=>{const v=Number(e.target.value);queueEdit(r=>{r.printing.temperature_k=v;r.printing.light='Planck';delete r.printing.custom_spd;},'放大光谱改变，相纸曝光重新积分。');};
+$('printer-ev').oninput=e=>$('printer-ev-value').textContent=e.target.value+' EV';$('printer-ev').onchange=e=>{const v=Number(e.target.value);queueEdit(r=>r.printing.exposure_ev=v,'放大曝光改变，相纸密度重新计算。');};
+for(let i=0;i<3;i++){const el=$('printer-filter-'+i);el.oninput=e=>$('printer-filter-'+i+'-value').textContent=Number(e.target.value).toFixed(2)+' D';el.onchange=e=>{const v=Number(e.target.value);queueEdit(r=>{r.printing.filters=[...(r.printing.filters||[0,0,0])];r.printing.filters[i]=v;},'滤色密度改变，光谱透射和相纸曝光重新计算。');};}
+
+function restoreLastWorking(){
+ if(!lastWorking)return;remember();const snapshot=copy(lastWorking);
+ const existing=documents.find(d=>d.id===snapshot.id);
+ if(existing){
+  if(key(existing.recipe)!==key(snapshot))existing.history.push(copy(existing.recipe));
+  existing.recipe=snapshot;existing.baseline=null;
+  if(existing.saveKey!==key(snapshot))existing.saveKey=null;
+  setActive(existing.id,false);
+ }else addDocument(snapshot);
+ announce('已恢复 '+snapshot.name+' r'+snapshot.revision+' 的成功快照；其他修改保留在撤销历史。');
+}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.diagnosticSample){$('diagnostic-samples').open=false;diagnosticSampler.select(b.dataset.diagnosticSample);}else if(b.dataset.document)selectRecipe(b.dataset.document);else if(b.dataset.node){if(b.dataset.node!==selectedNode||mainView!=='spectra')showNode(b.dataset.node);}else if(b.dataset.nodeTab){showNodeTab(b.dataset.nodeTab);}else if(b.dataset.close)$(b.dataset.close).close();});
+document.addEventListener('contextmenu',e=>{
+ const row=e.target.closest('.sidebar button[data-document]');
+ if(!row&&(mainView==='scan'||!e.target.closest('#recipe-sidebar')||!deletedDocuments.length)){closeRecipeMenu();return;}e.preventDefault();openRecipeMenu(row,e.clientX,e.clientY);
+});
+document.addEventListener('pointerdown',e=>{if(!$('recipe-context-menu').contains(e.target))closeRecipeMenu();});
+document.addEventListener('keydown',e=>{
+ if(!$('recipe-context-menu').hidden){
+  if(e.key==='Escape'){e.preventDefault();closeRecipeMenu(true);}
+  else if(e.key==='Tab')closeRecipeMenu(true);
+  else if(['ArrowUp','ArrowDown','Home','End'].includes(e.key)){e.preventDefault();const items=[...$('recipe-context-menu').querySelectorAll('button')].filter(b=>!b.hidden&&!b.disabled),i=items.indexOf(document.activeElement);items[e.key==='Home'?0:e.key==='End'?items.length-1:(i+(e.key==='ArrowUp'?-1:1)+items.length)%items.length]?.focus();}
+  return;
+ }
+ if(e.key==='ContextMenu'||(e.shiftKey&&e.key==='F10')){
+  const row=e.target.closest('.sidebar button[data-document]');if(!row)return;
+  e.preventDefault();const r=row.getBoundingClientRect();openRecipeMenu(row,r.left+12,r.bottom);
+ }
+});
+window.addEventListener('resize',()=>closeRecipeMenu());document.addEventListener('scroll',()=>closeRecipeMenu(),true);
+$('delete-recipe').onclick=()=>{const id=recipeMenuId;closeRecipeMenu();deleteRecipe(id);};
+$('undo-delete-recipe').onclick=undoDeletedRecipe;
+$('empty-new-recipe').onclick=()=>$('duplicate-recipe').click();$('empty-open-recipe').onclick=()=>$('open-recipe').click();
+document.addEventListener('keydown',e=>{
+ if(e.altKey||e.ctrlKey||e.metaKey||!['ArrowUp','ArrowDown','Home','End'].includes(e.key))return;
+ const row=e.target.closest('.sidebar button[data-document],.sidebar .node-list button[data-node]');
+ if(!row)return;const rows=Array.from(row.parentElement.children).filter(button=>!button.disabled),index=rows.indexOf(row);
+ const next=e.key==='Home'?0:e.key==='End'?rows.length-1:Math.max(0,Math.min(rows.length-1,index+(e.key==='ArrowDown'?1:-1)));
+ e.preventDefault();rows[next].focus({preventScroll:true});rows[next].click();rows[next].scrollIntoView({block:'nearest'});
+});
+$('film-plus').onclick=()=>queueEdit(r=>r.film.exposure_ev=Math.min(4,Math.round((r.film.exposure_ev+.5)*100)/100),'胶片曝光 +0.5 EV → 入射曝光、染料密度与胶片透射率重新计算。');$('film-minus').onclick=()=>queueEdit(r=>r.film.exposure_ev=Math.max(-4,Math.round((r.film.exposure_ev-.5)*100)/100),'胶片曝光 −0.5 EV → 入射曝光、染料密度与胶片透射率重新计算。');
+for(const id of ['film-ev','film-ev-number'])$(id).addEventListener('change',e=>{const value=Number(e.target.value);queueEdit(r=>r.film.exposure_ev=value,'胶片曝光改变 → 非线性胶片曝光阶段重新计算。');});
+$('recipe-name').addEventListener('change',e=>{const value=e.target.value;queueEdit(r=>r.name=value,'配方已命名，成像条件保持不变。');});
+$('undo').onclick=()=>{if(!history.length)return;const previous=history.pop(),revision=active.revision+1;active={...previous,revision};action='已撤销上一项配方修改；试片输入没有变化。';remember();render();evaluate();};
+$('view-light').onchange=e=>{if(e.target.value==='custom'){nodeTab='viewing';render();spectralEditor.open('viewing');return;}const id=e.target.value;queueEdit(r=>{r.viewing.illuminant=id;delete r.viewing.custom_spd;},'替换观看光 → 胶片透射谱保持不变，观看光谱与颜色重新计算。');};
+$('view-gain').onchange=e=>{const value=Number(e.target.value);queueEdit(r=>r.viewing.gain=value,'观看增益改变 → 观看谱与 XYZ 亮度尺度更新；胶片本身保持不变。');};
+$('display-target').onchange=e=>{const v=e.target.value;queueEdit(r=>r.display.target=v,'输出目标已更新，预览与导出使用匹配的 RGB 编码。');};
+$('photo-display-target').onchange=$('display-target').onchange;
+$('display-view').onchange=e=>{const value=e.target.value;queueEdit(r=>r.display.view=value,'显示外观改变 → 执行对应 OCIO 视图；材料 XYZ 保持不变。');};
+function materialEdit(mutator,cause){
+ if(spectralEditor?.hasPending()){announce('请先应用或恢复待处理的 CSV 曲线。',true);render();return;}
+ queueEdit(r=>{if(spectralEditor?.hasPending())throw Error('请先处理待应用的 CSV 曲线。');mutator(r);},cause);
+}
+$('endpoint').onchange=e=>{
+ const value=e.target.value;materialEdit(r=>setPositiveMethod(r,value),'已切换正相方式，负片材料与曝光保留。');
+};
+$('photo-endpoint').onchange=$('endpoint').onchange;
+$('stock').onchange=e=>{
+ const stock=e.target.value,material=bootstrap.spectral_assets[stock];
+ if(!material){announce('所选材料尚未载入。',true);render();return;}
+ materialEdit(r=>r.route==='slide'?replaceReversalMaterial(r,stock,material):replaceNegativeMaterial(r,stock,material),'已更换胶片材料，拍摄光、曝光和观看设置保留。');
+};
+$('photo-stock').onchange=$('stock').onchange;
+$('paper-stock').onchange=e=>{
+ const id=e.target.value,material=(bootstrap.paper_presets||[]).find(p=>p.id===id)?.material;
+ materialEdit(r=>replacePaperMaterial(r,id,material),'已更换相纸；负片、放大光和曝光设置保留。');
+};
+$('photo-paper-stock').onchange=$('paper-stock').onchange;
+$('test-input').onchange=e=>selectPhoto(e.target.value);$('input-ev').onchange=e=>{testInput=photoQueue.setExposure(Number(e.target.value));action='只调整试片输入曝光；A/B 同时重算，不写入配方或 LUT。';evaluate();};$('input-ev').oninput=e=>$('input-ev-value').textContent=Number(e.target.value).toFixed(2)+' EV';$('sample-select').onchange=e=>{selection.sample_id=e.target.value;evaluate();};
+function pick(e){const r=e.currentTarget.getBoundingClientRect(),scale=mainView==='photo'?Math.min(r.width/e.currentTarget.naturalWidth,r.height/e.currentTarget.naturalHeight):1,w=mainView==='photo'?e.currentTarget.naturalWidth*scale:r.width,h=mainView==='photo'?e.currentTarget.naturalHeight*scale:r.height,x=Math.max(0,Math.min(.999999,(e.clientX-r.left-(r.width-w)/2)/w)),y=Math.max(0,Math.min(.999999,(e.clientY-r.top-(r.height-h)/2)/h));selection={x,y,sample_id:selection.sample_id};if(testInput.id==='chart'){const columns=bootstrap.chart_layout?.columns||3,rows=bootstrap.chart_layout?.rows||2,i=Math.min(bootstrap.samples.length-1,Math.floor(y*rows)*columns+Math.floor(x*columns));selection.sample_id=bootstrap.samples[i].id;}evaluate();}$('current-image').onclick=pick;$('baseline-image').onclick=pick;
+$('node-select').onchange=e=>showNode(e.target.value);$('set-baseline').onclick=()=>{baseline=copy(active);remember();action='已把整份当前配方设为 A；接下来的变化与它在同一输入上比较。';evaluate();};$('clear-baseline').onclick=()=>{baseline=null;remember();evaluate();};$('use-baseline').onclick=()=>{if(!baseline)return;const a=copy(baseline);queueEdit(r=>{const id=r.id,rev=r.revision;Object.assign(r,a,{id,revision:rev});},'已采用 A 的整份成像条件；可一步撤销。');};
+$('save-recipe').onclick=save;$('open-recipe').onclick=()=>$('recipe-file').click();$('recipe-file').onchange=e=>openRecipe(e.target.files[0]);$('duplicate-recipe').onclick=()=>{
+ const dialog=$('new-recipe-dialog');dialog.querySelector('input[value="'+(active?.route||'slide')+'"]').checked=true;$('new-recipe-error').hidden=true;renderNewMaterials();dialog.showModal();
+};
+$('new-material').onchange=renderNewMaterialNote;
+document.querySelectorAll('input[name=new-route]').forEach(input=>input.addEventListener('change',renderNewMaterials));
+$('new-recipe-form').onsubmit=async e=>{
+ e.preventDefault();const dialog=$('new-recipe-dialog'),button=$('create-recipe');if(button.disabled)return;
+ const route=dialog.querySelector('input[name=new-route]:checked').value,presetId=$('new-material').value;button.disabled=true;
+ try{await editQueue;if(!dialog.open)return;if(documents.length>=64)throw Error('当前工作区最多打开 64 份配方。');
+  let recipe=presetId?newRecipeFromPreset(route,route==='slide'?bootstrap.reversal_presets:bootstrap.recipe_presets,presetId,uid()):newRecipeFromTemplate(route,bootstrap.templates,uid());
+  if(route==='print'&&bootstrap.printing_defaults)recipe.printing=copy(bootstrap.printing_defaults_by_stock?.[recipe.film.stock]||bootstrap.printing_defaults);
+  recipe=(await api('/api/validate',{recipe})).normalized_recipe;
+  if(!dialog.open)return;if(dialog.querySelector('input[name=new-route]:checked').value!==route||$('new-material').value!==presetId)throw Error('材料选择已改变，请重新创建。');
+  mainView='spectra';addDocument(recipe);dialog.close();
+  announce('已填入 '+recipe.film.stock+' 内置光谱；可在各材料节点导入 CSV 替换。');
+ }catch(error){$('new-recipe-error').textContent=error.message;$('new-recipe-error').hidden=false;}finally{button.disabled=false;}
+};$('restore-working').onclick=restoreLastWorking;
+$('export-grid').addEventListener('input',()=>{if(!exportJob)exportResult=null;renderExport();});$('export-open').onclick=()=>{$('export-dialog').showModal();renderExport();};$('export-run').onclick=runExport;document.querySelectorAll('input[name=purpose]').forEach(input=>input.addEventListener('change',()=>{if(!exportJob)exportResult=null;renderExport();}));$('diagnostics').addEventListener('toggle',()=>{if($('diagnostics').open)requestAnimationFrame(renderDiagnostics);});
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();save();}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)){e.preventDefault();$('undo').click();}});
+new ResizeObserver(()=>{if(redrawQueued)return;redrawQueued=true;requestAnimationFrame(()=>{redrawQueued=false;if(result)renderDiagnostics();});}).observe($('workbench'));
+async function init(){try{bootstrap=await api('/api/bootstrap');$('scan-view').hidden=!bootstrap.scan?.available;if(bootstrap.cache_settings?.limits)photoFrames.configure(bootstrap.cache_settings.limits.browser_bytes);$('photo-file').accept=photoInputAccept(bootstrap.capabilities);selection.sample_id=bootstrap.samples[0].id;$('test-input').innerHTML=bootstrap.inputs.map(i=>`<option value="${esc(i.id)}">${esc(i.name)}</option>`).join('');$('sample-select').innerHTML=bootstrap.samples.map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('');$('view-light').innerHTML=bootstrap.capabilities.viewing_lights.map(i=>`<option value="${esc(i.id)}">${esc(i.id==='custom'?'自定义光谱…':i.label)}</option>`).join('');$('display-view').innerHTML=bootstrap.capabilities.display_views.map(i=>`<option value="${esc(i.id)}">${esc(i.label)}</option>`).join('');$('photo-display').innerHTML=$('display-view').innerHTML;for(const id of ['display-target','photo-display-target'])$(id).innerHTML=bootstrap.capabilities.display_targets.map(i=>`<option value="${esc(i.id)}">${esc(i.label)}</option>`).join('');$('node-select').innerHTML=Object.entries(nodeNames).map(([id,name])=>`<option value="${id}">${esc(name)}</option>`).join('');sessionRevision=bootstrap.session_revision||0;documents=bootstrap.session?bootstrap.session.documents.map(d=>({id:d.recipe.id,recipe:copy(d.recipe),baseline:copy(d.baseline),history:[],saveKey:null})):bootstrap.templates.map(t=>({id:t.recipe.id,recipe:copy(t.recipe),baseline:null,history:[],saveKey:null}));deletedDocuments=(bootstrap.session?.deleted_documents||[]).map(entry=>({...copy(entry),document:{...copy(entry.document),id:entry.document.recipe.id,history:[],saveKey:null}}));photoQueue=createPhotoQueue(bootstrap.inputs,bootstrap.session?.photo_workspace,bootstrap.capabilities.fixed_scene_reference&&bootstrap.inputs.some(i=>i.id==='scene43_rgb')?'scene43_rgb':'chart');testInput=photoQueue.current();if(documents.length)setActive(bootstrap.session?.active_id||bootstrap.default_recipe.id);else render();if(bootstrap.session_warning)announce(bootstrap.session_warning,true);else if(bootstrap.session_notice)announce(bootstrap.session_notice);else if(bootstrap.session)announce(bootstrap.capabilities.fixed_scene_reference?'已恢复上次应用的配方。A 保持原始场景参考。':'已恢复上次应用的配方与对照。未应用的光谱草稿需要先应用再保存。');}catch(e){$('unsupported').hidden=false;$('unsupported-message').textContent='无法连接本机参考：'+e.message;$('preview-area').hidden=true;$('model-status').textContent='本机服务未就绪';announce(e.message,true);}}
+function persistSession(){
+ if(!bootstrap?.capabilities.session_persistence||sessionConflict||bootstrap.session_warning)return;
+ const state={documents:documents.map(d=>({recipe:copy(d.id===active?.id?active:d.recipe),baseline:copy(d.id===active?.id?baseline:d.baseline)})),active_id:active?.id||null,deleted_documents:deletedDocuments.map(entry=>({id:entry.id,index:entry.index,document:{recipe:copy(entry.document.recipe),baseline:copy(entry.document.baseline)}}))};
+ if(photoQueue)state.photo_workspace=photoQueue.snapshot();
+ const signature=key(state);if(signature===sessionKey)return;sessionKey=signature;
+ sessionQueue=sessionQueue.then(async()=>{
+  if(sessionConflict)return;
+  try{const response=await api('/api/session',{expected_revision:sessionRevision,session:state});sessionRevision=response.revision;}
+  catch(e){sessionConflict=true;announce('本机工作区未保存：'+e.message+' 可使用「保存配方」带走当前版本。',true);}
+ });
+}
+function renderPhotoControls(){
+ renderPhotoPanels();
+ $('open-photo').hidden=mainView!=='photo';$('open-photo').disabled=photoImporting;
+ $('batch-export').hidden=mainView!=='photo';$('batch-export').disabled=photoImporting||(photoExporting&&!photoJobId)||!active||!bootstrap?.capabilities.image_batch_export||!photoQueue?.batchInputs().length;renderFilmstrip();
+ if(active){renderSceneLightControls();$('photo-film-ev').value=active.film.exposure_ev;$('photo-film-value').textContent=Number(active.film.exposure_ev).toFixed(1)+' EV';$('photo-daylight').value=active.scene.temperature_k||6500;$('photo-daylight-value').textContent=(active.scene.temperature_k||6500)+' K';$('photo-viewing').value=active.viewing.illuminant;$('photo-gain').value=active.viewing.gain;$('photo-gain-value').textContent=Number(active.viewing.gain).toFixed(1);$('photo-display').value=active.display.view;$('photo-display-target').value=active.display.target||'sRGB';$('photo-input-ev').value=testInput.exposure_ev;$('photo-input-value').textContent=Number(testInput.exposure_ev).toFixed(1)+' EV';$('photo-viewing').closest('label').hidden=active.route==='negative';$('photo-gain').closest('label').hidden=active.route==='negative';$('photo-viewing').querySelector('option[value=custom]').disabled=active.viewing.illuminant!=='custom';}
+
+ const fixed=!!bootstrap?.capabilities.fixed_scene_reference;
+ $('set-baseline').hidden=fixed;$('clear-baseline').hidden=fixed||!baseline;$('use-baseline').hidden=fixed;document.querySelector('.comparison-menu').hidden=fixed;
+ const enabled=!!bootstrap?.capabilities.image_import;
+
+ $('export-photo').hidden=!enabled||mainView!=='photo';
+ $('export-photo').disabled=photoImporting||photoExporting||!supported(active)||!bootstrap?.inputs.some(i=>i.id===testInput.id&&i.kind.startsWith('imported_'));
+}
+function renderPhotoPanels(){
+ const photoMode=mainView==='photo',scanMode=mainView==='scan',panels=photoQueue?.panels()||{recipes_collapsed:false,filmstrip_collapsed:false};
+ const collapsed=scanMode?scanUI.sidebarCollapsed():photoMode&&panels.recipes_collapsed;
+ $('workbench').dataset.recipesCollapsed=String(collapsed);$('recipe-sidebar').hidden=collapsed;
+ const recipes=$('toggle-recipes');recipes.hidden=!photoMode&&!scanMode;recipes.disabled=scanMode&&scanUI.sidebarPending();recipes.setAttribute('aria-expanded',String(!collapsed));
+ const label=(collapsed?'展开':'收起')+(scanMode?'扫描标定栏':'配方栏');recipes.setAttribute('aria-label',label);recipes.title=label;
+ const strip=$('toggle-filmstrip');strip.setAttribute('aria-expanded',String(!panels.filmstrip_collapsed));
+ strip.setAttribute('aria-label',panels.filmstrip_collapsed?'展开胶片条':'收起胶片条');strip.title=panels.filmstrip_collapsed?'展开胶片条':'收起胶片条';
+ $('filmstrip').dataset.collapsed=String(panels.filmstrip_collapsed);$('filmstrip-rail').hidden=panels.filmstrip_collapsed;
+}
+$('toggle-recipes').onclick=()=>{if(mainView==='scan'){scanUI.toggleSidebar();return;}if(!photoQueue)return;closeRecipeMenu();photoQueue.togglePanel('recipes_collapsed');renderPhotoPanels();persistSession();};
+$('toggle-filmstrip').onclick=()=>{if(!photoQueue)return;photoQueue.togglePanel('filmstrip_collapsed');renderPhotoPanels();persistSession();};
+function selectPhoto(id){
+ photoSelectionSerial++;testInput=photoQueue.select(id);selection={x:.5,y:.5,sample_id:bootstrap.samples[0].id};
+ action='已切换照片，使用同一份配方。';evaluate();
+ const button=Array.from($('filmstrip-rail').children).find(b=>b.dataset.photoId===id);button?.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+function renderFilmstrip(){
+ const strip=$('filmstrip');strip.hidden=mainView!=='photo'||!photoQueue;if(strip.hidden)return;
+ const items=photoQueue.stripItems(),rail=$('filmstrip-rail'),ids=new Set(items.map(i=>i.id)),buttons=new Map(Array.from(rail.children).map(b=>[b.dataset.photoId,b]));
+ for(const child of Array.from(rail.children))if(!ids.has(child.dataset.photoId))child.remove();
+ for(const item of items){
+  let button=buttons.get(item.id);
+  if(!button){button=document.createElement('button');button.className='filmstrip-item';button.dataset.photoId=item.id;
+   const image=document.createElement('img');image.alt='';image.loading='lazy';image.decoding='async';button.append(image,document.createElement('span'));button.onclick=()=>selectPhoto(item.id);rail.append(button);}
+  const image=button.querySelector('img');if(item.thumbnail&&image.getAttribute('src')!==item.thumbnail)image.src=item.thumbnail;
+  button.lastElementChild.textContent=item.name;button.title=item.name;button.setAttribute('aria-label',item.name);button.setAttribute('aria-pressed',String(item.id===testInput.id));
+ }
+ const current=items.findIndex(i=>i.id===testInput.id);$('filmstrip-count').textContent=(current<0?'':current+1+' / ')+items.length+' 张';
+ const photo=photoQueue.sources().find(i=>i.id===testInput.id);$('filmstrip-name').textContent=(photo?.name||'')+(photo?.interpretation?.camera_white_balance_unavailable?' · 白平衡回退':'');
+}
+$('filmstrip-rail').onkeydown=e=>{
+ if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+ const items=photoQueue.stripItems();if(!items.length)return;e.preventDefault();
+ const index=items.findIndex(i=>i.id===testInput.id),next=e.key==='Home'?0:e.key==='End'?items.length-1:Math.max(0,Math.min(items.length-1,index+(e.key==='ArrowLeft'?-1:1)));
+ selectPhoto(items[next].id);Array.from($('filmstrip-rail').children)[next]?.focus();
+};
+async function exportBatch(){
+ if(photoExporting&&photoJobId){$('photo-dialog').showModal();return;}
+ if(photoExporting||photoImporting)return;if(spectralEditor?.hasPending()){announce('请先应用光谱草稿。',true);return;}
+ const id=active?.id,epoch=documentEpoch;photoExporting=true;renderPhotoControls();
+ try{
+  await editQueue;if(active?.id!==id||documentEpoch!==epoch)throw Error('配方已切换，请重新导出。');
+  const recipe=copy(active),inputs=photoQueue.batchInputs();$('photo-dialog').showModal();$('photo-downloads').replaceChildren();$('photo-title').textContent='批量导出';
+  $('photo-export-state').textContent='正在排队 · '+inputs.length+' 张';
+  let job=await api('/api/export-images-start',{recipe,inputs});photoJobId=job.id;$('photo-job-cancel').hidden=false;renderPhotoControls();
+  while(['queued','running'].includes(job.status)){
+   $('photo-export-state').textContent=(job.status==='queued'?'等待导出':'正在导出')+' '+job.completed+' / '+job.total+' · '+recipe.name;
+   await new Promise(resolve=>setTimeout(resolve,500));job=await api('/api/photo-job',{id:photoJobId});
+  }
+  if(job.status==='failed')throw Error(job.error);
+  const response=job.result;$('photo-export-state').textContent=(job.status==='cancelled'?'已停止；':'')+'已完成 '+response.succeeded+' / '+response.total+' 张'+(response.failed?'，'+response.failed+' 张失败':'');
+  for(const file of response.files){const a=document.createElement('a');a.href=file.url;a.download='SoftLoaf-photos.zip';a.className='download-primary';a.textContent='保存照片…';$('photo-downloads').append(a);}
+  if(response.errors.length){const error=document.createElement('p');error.className='help';error.textContent=response.errors.map(e=>e.name+'：'+e.message).join('；');$('photo-downloads').append(error);}
+ }catch(error){$('photo-export-state').textContent=error.message;announce(error.message,true);}
+ finally{photoJobId=null;photoExporting=false;$('photo-job-cancel').hidden=true;renderPhotoControls();}
+}
+$('batch-export').onclick=exportBatch;
+$('photo-job-cancel').onclick=async()=>{if(photoJobId){await api('/api/photo-job',{id:photoJobId,cancel:true});$('photo-export-state').textContent='正在停止，等待当前照片完成…';}};
+async function exportPhoto(){
+ if(photoExporting)return;
+ if(spectralEditor?.hasPending()){announce('请先应用光谱草稿，再导出照片。',true);showNodeTab(spectralEditor.target());return;}
+ const id=active?.id,epoch=documentEpoch;
+ photoExporting=true;renderPhotoControls();
+ try{
+  await editQueue;
+  if(active?.id!==id||documentEpoch!==epoch)throw Error('配方已切换，请重新导出照片。');
+  if(spectralEditor?.hasPending())throw Error('请先应用光谱草稿。');
+  const recipe=copy(active),input=copy(testInput),inputName=bootstrap.inputs.find(i=>i.id===input.id)?.name||'照片';
+  $('photo-title').textContent='导出照片';$('photo-dialog').showModal();$('photo-export-state').textContent='正在处理 '+inputName+' 原始尺寸 · 冻结配方 r'+recipe.revision+'…';$('photo-downloads').replaceChildren();
+  const response=await api('/api/export-image',{recipe,input});
+  $('photo-export-state').textContent=inputName+' · 已生成并读回验证 · 配方 r'+response.frozen.revision+' · '+response.verification.width+' × '+response.verification.height;
+  for(const file of response.files.filter(f=>f.name==='image.png')){const a=document.createElement('a');a.href=file.url;a.download=file.name;a.textContent=file.name==='image.zip'?'下载照片与配方包':file.name==='image.png'?'只下载照片':'查看处理记录';a.className='download-primary';$('photo-downloads').append(a);}
+  announce('照片已生成；导出使用冻结的配方和试片曝光。');
+ }catch(e){$('photo-export-state').textContent=e.message;announce(e.message,true);}finally{photoExporting=false;renderPhotoControls();}
+}
+$('export-photo').onclick=exportPhoto;
+$('spectral-inspector').append($('spectrum-draft-state'));
+const sourceActions=document.createElement('div');sourceActions.className='source-actions';
+for(const id of ['spectrum-import','spectrum-export'])sourceActions.append($(id));$('spectral-inspector').append(sourceActions);
+$('spectral-inspector').append(document.querySelector('.spectrum-meta-details'));
+
+$('spectral-inspector').append($('spectrum-error'),document.querySelector('.spectral-editor-actions'));
+const formatDetails=document.createElement('details');formatDetails.className='footer-notes';const formatSummary=document.createElement('summary');formatSummary.textContent='格式与计算约定';formatDetails.append(formatSummary,$('spectrum-format'),$('spectrum-description'));$('spectral-inspector').append(formatDetails);
+for(const id of ['set-baseline','use-baseline','clear-baseline'])$('comparison-controls').append($(id));
+spectralEditor=createSpectralEditor({
+ getState:()=>({active,epoch:documentEpoch,assets:bootstrap?.spectral_assets,result,previewStatus:busy?'正在更新当前取样…':resultMeta?'已应用配方 r'+resultMeta.recipe.revision+' 的当前取样结果。':'等待计算'}),
+ key,graph,message:announce,awaitEdits:()=>editQueue,
+ selectNode:id=>{selectedNode=id;nodeTab=spectralEditor?.target()||nodeTab;$('node-select').value=id;render();},
+ validate:async recipe=>(await api('/api/validate',{recipe})).normalized_recipe,
+ commit:(recipe,origin)=>{if(documentEpoch!==origin.epoch||key(active)!==key(origin.active))throw Error('配方在校验期间已修改，请再次应用；现有配方保持不变。');history.push(copy(active));active=recipe;action='已应用自定义源曲线；图像、计算结果和下次 LUT 使用同一配方。';remember();render();evaluate();}
+});
+diagnosticSampler=createDiagnosticSampler({getState:()=>({active,computable:supported(active),visible:mainView==='spectra'&&['result','process'].includes(nodeTab),samples:bootstrap?.samples||[]}),api,render:renderDiagnostics});
+$('diagnostic-sample-reset').onclick=()=>{$('diagnostic-samples').open=false;diagnosticSampler.select(null);};
+$('spectral-open').onclick=()=>showNodeTab('sensitivity');
+$('view-spectrum-open').onclick=()=>showNodeTab('viewing');
+$('scene-temperature').oninput=e=>{$('scene-temperature-number').value=e.target.value;};
+function renderSceneLightControls(){
+ const tungsten=active.scene.illuminant==='Planck',low=tungsten?2500:4000,high=tungsten?5000:10000;
+ for(const id of ['scene-temperature','scene-temperature-number','photo-daylight']){$(id).min=low;$(id).max=high;}
+ for(const id of ['scene-kind','photo-scene-kind'])syncValue(id,tungsten?'Planck':'CIE_D');
+ $('scene-kind-field').hidden=active.route==='slide';$('photo-scene-kind-field').hidden=active.route==='slide';
+ $('scene-temperature-label').textContent=tungsten?'钨丝光色温':'日光色温';$('photo-scene-temperature-label').textContent=tungsten?'钨丝光色温':'拍摄日光';
+ $('scene-light-help').textContent=tungsten?'2500–5000 K 黑体能量光谱近似；按相同光度 Y 归一化。不是 CIE 日光模型。':'4000 K 暖日光 · 6500 K D65 · 10000 K 冷日光。光谱采用 CIE 标准日光模型。';
+}
+function setSceneKind(kind){if(active.route==='slide')return;queueEdit(r=>{r.scene=kind==='Planck'?{illuminant:'Planck',temperature_k:3200}:{illuminant:'CIE_D',temperature_k:5500};},'已替换拍摄光源模型，重新积分胶片曝光。');}
+$('scene-kind').onchange=e=>setSceneKind(e.target.value);$('photo-scene-kind').onchange=e=>setSceneKind(e.target.value);
+function setSceneTemperature(value){const tungsten=active.scene.illuminant==='Planck',low=tungsten?2500:4000,high=tungsten?5000:10000;if(!Number.isFinite(value)||value<low||value>high){announce('色温范围为 '+low+'–'+high+' K。',true);render();return;}queueEdit(r=>{r.scene=tungsten?{illuminant:'Planck',temperature_k:value}:value===6500?{illuminant:'D65'}:{illuminant:'CIE_D',temperature_k:value};},'拍摄色温 '+value+' K → 胶片曝光与成像重新计算；A 保持原始参考。');}
+$('scene-temperature').onchange=e=>setSceneTemperature(Number(e.target.value));$('scene-temperature-number').onchange=e=>setSceneTemperature(Number(e.target.value));
+$('recipe-select').onchange=e=>selectRecipe(e.target.value);
+const scanUI=createScanWorkbench({container:$('scan-workspace'),sidebar:$('scan-profile-sidebar'),api,status:announce,onPanelsChange:renderPhotoPanels});
+$('scan-view').onclick=()=>{mainView='scan';spectralEditor?.close();render();};
+$('node-view').onclick=()=>{mainView='spectra';showNode(selectedNode);};
+$('photo-view').onclick=()=>{mainView='photo';spectralEditor?.close();render();schedulePhotoPrefetch();};
+$('photo-editbar').append($('export-photo'));
+$('photo-spectral-recipe').onclick=()=>{mainView='spectra';showNode('film');};
+document.querySelectorAll('[data-photo-view]').forEach(b=>b.onclick=()=>{photoView=b.dataset.photoView;renderPreview();});
+$('photo-film-ev').oninput=e=>$('photo-film-value').textContent=Number(e.target.value).toFixed(1)+' EV';
+$('photo-film-ev').onchange=e=>{const v=Number(e.target.value);queueEdit(r=>r.film.exposure_ev=v,'胶片曝光已更新。');};
+$('photo-daylight').oninput=e=>$('photo-daylight-value').textContent=e.target.value+' K';$('photo-daylight').onchange=e=>setSceneTemperature(Number(e.target.value));
+$('photo-viewing').onchange=e=>{const v=e.target.value;if(v==='custom')return;queueEdit(r=>{r.viewing.illuminant=v;delete r.viewing.custom_spd;},'观看光已更新。');};
+$('photo-gain').oninput=e=>$('photo-gain-value').textContent=Number(e.target.value).toFixed(1);$('photo-gain').onchange=e=>{const v=Number(e.target.value);queueEdit(r=>r.viewing.gain=v,'观看亮度已更新。');};
+$('photo-display').onchange=e=>{const v=e.target.value;queueEdit(r=>r.display.view=v,'显示外观已更新。');};
+$('photo-input-ev').oninput=e=>$('photo-input-value').textContent=Number(e.target.value).toFixed(1)+' EV';$('photo-input-ev').onchange=e=>{testInput=photoQueue.setExposure(Number(e.target.value));evaluate();};
+$('open-photo').onclick=()=>$('photo-file').click();
+$('photo-file').onchange=async e=>{
+ const files=Array.from(e.target.files||[]);if(!files.length||photoImporting)return;
+ photoImporting=true;renderPhotoControls();let imported=0,first=null,failures=[];const selectionSerial=photoSelectionSerial;
+ try{for(let index=0;index<files.length;index++){
+  const file=files[index];$('import-progress').textContent='导入 '+(index+1)+' / '+files.length;
+  try{
+   const raw=bootstrap.capabilities.raw_extensions?.includes('.'+file.name.split('.').pop().toLowerCase());
+   if(raw&&!bootstrap.capabilities.raw_supported)throw Error('未找到 RawTherapee。');
+   if(file.size>(raw?bootstrap.capabilities.raw_max_bytes:bootstrap.capabilities.image_max_bytes))throw Error('文件超过大小限制。');
+   const bytes=new Uint8Array(await file.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=16384)binary+=String.fromCharCode(...bytes.subarray(i,i+16384));
+   const response=await api('/api/import-image',{name:file.name,data_base64:btoa(binary)}),item=response.input;
+   photoQueue.upsert(item);bootstrap.inputs=photoQueue.sources();if(!first)first=item.id;imported++;
+   $('test-input').innerHTML=bootstrap.inputs.map(i=>`<option value="${esc(i.id)}">${esc(i.name)}</option>`).join('');$('test-input').value=testInput.id;renderFilmstrip();
+   if(imported===1&&selectionSerial===photoSelectionSerial){photoView='compare';selectPhoto(first);persistSession();}
+  }catch(error){failures.push(file.name+'：'+error.message);}
+ }
+ persistSession();announce('已导入 '+imported+' 张'+(failures.length?'；'+failures.length+' 张失败，'+failures[0]:''),!!failures.length);
+ }finally{photoImporting=false;e.target.value='';$('import-progress').textContent='';renderPhotoControls();}
+};
+const cacheSettings=createCacheSettings({onOpen:cancelPhotoPrefetch,onBudgets:limits=>photoFrames.configure(limits.browser_bytes),onInvalidate:()=>{photoFrames.clear();cancelPhotoPrefetch();}});
+const uiI18n=createUII18n({request:api,status:announce});
+window.softloafOpenSettings=()=>cacheSettings.open();$('open-settings').onclick=window.softloafOpenSettings;$('open-app-settings').onclick=window.softloafOpenSettings;
+document.addEventListener('keydown',event=>{if((event.metaKey||event.ctrlKey)&&event.key===','){event.preventDefault();window.softloafOpenSettings();}});
+window.softloafFlushSession=async()=>{if(scanUI.isBusy())return {ok:false,reason:'扫描任务仍在进行，请完成后再退出。'};await editQueue;persistSession();await sessionQueue;return {ok:!photoImporting&&!photoExporting&&!sessionConflict&&!bootstrap?.session_warning&&!spectralEditor?.hasPending(),reason:photoImporting||photoExporting?'照片仍在导入或导出，请完成后再退出。':spectralEditor?.hasPending()?'还有未应用的光谱草稿。':'本机工作区尚未保存，请先下载配方。'};};
+init();
+})();
+</script>
+</html>

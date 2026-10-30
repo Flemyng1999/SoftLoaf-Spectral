@@ -1,0 +1,9 @@
+{
+  "schema": "softloaf.material-plot-identities/1",
+  "source_id": "kodak_e100_e4000_2018",
+  "source_sha256": "d6e6fa1497c4fc16010997b1a8510d9df3b4692e34c48599c8a4338d5768fab6",
+  "plot_sha256": "4b4a85f1e88d27d12377e5559aa9b59eb49d7f15be26755b5ffa2e5f3dd82e38",
+  "calculation_sensitivity_sha256": "87ec57285a4c2feb0234986b87e5fc19b39c472bf738c8c207911e0563674a1b",
+  "extraction": "experiments/extract_e100_plot.py; original vector paths, no smoothing or extrapolation",
+  "rights": "Hashes only; PDF and extracted curve data remain local pending redistribution review"
+}
