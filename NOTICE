@@ -27,10 +27,10 @@ The original scanline PNG interface links to libpng (PNG Reference Library
 License) and zlib through the configured build dependency. No other product
 implementation was copied for the streaming image or cache settings modules.
 
-The optional scan lens adapter uses the separately installed public Lensfun
-library and database, currently tested with 0.3.4. Lensfun library, tools and data
-retain their upstream LGPL-3.0, GPL-3.0 and CC-BY-SA-3.0 terms respectively; no Lensfun
-database or binary is bundled here. Frozen selections record source XML hashes
+The scan lens adapter uses the public Lensfun library and original 0.3.4 XML
+database; assets/lensfun records the original source and unchanged file hashes. Lensfun library, tools and data
+retain their upstream LGPL-3.0, GPL-3.0 and CC-BY-SA-3.0 terms respectively.
+Standalone packages include the library and database with their notices. Frozen selections record source XML hashes
 and Lensfun attribution. Other products' private profiles are not imported.
 
 assets/science/cie contains unmodified original International Commission on

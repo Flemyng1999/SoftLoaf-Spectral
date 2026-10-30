@@ -12,6 +12,11 @@ int main() {
                 backing:NSBackingStoreBuffered defer:NO];
             NSView *content = [NSView new];
             SLInstallContentView(window,content);
+            NSRect initial = [content convertRect:content.bounds toView:nil];
+            if (NSWidth(initial)<900 || NSHeight(initial)<600) {
+                std::cerr << "Initial content has no visible size: " << NSStringFromRect(initial).UTF8String << '\n';
+                return 1;
+            }
             for (NSSize size : {NSMakeSize(960,650),NSMakeSize(1320,850),NSMakeSize(1100,680)}) {
                 [window setContentSize:size];
                 [window.contentView layoutSubtreeIfNeeded];

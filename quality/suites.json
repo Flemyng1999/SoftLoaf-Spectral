@@ -24,7 +24,10 @@
     "tests/test_raw_runtime.py",
     "tests/test_cache_platform.py",
     "tests/test_release_sources.py",
-    "tests/test_source_release.py"
+    "tests/test_source_release.py",
+    "tests/test_runtime_paths.py",
+    "tests/test_runtime_setup.py",
+    "tests/test_runtime_resources.py"
   ],
   "integration_required": [
     "local/film-color-slides/hyperspectral-demo/output/reversal-E100/intermediate/model.npz",

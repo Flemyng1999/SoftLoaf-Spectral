@@ -1,0 +1,6 @@
+Lensfun 0.3.4 — original lens database by Lensfun contributors.
+Database: CC-BY-SA-3.0, https://creativecommons.org/licenses/by-sa/3.0/
+Native library: LGPL-3.0-only, https://www.gnu.org/licenses/lgpl-3.0.html
+Original XML source and upstream author notices are included unchanged.
+Source: https://github.com/lensfun/lensfun/tree/v0.3.4
+No scanner profiles or other products’ private data are included.

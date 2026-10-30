@@ -2,11 +2,14 @@
 
 [中文说明](README.zh-CN.md)
 
-**0.1.0-alpha.1 is a source-only prerelease.** It includes source code, tests,
-the application logo and the reviewed original CIE tables. It does not include
-an installer, film/paper curves, frozen spectral models, photographs or scan
-calibrations. Public core checks can run without those inputs; the desktop
-application cannot run out of the box. See [building and required inputs](docs/source-release.md).
+**The desktop runtime and scientific inputs are distributed separately.**
+Alpha.1 is source-only; alpha.2 adds standalone macOS arm64 packaging. Windows
+installers remain in validation. See [Releases](https://github.com/Flemyng1999/SoftLoaf-Spectral/releases)
+for published downloads. Neither channel includes film/paper curves, frozen
+spectral models, photographs or scan calibrations.
+Public core checks run without those inputs; the application needs a prepared
+scientific-data directory. See [source build inputs](docs/source-release.md)
+and [installer setup and packaging](docs/installer-setup.md).
 
 SoftLoaf Spectral is a project for calculating film-emulation LUTs from spectral
 data. Its planned desktop application will combine illuminants, film sensitivity,
@@ -75,7 +78,8 @@ A [local desktop version 0.1](docs/application-v0.1.zh-CN.md) now uses a C++23
 float64 calculation library and a macOS AppKit / WebKit window. It supports E100
 node editing, RGB image trials, full-size PNG export and verified LUT export.
 The development bundle requires the configured checkout, Python environment and
-local material assets; there is no self-contained installer or released LUT yet.
+local material assets. The separate alpha.2 runtime candidate removes the
+checkout/Python requirement, while scientific inputs remain user-provided.
 
 On macOS, image pixels now use an independent Metal float32 implementation of
 all three spectral routes and the native OCIO display graphs. Previews have a

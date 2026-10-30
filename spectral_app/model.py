@@ -56,7 +56,8 @@ class SpectralModel(E100Model):
         from .material_plots import load_e100_plot
         self.material_plot_sources=load_e100_plot(Path(__file__).resolve().parents[1],self.sources,np.diff(self.source_wavelengths)[0])
         self.direct_spectral_preview = True
-        self.material_directory=Path(materials or Path(__file__).resolve().parents[1]/'local/materials/5207-v1')
+        from .runtime_paths import science_root
+        self.material_directory=Path(materials or science_root()/'local/materials/5207-v1')
         self.route_sources={};self.route_material_cache={}
         self.negative=self.paper=None
         if not (self.material_directory/'provenance.json').exists():return
@@ -75,7 +76,7 @@ class SpectralModel(E100Model):
         weights=w[:,1:]*quadrature_widths(w[:,0])[:,None]
         self.apd_weights=weights/weights.sum(0)
         from spectral_lut.densitometry import load_status_m
-        products,self.status_m_source=load_status_m(Path(__file__).resolve().parents[1],self.negative_wavelengths)
+        products,self.status_m_source=load_status_m(Path(__file__).resolve().parents[1],self.negative_wavelengths,data_root=science_root())
         weights=products*quadrature_widths(self.negative_wavelengths)[:,None]
         self.status_m_weights=weights/weights.sum(0)
         self.negative_material={'schema':'softloaf.material/1','name':'Kodak 5207 · ECN-2','source':'Kodak H-1-5207t, July 2015, pp4–5; independently extracted published vector curves; local rights review pending',

@@ -170,7 +170,7 @@ class RawTherapee:
             self.identity=hashlib.sha256(self.cli.read_bytes()).hexdigest()
         share=self.runtime.resources
         self.resource_hashes={}
-        for name in ('camconst.json','cammatrices.json','dcraw.json','dcpprofiles','iccprofiles/input'):
+        for name in ('options','camconst.json','cammatrices.json','dcraw.json','dcpprofiles','iccprofiles/input'):
             path=share/name
             for file in sorted(path.rglob('*') if path.is_dir() else [path]):
                 if file.is_file():self.resource_hashes[str(file.relative_to(share))]=hashlib.sha256(file.read_bytes()).hexdigest()

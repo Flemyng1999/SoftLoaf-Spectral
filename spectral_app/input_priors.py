@@ -12,7 +12,8 @@ LEGACY={'schema':'softloaf.input-prior/1','id':'smooth-baseline/1','family':'sha
 
 class InputPriors:
     def __init__(self,kernel,wavelengths,directory=None):
-        self.directory=Path(directory or Path(__file__).resolve().parents[1]/'artifacts/sampling-database')
+        from .runtime_paths import science_root
+        self.directory=Path(directory or science_root()/'artifacts/sampling-database')
         report_path=self.directory/'report.json'
         pinned=json.loads((Path(__file__).resolve().parents[1]/'data/sampling-priors-manifest.json').read_text())
         if sha(report_path)!=pinned['report_sha256']:raise ValueError('Sampling selection report changed')

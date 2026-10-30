@@ -5,9 +5,9 @@ import json
 import numpy as np
 
 
-def load_status_m(root,grid):
+def load_status_m(root,grid,*,data_root=None):
     manifest=json.loads((root/'data/status-m-reference-manifest.json').read_text())
-    path=root/'local/materials/status-m-iso1984/table4.json'
+    path=(data_root or root)/'local/materials/status-m-iso1984/table4.json'
     if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=manifest['table_sha256']:
         raise ValueError('Status M source identity mismatch; extract the reviewed standard table.')
     data=json.loads(path.read_text());x=np.asarray(grid,dtype=np.float64)

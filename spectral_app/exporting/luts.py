@@ -98,7 +98,8 @@ class LutExporter:
                 (directory/'OpenDRT-LICENSE.md').write_bytes(self.model.opendrt_license);names.append('OpenDRT-LICENSE.md')
         upstream=bool(conditions.get('optical_sources')) or bool(conditions.get('material',{}).get('provenance',{}).get('sources',{}).get('processed_sensitivity'))
         if upstream:
-            source=root/'local/reference-assets/spektrafilm/SPEKTRAFILM_LICENSE.txt'
+            from ..runtime_paths import science_root
+            source=science_root(root)/'local/reference-assets/spektrafilm/SPEKTRAFILM_LICENSE.txt'
             if not source.is_file():raise RecipeError('missing_license','缺少上游资料许可，未发布 LUT。')
             (directory/source.name).write_bytes(source.read_bytes());names.extend([source.name,'CHANGELOG.txt'])
             (directory/'CHANGELOG.txt').write_text('SoftLoaf Spectral derived local export\nAuthor: Yangming Feng and contributors\nOriginal profile author: Andrea Volpato / spektrafilm\nChanges and sources:\n'+'\n'.join(metadata['comments'])+'\n')

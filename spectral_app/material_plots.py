@@ -5,8 +5,9 @@ from pathlib import Path
 
 
 def load_e100_plot(root, sources, calculation_step_nm):
+    from .runtime_paths import science_root
     manifest_path=root/'data/e100-plot-reference-manifest.json'
-    path=root/'local/materials/e100-plot-v1/sensitivity.json'
+    path=science_root(root)/'local/materials/e100-plot-v1/sensitivity.json'
     if not path.exists() or not manifest_path.exists():return {}
     manifest=json.loads(manifest_path.read_text())
     if hashlib.sha256(path.read_bytes()).hexdigest()!=manifest['plot_sha256']:
@@ -24,7 +25,8 @@ def load_vision3_plots(root):
     """Only reviewed material/plot pairs may supply optional display detail."""
     manifest=root/'data/vision3-materials-manifest.json'
     if not manifest.exists():return {}
-    data=json.loads(manifest.read_text());directory=root/'local/materials/vision3-source-v2';out={}
+    from .runtime_paths import science_root
+    data=json.loads(manifest.read_text());directory=science_root(root)/'local/materials/vision3-source-v2';out={}
     if data.get('schema')!='softloaf.vision3-materials/1':raise ValueError('Unknown VISION3 material catalog')
     for entry in data['materials']:
         if entry['id'] not in ('5203','5207','5213','5219'):raise ValueError('Unselected motion-picture stock')

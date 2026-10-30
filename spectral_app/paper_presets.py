@@ -5,7 +5,8 @@ from pathlib import Path
 
 
 def load_paper_presets(root):
-    root=Path(root);path=root/'data/paper-presets-manifest.json';directory=root/'local/materials/paper-presets-v1'
+    from .runtime_paths import science_root
+    root=Path(root);path=root/'data/paper-presets-manifest.json';directory=science_root(root)/'local/materials/paper-presets-v1'
     if not path.exists() or not directory.is_dir():return []
     catalog=json.loads(path.read_text())
     if catalog.get('schema')!='softloaf.paper-presets/1':raise ValueError('Unknown paper catalog')

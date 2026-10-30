@@ -60,6 +60,9 @@ if(BUILD_TESTING)
     target_compile_features(softloaf_process_tree_test PRIVATE cxx_std_23)
     add_test(NAME desktop_service_ownership COMMAND softloaf_process_tree_test)
     if(WIN32)
+        add_executable(softloaf_windows_arguments_test core/tests/windows_command_line_test.cpp)
+        target_link_libraries(softloaf_windows_arguments_test PRIVATE shell32)
+        add_test(NAME desktop_argument_roundtrip COMMAND softloaf_windows_arguments_test)
         add_executable(softloaf_windows_dpi_test WIN32 core/tests/windows_dpi_test.cpp)
         target_sources(softloaf_windows_dpi_test PRIVATE desktop/windows/app.manifest)
         target_link_libraries(softloaf_windows_dpi_test PRIVATE user32)
@@ -68,6 +71,7 @@ if(BUILD_TESTING)
 endif()
 
 option(SOFTLOAF_DESKTOP "Build the local development application" ON)
+option(SOFTLOAF_PACKAGED_SERVICE "Launch the independently bundled service instead of development Python" OFF)
 if(WIN32 AND SOFTLOAF_DESKTOP)
     enable_language(RC)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
@@ -76,6 +80,7 @@ if(WIN32 AND SOFTLOAF_DESKTOP)
     find_path(SOFTLOAF_WEBVIEW2_INCLUDE WebView2.h HINTS "${SOFTLOAF_WEBVIEW2_SDK}/build/native/include" REQUIRED)
     find_library(SOFTLOAF_WEBVIEW2_LOADER WebView2LoaderStatic HINTS "${SOFTLOAF_WEBVIEW2_SDK}/build/native/x64" REQUIRED)
     add_executable(SoftLoafSpectralWindows WIN32 desktop/windows/main.cpp desktop/windows/app.manifest)
+    target_compile_definitions(SoftLoafSpectralWindows PRIVATE SOFTLOAF_PACKAGED_SERVICE=$<BOOL:${SOFTLOAF_PACKAGED_SERVICE}>)
     configure_file(desktop/windows/application.rc.in windows-application.rc @ONLY)
     target_sources(SoftLoafSpectralWindows PRIVATE "${CMAKE_BINARY_DIR}/windows-application.rc")
     target_compile_features(SoftLoafSpectralWindows PRIVATE cxx_std_23)
@@ -91,13 +96,16 @@ if(WIN32 AND SOFTLOAF_DESKTOP)
         add_dependencies(softloaf_windows_branding_test SoftLoafSpectralWindows)
         add_test(NAME desktop_embedded_branding COMMAND softloaf_windows_branding_test "$<TARGET_FILE:SoftLoafSpectralWindows>")
     endif()
-    file(GENERATE OUTPUT "$<TARGET_FILE_DIR:SoftLoafSpectralWindows>/runtime.ini" CONTENT
+    if(NOT SOFTLOAF_PACKAGED_SERVICE)
+      file(GENERATE OUTPUT "$<TARGET_FILE_DIR:SoftLoafSpectralWindows>/runtime.ini" CONTENT
         "[runtime]\nsource=${CMAKE_SOURCE_DIR}\npython=${Python3_EXECUTABLE}\ncore=$<TARGET_FILE:softloaf_core>\nbrowser_cache=${SOFTLOAF_WEBVIEW2_CACHE}\n")
+    endif()
 endif()
 if(APPLE AND SOFTLOAF_DESKTOP)
     enable_language(OBJCXX)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
     add_executable(SoftLoafSpectral MACOSX_BUNDLE desktop/macos/main.mm)
+    target_compile_definitions(SoftLoafSpectral PRIVATE SOFTLOAF_PACKAGED_SERVICE=$<BOOL:${SOFTLOAF_PACKAGED_SERVICE}>)
     foreach(language IN ITEMS en zh-Hans)
         set(softloaf_localized_info "${CMAKE_SOURCE_DIR}/desktop/macos/${language}.lproj/InfoPlist.strings")
         set_source_files_properties("${softloaf_localized_info}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${language}.lproj")
@@ -116,6 +124,10 @@ if(APPLE AND SOFTLOAF_DESKTOP)
     set_target_properties(SoftLoafSpectral PROPERTIES
         OUTPUT_NAME "SoftLoaf Spectral"
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/desktop/macos/Info.plist.in")
+    set(SOFTLOAF_BUNDLE_ID "org.softloaf.spectral.development")
+    if(SOFTLOAF_PACKAGED_SERVICE)
+        set(SOFTLOAF_BUNDLE_ID "org.softloaf.spectral")
+    endif()
     add_dependencies(SoftLoafSpectral softloaf_core softloaf_metal softloaf_imageio)
     if(TARGET softloaf_rawtherapee_cli)
         add_dependencies(SoftLoafSpectral softloaf_rawtherapee_cli)
@@ -129,7 +141,8 @@ if(APPLE AND SOFTLOAF_DESKTOP)
     endif()
     # A local development bundle, intentionally tied to the configured checkout
     # and Python environment. External material assets are never copied into it.
-    configure_file(desktop/macos/runtime.plist.in runtime.plist @ONLY)
+    if(NOT SOFTLOAF_PACKAGED_SERVICE)
+      configure_file(desktop/macos/runtime.plist.in runtime.plist @ONLY)
     # POST_BUILD alone does not run when only the independently loaded core
     # changes. Refresh resources on every default build, after both targets.
     add_custom_target(softloaf_desktop_runtime ALL
@@ -143,6 +156,7 @@ if(APPLE AND SOFTLOAF_DESKTOP)
         COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:softloaf_imageio>"
             "$<TARGET_BUNDLE_DIR:SoftLoafSpectral>/Contents/Resources/$<TARGET_FILE_NAME:softloaf_imageio>"
         DEPENDS SoftLoafSpectral softloaf_core softloaf_metal softloaf_imageio)
+    endif()
 endif()
 
 # Honor this checkout's private external-data preference for test temporaries.

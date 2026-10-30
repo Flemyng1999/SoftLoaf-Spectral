@@ -5,7 +5,8 @@ from pathlib import Path
 
 
 def load_reversal_presets(root):
-    root=Path(root);manifest=root/'data/reversal-presets-manifest.json';directory=root/'local/materials/reversal-presets-v1'
+    from .runtime_paths import science_root
+    root=Path(root);manifest=root/'data/reversal-presets-manifest.json';directory=science_root(root)/'local/materials/reversal-presets-v1'
     if not manifest.is_file() or not directory.is_dir():return []
     catalog=json.loads(manifest.read_text());result=[]
     if catalog['schema']!='softloaf.reversal-presets/1':raise ValueError('Unknown reversal catalog')

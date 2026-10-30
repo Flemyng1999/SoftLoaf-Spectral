@@ -11,11 +11,18 @@ import time
 
 
 def main():
-    root = Path(__file__).resolve().parents[1]
+    from .runtime_paths import resources,state_path,science_root,packaged,SetupRequired
+    root = resources()
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--archive', type=Path, default=root/'local/film-color-slides/hyperspectral-demo')
-    parser.add_argument('--opendrt', type=Path, default=root/'local/reference-assets/OpenDRT_v1.0.0_mini-config_v2.zip')
-    parser.add_argument('--output', type=Path, default=root/'artifacts/application')
+    parser.add_argument('--archive', type=Path)
+    parser.add_argument('--opendrt', type=Path)
+    parser.add_argument('--output', type=Path)
+    parser.add_argument('--runtime-probe',action='store_true')
+    parser.add_argument('--needs-setup',action='store_true')
+    parser.add_argument('--configure',action='store_true')
+    parser.add_argument('--science-root',type=Path)
+    parser.add_argument('--data-root',type=Path)
+    parser.add_argument('--volume',type=Path)
     parser.add_argument('--core', type=Path)
     parser.add_argument('--compute',choices=['auto','metal','d3d12','cpu'],default='metal' if sys.platform=='darwin' else 'auto' if sys.platform=='win32' else 'cpu')
     parser.add_argument('--require-gpu',action='store_true',help='Fail verification instead of falling back when the requested GPU is unavailable')
@@ -25,8 +32,34 @@ def main():
     parser.add_argument('--stop-event',help='Owner-created Windows shutdown event')
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
+    if args.needs_setup:
+        from .runtime_paths import settings
+        try:
+            config=settings()
+            return 0 if (Path(config['science_root'])/'runtime-science.json').is_file() and Path(config['volume']).is_mount() else 2
+        except SetupRequired:return 2
+    if args.runtime_probe:
+        from .runtime_probe import probe
+        print(json.dumps(probe()),flush=True);return 0
+    if args.configure:
+        if not all((args.science_root,args.data_root,args.volume)):parser.error('Configuration needs science-root, data-root and volume')
+        from .runtime_setup import configure as configure_runtime
+        try:configure_runtime(args.science_root,args.data_root,args.volume)
+        except (OSError,ValueError,SetupRequired) as error:
+            print(json.dumps({'ok':False,'message':str(error)}),flush=True);return 2
+        print(json.dumps({'ok':True}),flush=True);return 0
+    try:science=science_root()
+    except SetupRequired as error:
+        print(json.dumps({'ok':False,'missing':[str(error)]}),flush=True);return 2
+    args.archive=args.archive or science/'local/film-color-slides/hyperspectral-demo'
+    args.opendrt=args.opendrt or science/'local/reference-assets/OpenDRT_v1.0.0_mini-config_v2.zip'
+    if args.output is None:
+        if packaged():
+            from .runtime_paths import settings
+            args.output=Path(settings()['data_root'])/'data/artifacts/application'
+        else:args.output=state_path('artifacts/application')
     from spectral_app.diagnostics import configure,event,install_exception_hooks
-    try:configure(root/'artifacts/application/logs')
+    try:configure(state_path('artifacts/application/logs'))
     except OSError:pass
     install_exception_hooks()
     event('service.starting',pid=os.getpid(),requested_backend=args.compute)
@@ -51,7 +84,7 @@ def main():
     assets += [('Status A density weights', args.archive/'output/reversal-E100/intermediate/model.npz')]
     assets += [(name, args.archive.parent/'data'/name) for name in (
         'CIE_xyz_official.csv', 'CIE_std_illum_D50.csv', 'CIE_std_illum_D65.csv')]
-    assets += [("optimized sampling "+name,root/'artifacts/sampling-database'/name) for name in ('report.json','reversal.sqlite','negative.sqlite','models/reversal.npz','models/negative.npz')]
+    assets += [("optimized sampling "+name,science/'artifacts/sampling-database'/name) for name in ('report.json','reversal.sqlite','negative.sqlite','models/reversal.npz','models/negative.npz')]
     assets += [('OpenDRT v1.0.0 mini config', args.opendrt)]
     for name, path in assets:
         if not path.is_file():
@@ -105,10 +138,11 @@ def main():
         gpu_backend.on_failure=fallback
     server = make_server(application, root/'design/gui-v2/index.html',
                          root/'assets/branding/softloaf-spectral.png', args.port)
-    ready = {'ok': True, 'url': f'http://127.0.0.1:{server.server_port}/', 'pid': os.getpid(),'backend':args.compute}
+    ready = {'ok': True, 'url': f'http://127.0.0.1:{server.server_port}/', 'pid': os.getpid(),'backend':args.compute,
+             'browser_cache':(storage.root/'browser' if storage.root else args.output/'browser').as_posix()}
     if args.ready_file:
         temporary = args.ready_file.with_suffix('.tmp')
-        temporary.write_text(json.dumps(ready))
+        temporary.write_text(json.dumps(ready,ensure_ascii=False),encoding='utf-8')
         temporary.replace(args.ready_file)
     print(json.dumps(ready), flush=True)
     event('service.ready',pid=os.getpid(),port=server.server_port,backend=args.compute)
