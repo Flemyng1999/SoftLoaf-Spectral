@@ -30,6 +30,8 @@ def stage(platform,native,service,notices,destination):
     if destination.exists():raise FileExistsError(destination)
     if not (service/'_internal/spectral_app/model.py').is_file():raise ValueError('Frozen service sources missing')
     for role in ('raw-engine','raw-reference'):
+        executable=service/'_internal'/role/('MacOS/rawtherapee-cli' if platform=='macos' else 'bin/rawtherapee-cli.exe')
+        if not executable.is_file():raise ValueError('RAW executable missing: '+role)
         resource=service/'_internal'/role/('Resources/share' if platform=='macos' else 'bin')
         for name in ('camconst.json','cammatrices.json','dcraw.json','options'):
             if not (resource/name).is_file():raise ValueError('RAW resource missing: '+role+'/'+name)
@@ -48,7 +50,7 @@ def stage(platform,native,service,notices,destination):
     else:
         destination.mkdir(parents=True);target=destination
         shutil.copy2(native,target/'SoftLoaf Spectral.exe')
-        shutil.copy2(ROOT/'assets/branding/softloaf-spectral.ico',target/'App.ico')
+        shutil.copy2(ROOT/'assets/branding/SoftLoafSpectral.ico',target/'App.ico')
         for name in ('MSVCP140.dll','VCRUNTIME140.dll','VCRUNTIME140_1.dll'):
             shutil.copy2(service/'_internal'/name,target/name)
     # Native build products must not bring a stale service along.

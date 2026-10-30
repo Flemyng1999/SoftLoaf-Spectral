@@ -83,3 +83,16 @@ assessment. Generate final SHA-256 sums only after those operations.
 missing RAW resources and inventories the payload. Windows packaging uses
 `desktop/windows/installer.nsi`; data volumes are not included in its uninstall
 rules. Never copy a local workspace, test pack or RAW corpus into a public stage.
+
+For Windows MSYS2 inputs, `scripts/msys2_inventory.py` verifies each selected DLL
+against its original cached binary package. It preserves `.PKGINFO`,
+`.BUILDINFO`, package notices, source URLs and hashes. After fetching the source
+archives, `--sources-manifest` also checks their `PKGBUILD` against the hash in
+the binary's build record. A filename or a matching library version alone is
+insufficient evidence. The audit includes both RAW roles and MSYS2 libraries
+selected by the frozen-service analysis; other native providers need separate
+records.
+
+Staging rejects a missing executable in either RAW role before creating its
+output directory. Install the role executables, DLL closures and resources
+after freezing the service: a clean freeze replaces its output tree.

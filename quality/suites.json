@@ -1,6 +1,9 @@
 {
   "schema": 1,
   "public": [
+    "tests/test_film_lighting.py",
+    "tests/test_windows_packaging.py",
+    "tests/test_msys2_inventory.py",
     "tests/test_reference.py",
     "tests/test_metrics.py",
     "tests/test_resampling.py",
