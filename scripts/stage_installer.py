@@ -33,7 +33,7 @@ def stage(platform,native,service,notices,destination):
         executable=service/'_internal'/role/('MacOS/rawtherapee-cli' if platform=='macos' else 'bin/rawtherapee-cli.exe')
         if not executable.is_file():raise ValueError('RAW executable missing: '+role)
         resource=service/'_internal'/role/('Resources/share' if platform=='macos' else 'bin')
-        for name in ('camconst.json','cammatrices.json','dcraw.json','options'):
+        for name in ('camconst.json','cammatrices.json','dcraw.json','rt.json','options'):
             if not (resource/name).is_file():raise ValueError('RAW resource missing: '+role+'/'+name)
     if platform=='macos':
         contents=destination/'SoftLoaf Spectral.app/Contents'

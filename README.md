@@ -11,6 +11,11 @@ Public core checks run without those inputs; the application needs a prepared
 scientific-data directory. See [source build inputs](docs/source-release.md)
 and [installer setup and packaging](docs/installer-setup.md).
 
+The workspace opens Film emulation, followed by Negative conversion and Spectra.
+New recipes and stock changes use the film's reference capture light, shown as
+a note. RAW white balance, enlarger light and viewing light remain separate;
+saved recipes retain their recorded conditions.
+
 SoftLoaf Spectral is a project for calculating film-emulation LUTs from spectral
 data. Its planned desktop application will combine illuminants, film sensitivity,
 characteristic curves, dye spectra and other material data, with controls for

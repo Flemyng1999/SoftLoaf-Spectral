@@ -68,6 +68,7 @@ const messages={
  "负片去色罩": "Negative conversion",
  "日光型": "Daylight balanced",
  "钨丝光型": "Tungsten balanced",
+ "当前 X-Trans 使用 RT 5.12 兼容路径，请配置经过验证的兼容读取器。": "X-Trans requires a verified RT 5.12 compatibility reader.",
  "片种参考": "Film reference",
  "配方记录": "Saved condition",
  "光谱": "Spectra",

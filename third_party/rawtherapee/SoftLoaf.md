@@ -62,6 +62,26 @@ The Windows build removes an unused namespace-scope `ProcParams` from
 global `Options` constructor on the tested MinGW build, crashing before `main`.
 The object had no uses; its removal does not change highlight processing.
 
+The X-Trans homogeneity sums now stay within the maps initialized by their
+preceding loops. Upstream extended the final tile's bounds beyond those maps;
+repeated official Windows developments produced different bottom-edge values.
+The corrected path uses RT's existing raw-sample interpolation for the outer
+11 sensor pixels. In the two tested X-T30 images this changes only the outer
+four output pixels. The rest matches the original official CLI exactly when
+both readers use the same complete upstream camera resources; the corrected
+full output repeats exactly. This is a recorded boundary change, not a claim
+of agreement with the original program's unstable edge values.
+
+`scripts/build_windows_rt_reference.py` builds a compatibility CLI from the
+hash-pinned official 5.12 source archive, with only those initialization and
+X-Trans bounds fixes. It uses a generic x64 target and UCRT64 dependencies,
+whose binary packages and corresponding source recipes are audited separately.
+The independent comparison must include `dcraw.json`, `rt.json`,
+`camconst.json` and `cammatrices.json` on both sides: the originally extracted
+official Windows directory omitted additional camera tables and therefore
+was not the same camera-calibration condition. No fitted color correction is
+applied to make the readers agree.
+
 From the repository root, configure and build with CMake. Required public
 packages include GTKmm 3, LCMS2, Exiv2, TIFF, PNG, JPEG, FFTW3f, Lensfun,
 libiptcdata, glibmm, librsvg, libomp, autoconf, automake and libtool. CMake's

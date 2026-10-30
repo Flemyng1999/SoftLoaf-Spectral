@@ -200,7 +200,7 @@ class RawTherapee:
                 self._sensors[digest]=json.loads(run.stdout).get('filters') if run.returncode==0 else None
             except (OSError,ValueError,subprocess.TimeoutExpired):self._sensors[digest]=None
         if self._sensors[digest]!=9:return None
-        if not self.reference_identity:raise RecipeError('raw_compatibility','当前 X-Trans 读取保留官方 RT 5.12 路径，请配置经过验证的兼容读取器。')
+        if not self.reference_identity:raise RecipeError('raw_compatibility','当前 X-Trans 使用 RT 5.12 兼容路径，请配置经过验证的兼容读取器。')
         if self.files.digest(self.reference_cli)!=self.reference_identity:raise RecipeError('raw_engine_changed','RAW 兼容读取器已更新，请重新启动应用。')
         return self.reference_cli
 
@@ -326,9 +326,9 @@ class RawTherapee:
                                 if not np.isfinite(block).all():raise RecipeError('raw_handoff','RAW 输出包含非有限数值。')
                         if page.tags.get(34675) is None or page.tags[34675].value!=icc:raise RecipeError('raw_handoff','RAW 输出 ICC 与声明的空间不符。')
                     del pixels
-                method=('bayer-2x2' if geometry and geometry[0][2]=='2' else 'RT full demosaic → half-size output (non-quartet geometry)') if preview and shared else 'official RT full demosaic → half-size output' if preview else 'not applicable'
+                method=('bayer-2x2' if geometry and geometry[0][2]=='2' else 'RT full demosaic → half-size output (non-quartet geometry)') if preview and shared else 'RT reference full demosaic → half-size output' if preview else 'not applicable'
                 metadata={'schema':'softloaf.raw-handoff/2','source_sha256':digest,'engine':'RawTherapee 5.12','engine_sha256':self.files.digest(cli),'settings_sha256':signature,
-                    'processing_mode':'preview' if preview else 'full-quality','raw_decode_count':1,'handoff':'shared RT Lab → independent ICC outputs' if shared else 'official RT → float AP1 → relative-colorimetric LCMS2 sRGB',
+                    'processing_mode':'preview' if preview else 'full-quality','raw_decode_count':1,'handoff':'shared RT Lab → independent ICC outputs' if shared else 'RT reference → float AP1 → relative-colorimetric LCMS2 sRGB',
                     'worker_threads':int(re.findall(r'SOFTLOAF_RAW_THREADS (\d+)',message)[0]) if 'SOFTLOAF_RAW_THREADS ' in message else 2 if compatibility else self.thread_count,
                     'requested_worker_threads':self.thread_count,'preview_method':method,'original_size':original_size,'decoded_size':[page.imagewidth,page.imagelength],
                     'camera_database_sha256':hashlib.sha256(json.dumps(self.resource_hashes,sort_keys=True).encode()).hexdigest(),

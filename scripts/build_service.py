@@ -4,12 +4,18 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import shutil
 
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def build(root,build_directory,output,native_dependencies=None):
+def build(root,build_directory,output,native_dependencies=None,msvc_runtime=None):
     root=Path(root).resolve();build_directory=Path(build_directory).resolve();output=Path(output).resolve()
+    crt=('MSVCP140.dll','VCRUNTIME140.dll','VCRUNTIME140_1.dll')
+    if sys.platform=='win32':
+        if not msvc_runtime:raise ValueError('Windows requires an explicit reviewed MSVC redistributable directory')
+        for name in crt:
+            if not (Path(msvc_runtime)/name).is_file():raise FileNotFoundError(name)
     work=root/'build/frozen-service';work.mkdir(parents=True,exist_ok=True)
     args=[sys.executable,'-m','PyInstaller','--noconfirm','--clean','--onedir','--name','spectral-service',
         '--distpath',str(output),'--workpath',str(work/'work'),'--specpath',str(work),
@@ -46,6 +52,8 @@ def build(root,build_directory,output,native_dependencies=None):
             args.extend(['--add-binary',str(path)+':native'])
     args.append(str(root/'scripts/frozen_service.py'))
     subprocess.run(args,cwd=root,check=True)
+    if sys.platform=='win32':
+        for name in crt:shutil.copy2(Path(msvc_runtime)/name,output/'spectral-service/_internal'/name)
     return output/'spectral-service'
 
 
@@ -55,4 +63,5 @@ if __name__=='__main__':
     parser.add_argument('--native',type=Path,default=ROOT/'build')
     parser.add_argument('--output',type=Path,default=ROOT/'dist/runtime')
     parser.add_argument('--native-dependencies',type=Path)
-    args=parser.parse_args();print(build(args.root,args.native,args.output,args.native_dependencies))
+    parser.add_argument('--msvc-runtime',type=Path)
+    args=parser.parse_args();print(build(args.root,args.native,args.output,args.native_dependencies,args.msvc_runtime))

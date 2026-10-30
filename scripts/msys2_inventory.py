@@ -2,11 +2,13 @@
 import argparse
 import ast
 import hashlib
+import io
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import shutil
 import subprocess
+import tarfile
 
 
 def digest(path):
@@ -37,6 +39,35 @@ def verify_source_recipe(archive,base,expected,tar_command=('tar',),env=None):
     actual=hashlib.sha256(result.stdout).hexdigest()
     if actual!=expected:raise ValueError(base+' source recipe differs from the binary build')
     return actual
+
+
+def source_notices(archive,destination,tar_command=('tar',),env=None):
+    """Read license texts from a verified source package and its upstream tar."""
+    def safe(name):
+        p=PurePosixPath(name)
+        return not p.is_absolute() and '..' not in p.parts and '\\' not in name and ':' not in name
+    def notice(name):
+        p=PurePosixPath(name)
+        return (safe(name) and
+                any(word in p.name.lower() for word in ('license','licence','copying','copyright','notice','authors'))
+                and p.suffix.lower() not in ('.c','.h','.cc','.cpp','.py','.rs','.json','.toml','.cmake'))
+    def save(name,data):
+        if len(data)>2_000_000:return 0
+        target=Path(destination)/Path(*PurePosixPath(name).parts)
+        target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data);return 1
+    names=subprocess.check_output([*map(str,tar_command),'-tf',str(archive)],env=env,text=True).splitlines();count=0
+    for name in names:
+        p=PurePosixPath(name)
+        if not safe(name) or name.endswith('/'):continue
+        if not notice(name) and not name.endswith(('.tar.gz','.tar.xz','.tar.bz2','.tgz')):continue
+        data=subprocess.check_output([*map(str,tar_command),'-xOf',str(archive),name],env=env)
+        if notice(name):count+=save(name,data)
+        else:
+            with tarfile.open(fileobj=io.BytesIO(data)) as nested:
+                for member in nested:
+                    if member.isfile() and member.size<=2_000_000 and notice(member.name):
+                        count+=save(p.name+'/'+member.name,nested.extractfile(member).read())
+    return count
 
 
 def installed_owners(root):
@@ -121,5 +152,8 @@ if __name__=='__main__':
             if digest(archive)!=record['sha256']:raise ValueError('Source archive hash changed: '+item['name'])
             verify_source_recipe(archive,item['source_package_base'],item['build_recipe_sha256'],(a.toolchain/'usr/bin/tar.exe','--force-local'),env)
             item['source_archive_sha256']=record['sha256'];item['source_recipe_verified']=True
+            if not item['notice_files']:
+                item['source_notice_files']=source_notices(archive,a.destination/item['name']/'upstream-source-notices',(a.toolchain/'usr/bin/tar.exe','--force-local'),env)
+                if not item['source_notice_files']:raise ValueError('No upstream notice found: '+item['name'])
         (a.destination/'native-components.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'packages':len(result['components']),'verified_native_binaries':len(result['binaries'])}))

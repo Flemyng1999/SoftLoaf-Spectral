@@ -29,3 +29,17 @@ def test_source_archive_requires_the_recipe_used_for_the_binary_build(tmp_path):
     assert verify_source_recipe(archive,'mingw-w64-demo',expected)==expected
     with pytest.raises(ValueError,match='source recipe differs'):
         verify_source_recipe(archive,'mingw-w64-demo','0'*64)
+
+
+def test_source_notices_include_nested_upstream_license_without_path_traversal(tmp_path):
+    from scripts.msys2_inventory import source_notices
+    data=io.BytesIO()
+    with tarfile.open(fileobj=data,mode='w:gz') as nested:
+        for name in ('demo/COPYING','../../escape/COPYING','C:/escape/COPYING','..\\escape\\COPYING'):
+            info=tarfile.TarInfo(name);info.size=7;nested.addfile(info,io.BytesIO(b'License'))
+    archive=tmp_path/'source.tar'
+    with tarfile.open(archive,'w') as outer:
+        info=tarfile.TarInfo('package/upstream.tar.gz');info.size=len(data.getvalue());outer.addfile(info,io.BytesIO(data.getvalue()))
+    assert source_notices(archive,tmp_path/'notices')==1
+    assert (tmp_path/'notices/upstream.tar.gz/demo/COPYING').read_bytes()==b'License'
+    assert not (tmp_path/'escape').exists()
