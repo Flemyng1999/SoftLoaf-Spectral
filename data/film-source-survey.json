@@ -1,0 +1,2122 @@
+{
+  "schema": "softloaf.film-source-survey/1",
+  "recorded_on": "2026-10-27",
+  "spektrafilm_commit": "3bb2c2d2801ff68b92019cf1dbcbb133d60832bc",
+  "counts": {
+    "negative_camera": 16,
+    "paper": 6,
+    "positive_camera": 4,
+    "movie_print_film": 2
+  },
+  "manufacturer_documents": [
+    {
+      "id": "kodak_5203_2015",
+      "url": "https://www.kodak.com/content/products-brochures/Film/VISION3-50D-Color-Negative-Film-7203-TECHNICAL-DATA.pdf",
+      "file": "kodak_5203_2015.pdf",
+      "sha256": "adf0dedd974323b4e5d53a54023cd72bc85f447f5f814eb7882774c145d10eeb",
+      "bytes": 285171,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "kodak_5213_2015",
+      "url": "https://www.kodak.com/content/products-brochures/Film/VISION3-200T-Color-Negative-Film-7213-TECHNICAL-DATA.pdf",
+      "file": "kodak_5213_2015.pdf",
+      "sha256": "c2a88cb5de19c40e991f7522f9c7a43ea4c59357ccdca6957a4f5e31f2abd411",
+      "bytes": 262654,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "kodak_5219_2022",
+      "url": "https://www.kodak.com/content/products-brochures/Film/VISION3_5219_7219_Technical-data.pdf",
+      "file": "kodak_5219_2022.pdf",
+      "sha256": "bcf82ca05b991505ea5cdd198875128e724195eabed43976e0ccf7aec3b083c8",
+      "bytes": 742583,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "kodak_portra400_2016",
+      "url": "https://business.kodakmoments.com/sites/default/files/files/resources/e4050_portra_400.pdf",
+      "file": "kodak_portra400_2016.pdf",
+      "sha256": "e83ac6775d37832a4cb466892a3e1cf4c88917a6ee93384e59d6924b1cd97e3a",
+      "bytes": 262115,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "kodak_portra160_2016",
+      "url": "https://business.kodakmoments.com/sites/default/files/files/products/e4051_portra_160.pdf",
+      "file": "kodak_portra160_2016.pdf",
+      "sha256": "a635048fc5e578747868684ff5a98fa2a6582a5d4542dd4ba2e132bc06d951c0",
+      "bytes": 281775,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "kodak_portra800_2016",
+      "url": "https://imaging.kodakalaris.com/sites/default/files/files/products/e4040_portra_800.pdf",
+      "file": "kodak_portra800_2016.pdf",
+      "sha256": "9482510dfaaff7349f304905a645c096864b2789d245ee0b646ef5102330b7b9",
+      "bytes": 337024,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "kodak_ektar100_2016",
+      "url": "https://kodakprofessional.com/sites/default/files/wysiwyg/pro/resources/e4046_ektar_100.pdf",
+      "file": "kodak_ektar100_2016.pdf",
+      "sha256": "e39971d16dc8679fb92742a229c237acde5b0dddb0428a708f8ad68d7a1d5590",
+      "bytes": 276841,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "kodak_gold200_2016",
+      "url": "https://business.kodakmoments.com/sites/default/files/files/resources/E7022_Gold_200.pdf",
+      "file": "kodak_gold200_2016.pdf",
+      "sha256": "9f19012f258b5e61be9b043c554483f01d338d0a8aff28163cb4ef6d7ddbe7df",
+      "bytes": 244442,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "fuji_velvia50",
+      "url": "https://asset.fujifilm.com/www/us/files/2020-03/742f83fe2440fce58fbcc08f7370a7e6/AF3-0221E2Velvia50PIB.pdf",
+      "file": "fuji_velvia50.pdf",
+      "sha256": "bebfb4305fd3edc5e3505a9a0f4a0a1078da1db7672aacb4aa1bac1de3d64cfd",
+      "bytes": 524708,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "fuji_velvia100",
+      "url": "https://asset.fujifilm.com/www/in/files/2020-07/053a4dd52b58d6f75cd3ad35dd03998c/films_velvia-100_datasheet_01.pdf",
+      "file": "fuji_velvia100.pdf",
+      "sha256": "4c57a27b978311ca2ef819f2bf2d74c757639d27f9f0bd94e5f49c4b1c3d5902",
+      "bytes": 442939,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "fuji_provia100f",
+      "url": "https://asset.fujifilm.com/www/in/files/2020-07/0b154ed25442c231feccf22032620306/films_provia-100f_datasheet_01.pdf",
+      "file": "fuji_provia100f.pdf",
+      "sha256": "e28d54e76e8fcdf44c8ffacc930b5b8f2ea54a7cdaeedfcc91790e68eb599de8",
+      "bytes": 215262,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "fuji_pro400h",
+      "url": "https://asset.fujifilm.com/www/in/files/2020-07/eda98c2cfd28460d1da2dc2c498a636d/films_pro-400h_datasheet_01.pdf",
+      "file": "fuji_pro400h.pdf",
+      "sha256": "9a2ca2d506cf57c7747ae5b9557d34a6102a76c009b2bb4eaedde829615205d6",
+      "bytes": 444569,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "fuji_c200",
+      "url": "https://asset.fujifilm.com/www/in/files/2020-07/f9450814a7473fb42ed1eec840d115ab/films_c200_datasheet_01.pdf",
+      "file": "fuji_c200.pdf",
+      "sha256": "fe9a94fb0adc8817e77156517ab8cfe60fe7ce1f6275cc223686db664d6f2629",
+      "bytes": 687244,
+      "status": "downloaded official PDF; chart review pending"
+    },
+    {
+      "id": "fuji_superia400",
+      "url": "https://asset.fujifilm.com/www/in/files/2020-07/32cf7e5def364084eb8cf03ff011df0f/films_superia-xtra400_datasheet_01.pdf",
+      "file": "fuji_superia400.pdf",
+      "sha256": "7e77f9c3bd3001e40f8cafea55c73cdfda09fd1980b55b73862d6da87f6a11b2",
+      "bytes": 354373,
+      "status": "downloaded official PDF; chart review pending"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "fujifilm_c200",
+      "name": "Fujifilm C200",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "fujifilm_c200",
+        "name": "Fujifilm C200",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "weak",
+        "target_print": "fujifilm_crystal_archive_typeii",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "30db07d88090aadc62e03d18c2c51f67a20a1673390c69f99933b7ed5406d2c8",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/fujifilm_c200.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -6.834048300106963,
+          "finite_max": -0.30232177868045546
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 42,
+          "finite_min": -0.03414077498785457,
+          "finite_max": 1.3568334559093753
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 17,
+          "negative_count": 0,
+          "finite_min": 0.21419601696673843,
+          "finite_max": 0.9334140435835341
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 15,
+          "finite_min": -0.0008258820150207076,
+          "finite_max": 2.6422637165305582
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "fujifilm_crystal_archive_typeii",
+      "name": "Fujifilm Crystal Archive Type II",
+      "group": "paper",
+      "declared_info": {
+        "stock": "fujifilm_crystal_archive_typeii",
+        "name": "Fujifilm Crystal Archive Type II",
+        "type": "negative",
+        "support": "paper",
+        "stage": "printing",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "TH-KG3",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "0db98e5b8e2ed5248696e62bc39b7f21459a8812d64049b1275d7be995af873b",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/fujifilm_crystal_archive_typeii.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 200,
+          "finite_min": -9.11379973731489,
+          "finite_max": 1.4921308734306924
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 37,
+          "negative_count": 0,
+          "finite_min": 0.001170841942615931,
+          "finite_max": 1.1973655233476703
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.0812468622187595,
+          "finite_max": 0.0854182505797178
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 117,
+          "finite_min": -0.0010369972489759965,
+          "finite_max": 2.446143640159846
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "fujifilm_pro_400h",
+      "name": "Fujifilm Pro 400H",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "fujifilm_pro_400h",
+        "name": "Fujifilm Pro 400H",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": "fujifilm_crystal_archive_typeii",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "da1be731ab79fb5535c43042494fa7298c942179abb68270b928aa012c629b31",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/fujifilm_pro_400h.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -8.91290678846865,
+          "finite_max": -0.26873551155182346
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 39,
+          "finite_min": -0.052256705566577244,
+          "finite_max": 1.3929387121051906
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 17,
+          "negative_count": 0,
+          "finite_min": 0.1637238192493328,
+          "finite_max": 1.4473968752030277
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 20,
+          "finite_min": -0.0006809338408443301,
+          "finite_max": 2.1255327174218843
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "fujifilm_provia_100f",
+      "name": "Fujifilm Provia 100F",
+      "group": "positive_camera",
+      "declared_info": {
+        "stock": "fujifilm_provia_100f",
+        "name": "Fujifilm Provia 100F",
+        "type": "positive",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "f061f7aa55e3fefe1c89ee2edb8555a2d44fe8167d02f663c787067d131137b6",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/fujifilm_provia_100f.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -8.36430996837495,
+          "finite_max": -0.08803520986142323
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 42,
+          "negative_count": 0,
+          "finite_min": 0.009604451384748672,
+          "finite_max": 1.169281021498697
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.09002733475206587,
+          "finite_max": 0.09053994906064723
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 144,
+          "finite_min": -0.0015595326213980784,
+          "finite_max": 2.555651786511297
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "fujifilm_velvia_100",
+      "name": "Fujifilm Velvia 100",
+      "group": "positive_camera",
+      "declared_info": {
+        "stock": "fujifilm_velvia_100",
+        "name": "Fujifilm Velvia 100",
+        "type": "positive",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "af696fa9662e0483cb9428d2939675044f2016fc3fad760b50a20a0a586fc04b",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/fujifilm_velvia_100.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -8.49779047222553,
+          "finite_max": -0.18026443008180146
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 56,
+          "negative_count": 7,
+          "finite_min": -5.215374286969479e-05,
+          "finite_max": 1.2987738919028216
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.12728699018433504,
+          "finite_max": 0.1316843451837513
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 150,
+          "finite_min": -0.0015595480767851989,
+          "finite_max": 3.5731753173801013
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "fujifilm_xtra_400",
+      "name": "Fujifilm X-Tra 400",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "fujifilm_xtra_400",
+        "name": "Fujifilm X-Tra 400",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "weak",
+        "target_print": "fujifilm_crystal_archive_typeii",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "5f2a3642c7c8db5e750d7366c34b47d24b89ad78d2abe41da4b5282fd4286e58",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/fujifilm_xtra_400.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -11.713805830242606,
+          "finite_max": -0.2614273280511812
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 36,
+          "finite_min": -0.03142307557393125,
+          "finite_max": 1.3342047566632518
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 17,
+          "negative_count": 0,
+          "finite_min": 0.2073548902036079,
+          "finite_max": 0.8495832892039802
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 22,
+          "finite_min": -0.0008267750406870173,
+          "finite_max": 2.8618437182456327
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_2383",
+      "name": "Kodak Vision 2383",
+      "group": "movie_print_film",
+      "declared_info": {
+        "stock": "kodak_2383",
+        "name": "Kodak Vision 2383",
+        "type": "negative",
+        "support": "film",
+        "stage": "printing",
+        "use": "cine",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "TH-KG3",
+        "viewing_illuminant": "K75P"
+      },
+      "sha256": "eb7fdfa3b75a909bf5c400802f7401160c8017ed1ac3e8e0d1c8448d56fbe184",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_2383.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 205,
+          "finite_min": -11.246016066991963,
+          "finite_max": 1.2928695796930745
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 19,
+          "negative_count": 0,
+          "finite_min": 0.00579725058316551,
+          "finite_max": 1.2504384224993843
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.04922805023487477,
+          "finite_max": 0.11363710440144138
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 101,
+          "finite_min": -0.0010272870600664136,
+          "finite_max": 3.802025326360448
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_2393",
+      "name": "Kodak Vision Premier 2393",
+      "group": "movie_print_film",
+      "declared_info": {
+        "stock": "kodak_2393",
+        "name": "Kodak Vision Premier 2393",
+        "type": "negative",
+        "support": "film",
+        "stage": "printing",
+        "use": "cine",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "TH-KG3",
+        "viewing_illuminant": "K75P"
+      },
+      "sha256": "b564aece5e9fe43a5c7878d661a8c260c9f73a647a55899596c78487c79678dc",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_2393.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 205,
+          "finite_min": -12.54610807611133,
+          "finite_max": 1.3020721639092145
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 21,
+          "negative_count": 0,
+          "finite_min": 0.0003584866743864618,
+          "finite_max": 1.2713305253372356
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.0564737660225391,
+          "finite_max": 0.07450850724853716
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 98,
+          "finite_min": -0.001021844587523962,
+          "finite_max": 4.626927996557578
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_ektachrome_100",
+      "name": "Kodak Ektachrome 100",
+      "group": "positive_camera",
+      "declared_info": {
+        "stock": "kodak_ektachrome_100",
+        "name": "Kodak Ektachrome 100",
+        "type": "positive",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "ef194fd80c60a1ac42bbbf1df458b4d047fc07bc17eebce674bb3bcba2ccf62a",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_ektachrome_100.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -8.32071832429953,
+          "finite_max": -0.07166309402529543
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 63,
+          "negative_count": 0,
+          "finite_min": 0.008224641427887857,
+          "finite_max": 1.2080151386356586
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.09211894157755567,
+          "finite_max": 0.10967667920539746
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 128,
+          "finite_min": -0.001558206375449202,
+          "finite_max": 2.811716456350037
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_ektacolor_edge",
+      "name": "Kodak Ektacolor Edge",
+      "group": "paper",
+      "declared_info": {
+        "stock": "kodak_ektacolor_edge",
+        "name": "Kodak Ektacolor Edge",
+        "type": "negative",
+        "support": "paper",
+        "stage": "printing",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "TH-KG3",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "5db23694d478c35cc0f96d42f94da79e552b2f8eb0853767449a24ac0f0f890e",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_ektacolor_edge.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 196,
+          "finite_min": -10.020504978125544,
+          "finite_max": 1.5979827498960975
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 64,
+          "negative_count": 1,
+          "finite_min": -7.148998859762162e-19,
+          "finite_max": 1.2192498884845993
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.10316822052056626,
+          "finite_max": 0.10485702865738974
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 113,
+          "finite_min": -0.0010363771030407294,
+          "finite_max": 2.2523677647653413
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_ektar_100",
+      "name": "Kodak Ektar 100",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_ektar_100",
+        "name": "Kodak Ektar 100",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": "kodak_portra_endura",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "60acbd46c75005771569eafb97f534a4495e9d4e1e9c1e419b90cea2676ec7cf",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_ektar_100.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -10.187028475979504,
+          "finite_max": -0.26935668230077303
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 55,
+          "finite_min": -0.054065163653226514,
+          "finite_max": 1.3535237707638113
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 25,
+          "negative_count": 0,
+          "finite_min": 0.20409885132455274,
+          "finite_max": 0.8665140179535787
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 40,
+          "finite_min": -0.0007895119592313875,
+          "finite_max": 2.2698956225115388
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_endura_premier",
+      "name": "Kodak Professional Endura Premier",
+      "group": "paper",
+      "declared_info": {
+        "stock": "kodak_endura_premier",
+        "name": "Kodak Professional Endura Premier",
+        "type": "negative",
+        "support": "paper",
+        "stage": "printing",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "TH-KG3",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "fd37807d61eb730cda54e85d36640e35a0f8da58666bfc6aa83db888b2e364c2",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_endura_premier.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 199,
+          "finite_min": -9.173700888698413,
+          "finite_max": 1.630430107637385
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 66,
+          "negative_count": 0,
+          "finite_min": 0.006669158302142167,
+          "finite_max": 1.1557011967194977
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.07885859032245505,
+          "finite_max": 0.10618970263580212
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 125,
+          "finite_min": -0.0010369970234380284,
+          "finite_max": 2.4258219948768214
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_gold_200",
+      "name": "Kodak Gold 200",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_gold_200",
+        "name": "Kodak Gold 200",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "weak",
+        "target_print": "kodak_portra_endura",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "aa8a0c1c7851fface3752f968cdf6c6d74a26fc9756a4460d3155d2382506b7c",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_gold_200.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -9.663807206876465,
+          "finite_max": -0.1898545508738761
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 60,
+          "finite_min": -0.046923532120118835,
+          "finite_max": 1.3791992905566264
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 20,
+          "negative_count": 0,
+          "finite_min": 0.2309277375556934,
+          "finite_max": 0.9851555234049549
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 24,
+          "finite_min": -0.0006589118522932989,
+          "finite_max": 1.6868016600611462
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_kodachrome_64",
+      "name": "Kodak Kodachrome 64",
+      "group": "positive_camera",
+      "declared_info": {
+        "stock": "kodak_kodachrome_64",
+        "name": "Kodak Kodachrome 64",
+        "type": "positive",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "weak",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "f88ede487219cf75090ed6663af6923c595707b3c48819f2ccf27122130e921d",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_kodachrome_64.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -7.244192060651908,
+          "finite_max": -0.1502242639135994
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 78,
+          "negative_count": 0,
+          "finite_min": 0.005442301473350668,
+          "finite_max": 1.3048733381802329
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.16693800581117554,
+          "finite_max": 0.19955596236044199
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 137,
+          "finite_min": -0.0015591524063943397,
+          "finite_max": 2.909863650614478
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_portra_160",
+      "name": "Kodak Portra 160",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_portra_160",
+        "name": "Kodak Portra 160",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": "kodak_portra_endura",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "1bc9b65a6940f3a4381e8d14d0ac43594aff9495051992ce4d7408e761549992",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_portra_160.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -7.574687849594657,
+          "finite_max": -0.2434267231052134
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 51,
+          "finite_min": -0.08213635254951278,
+          "finite_max": 1.5043678450195976
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 22,
+          "negative_count": 0,
+          "finite_min": 0.15919812002846534,
+          "finite_max": 0.8250264082369969
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 34,
+          "finite_min": -0.0006850198618030009,
+          "finite_max": 2.024612011197227
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_portra_400",
+      "name": "Kodak Portra 400",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_portra_400",
+        "name": "Kodak Portra 400",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": "kodak_portra_endura",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "b5cdc73dbec8f462f488bca70bedf23fd13ce79969c0457e8ac2a2565d92bf5d",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_portra_400.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -9.254719777616156,
+          "finite_max": -0.2373987598254509
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 51,
+          "finite_min": -0.03929278350710587,
+          "finite_max": 1.4130749236383615
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 20,
+          "negative_count": 0,
+          "finite_min": 0.1881143045180333,
+          "finite_max": 0.8180137608511745
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 33,
+          "finite_min": -0.000731113838226926,
+          "finite_max": 2.1632179044480675
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_portra_800",
+      "name": "Kodak Portra 800",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_portra_800",
+        "name": "Kodak Portra 800",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": "kodak_portra_endura",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "5b0c6e861c6273a2ecdf552525e80738037918e650a0dc206e095acfd02f8b43",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_portra_800.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -12.697346654031117,
+          "finite_max": -0.23981355777486335
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 56,
+          "finite_min": -0.04368277657471256,
+          "finite_max": 1.4096752918557054
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 22,
+          "negative_count": 0,
+          "finite_min": 0.2023483577685361,
+          "finite_max": 0.9962498773075807
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 16,
+          "finite_min": -0.0007797055013099174,
+          "finite_max": 2.024916155338184
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_portra_800_push1",
+      "name": "Kodak Portra 800 (Push 1)",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_portra_800_push1",
+        "name": "Kodak Portra 800 (Push 1)",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": "kodak_portra_endura",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "dac9cbcd2442442d9dee90bd2d6a28dcc4b996635dcac0b44ac8ecd32c4b3a4f",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_portra_800_push1.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -12.697346654031117,
+          "finite_max": -0.23981355777486335
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 56,
+          "finite_min": -0.04368277657471256,
+          "finite_max": 1.4096752918557054
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 22,
+          "negative_count": 0,
+          "finite_min": 0.2023483577685361,
+          "finite_max": 0.9962498773075807
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 38,
+          "finite_min": -0.0008070132215772623,
+          "finite_max": 2.296509655600919
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_portra_800_push2",
+      "name": "Kodak Portra 800 (Push 2)",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_portra_800_push2",
+        "name": "Kodak Portra 800 (Push 2)",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": "kodak_portra_endura",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "5ee01e4a00c157721738314313a43b46fcd5dae62ed3a7e4730f9054b66f6282",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_portra_800_push2.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -12.697346654031117,
+          "finite_max": -0.23981355777486335
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 56,
+          "finite_min": -0.04368277657471256,
+          "finite_max": 1.4096752918557054
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 22,
+          "negative_count": 0,
+          "finite_min": 0.2023483577685361,
+          "finite_max": 0.9962498773075807
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 37,
+          "finite_min": -0.0008217570922595648,
+          "finite_max": 2.523168838439572
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_portra_endura",
+      "name": "Kodak Professional Portra Endura",
+      "group": "paper",
+      "declared_info": {
+        "stock": "kodak_portra_endura",
+        "name": "Kodak Professional Portra Endura",
+        "type": "negative",
+        "support": "paper",
+        "stage": "printing",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "TH-KG3",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "e3bb6069e02d088d8080d38ce28035816038f62786e2aff9176bf4aeeb4820a0",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_portra_endura.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 195,
+          "finite_min": -10.035613880625979,
+          "finite_max": 1.626869201175965
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 64,
+          "negative_count": 0,
+          "finite_min": 0.0035969934382308263,
+          "finite_max": 1.179172816048798
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.08734598312159524,
+          "finite_max": 0.09652879264195302
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 113,
+          "finite_min": -0.0010368303875072067,
+          "finite_max": 2.463077281700999
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_supra_endura",
+      "name": "Kodak Professional Supra Endura",
+      "group": "paper",
+      "declared_info": {
+        "stock": "kodak_supra_endura",
+        "name": "Kodak Professional Supra Endura",
+        "type": "negative",
+        "support": "paper",
+        "stage": "printing",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "TH-KG3",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "3a0928013effbb33e81acd01db426937faa3a12021a267c54b4d96e916286bd6",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_supra_endura.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 195,
+          "finite_min": -10.035613880625979,
+          "finite_max": 1.626869201175965
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 64,
+          "negative_count": 0,
+          "finite_min": 0.0035935930769282302,
+          "finite_max": 1.1792414582589852
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.0812468622187595,
+          "finite_max": 0.0854182505797178
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 118,
+          "finite_min": -0.0010369973889746307,
+          "finite_max": 2.4776858097875967
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_ultra_endura",
+      "name": "Kodak Professional Ultra Endura",
+      "group": "paper",
+      "declared_info": {
+        "stock": "kodak_ultra_endura",
+        "name": "Kodak Professional Ultra Endura",
+        "type": "negative",
+        "support": "paper",
+        "stage": "printing",
+        "use": "still",
+        "antihalation": "strong",
+        "target_print": null,
+        "channel_model": "color",
+        "densitometer": "status_A",
+        "log_sensitivity_density_over_min": 1.0,
+        "reference_illuminant": "TH-KG3",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "319fa2514e9a6809fd09ce587c4f714effc035e7f9ebaeb3b55d9bc1b52c2a72",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_ultra_endura.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 199,
+          "finite_min": -8.937070808542499,
+          "finite_max": 1.631227517774377
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 65,
+          "negative_count": 0,
+          "finite_min": 0.008535677518358377,
+          "finite_max": 1.4489631962143203
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 0,
+          "negative_count": 0,
+          "finite_min": 0.16569300897112332,
+          "finite_max": 0.20975525824134958
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 126,
+          "finite_min": -0.000958814891107497,
+          "finite_max": 2.387686637472411
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_ultramax_400",
+      "name": "Kodak Ultramax 400",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_ultramax_400",
+        "name": "Kodak Ultramax 400",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "still",
+        "antihalation": "weak",
+        "target_print": "kodak_portra_endura",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "248b78bdcc4fdbe864e30f193f900059ecd98cbdb276c88ad8f6f5b520137901",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_ultramax_400.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -13.587861753150406,
+          "finite_max": -0.22148386058555544
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 22,
+          "negative_count": 57,
+          "finite_min": -0.04406329691870121,
+          "finite_max": 1.427307277943234
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 21,
+          "negative_count": 0,
+          "finite_min": 0.1983692424652348,
+          "finite_max": 0.9771168443043763
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 15,
+          "finite_min": -0.0007390318558699444,
+          "finite_max": 2.056472367799555
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_verita_200d",
+      "name": "Kodak Verita 200D",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_verita_200d",
+        "name": "Kodak Verita 200D",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "cine",
+        "antihalation": "strong",
+        "target_print": "kodak_2383",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "5d71a3f544721a71cfa0b0671ce1b5eda6dc1e6a09273810793d4bc821b272fc",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_verita_200d.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -10.029343673137378,
+          "finite_max": -0.27981006025720523
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 23,
+          "negative_count": 60,
+          "finite_min": -0.12339292690064818,
+          "finite_max": 1.361034209161718
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 22,
+          "negative_count": 0,
+          "finite_min": 0.2449668485137556,
+          "finite_max": 0.9642656732530918
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 28,
+          "finite_min": -0.0007911927965757046,
+          "finite_max": 1.9792593826682097
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_vision3_200t",
+      "name": "Kodak Vision3 200T",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_vision3_200t",
+        "name": "Kodak Vision3 200T",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "cine",
+        "antihalation": "strong",
+        "target_print": "kodak_2383",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "T",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "4a28f049fd6bad67be98efdb058b413c6b3c022e2932b357b346d902c4c393c8",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_vision3_200t.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 235,
+          "finite_min": -8.635421978481775,
+          "finite_max": 0.0839795472666238
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 15,
+          "negative_count": 25,
+          "finite_min": -0.056492346477652756,
+          "finite_max": 1.4260835476153044
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 4,
+          "negative_count": 0,
+          "finite_min": 0.09782045188394364,
+          "finite_max": 0.8502780526508222
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 14,
+          "finite_min": -0.0006702934448667252,
+          "finite_max": 1.8452532603761735
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_vision3_250d",
+      "name": "Kodak Vision3 250D",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_vision3_250d",
+        "name": "Kodak Vision3 250D",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "cine",
+        "antihalation": "strong",
+        "target_print": "kodak_2383",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "9ab85c8627c0533beb925b747e441e93beabe9e98c2429695b0a53866b56fcc7",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_vision3_250d.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -10.058233666360465,
+          "finite_max": -0.26886964056976964
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 15,
+          "negative_count": 45,
+          "finite_min": -0.06826580480034962,
+          "finite_max": 1.3709594761017132
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 4,
+          "negative_count": 0,
+          "finite_min": 0.11775817780338953,
+          "finite_max": 0.8888694711258184
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 7,
+          "finite_min": -0.0004797264060930059,
+          "finite_max": 1.9073192758894892
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_vision3_500t",
+      "name": "Kodak Vision3 500T",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_vision3_500t",
+        "name": "Kodak Vision3 500T",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "cine",
+        "antihalation": "strong",
+        "target_print": "kodak_2383",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "T",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "d7beca68bf16db88dbb7373fd13a6a1150a57a911a54bb0309a760a6f9883329",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_vision3_500t.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 236,
+          "finite_min": -9.559894755337156,
+          "finite_max": 0.03724193751226007
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 15,
+          "negative_count": 42,
+          "finite_min": -0.118799519763609,
+          "finite_max": 1.4182321802547053
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 4,
+          "negative_count": 0,
+          "finite_min": 0.08250803417713755,
+          "finite_max": 0.8653309509365279
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 6,
+          "finite_min": -0.00035192379825857244,
+          "finite_max": 1.9210073381806752
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    },
+    {
+      "id": "kodak_vision3_50d",
+      "name": "Kodak Vision3 50D",
+      "group": "negative_camera",
+      "declared_info": {
+        "stock": "kodak_vision3_50d",
+        "name": "Kodak Vision3 50D",
+        "type": "negative",
+        "support": "film",
+        "stage": "filming",
+        "use": "cine",
+        "antihalation": "strong",
+        "target_print": "kodak_2383",
+        "channel_model": "color",
+        "densitometer": "status_M",
+        "log_sensitivity_density_over_min": 0.2,
+        "reference_illuminant": "D55",
+        "viewing_illuminant": "D50"
+      },
+      "sha256": "fd426abc9de911682080db222020978dee4e8df7ca939bfcd5c9d0f6df249fa1",
+      "source_url": "https://raw.githubusercontent.com/andreavolpato/spektrafilm/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/profiles/kodak_vision3_50d.json",
+      "license": "CC BY-SA 4.0",
+      "author": "Andrea Volpato",
+      "wavelength_grid_nm": [
+        380.0,
+        780.0,
+        5.0
+      ],
+      "processed_tables": {
+        "log_sensitivity": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 243,
+          "finite_min": -8.762429129968632,
+          "finite_max": -0.2343919131927497
+        },
+        "channel_density": {
+          "shape": [
+            81,
+            3
+          ],
+          "null_count": 23,
+          "negative_count": 29,
+          "finite_min": -0.06449922106241142,
+          "finite_max": 1.38474714165203
+        },
+        "base_density": {
+          "shape": [
+            81
+          ],
+          "null_count": 9,
+          "negative_count": 0,
+          "finite_min": 0.12511449223736792,
+          "finite_max": 0.8561187892593586
+        },
+        "density_curves": {
+          "shape": [
+            256,
+            3
+          ],
+          "null_count": 0,
+          "negative_count": 17,
+          "finite_min": -0.00069785241004135,
+          "finite_max": 1.9122486370538456
+        }
+      },
+      "status": "Processed source profile; not an original manufacturer measurement or automatically validated application material"
+    }
+  ],
+  "boundaries": [
+    "ECN-2 Status M material fit is distinct from APD/ADX output.",
+    "C-41/CN-16 camera negatives can use optical printing or experimental APD/ACES rendering; the motion-picture input transform has no stock-specific C-41 color validation.",
+    "E-6 Status A, K-14 Kodachrome, RA-4 reflection paper and movie print film must not share an unqualified material interpretation.",
+    "Only processed sensitivities from selected upstream profiles enter provisional negative materials; no processed/unmixed density_curves are treated as raw Status M.",
+    "No raw manufacturer PDF or profile table is bundled by this catalog."
+  ]
+}

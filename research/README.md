@@ -1,12 +1,27 @@
 # Earlier experiments
 
-The following results were read from saved reports on 2026-10-26. The calculations
-precede this repository. [baseline.json](baseline.json) contains selected results
-and hashes of the reports. Full reports, data and implementations are not bundled,
-so this record alone is not a reproducible benchmark.
+For the new implementation's local E100/simulated-RAW/LUT comparison, see
+[the separate experiment](hsi-raw-lut-comparison.md). The results below belong
+to the earlier programs.
 
-The same eight Manchester spectral scenes were used throughout. They are
-development scenes rather than a new independent test set.
+The new [IT8 data and LUT trial](it8-lut-trial.md) audits a measured reflective
+target and tests a first IT8-derived spectral prior for LUT construction.
+The [sampling-database study](sampling-database-study.md) compares color-space
+feasibility and measured-spectra selection, with bounded synthetic metamer tests.
+The [database build](sampling-database-build.md) implements separate local
+reversal/negative input banks, independent model selection and readback checks.
+
+These experiments were run before this repository was created. The results
+below were transcribed from saved reports on 2026-10-26.
+[baseline.json](baseline.json) records selected results and report hashes.
+The full reports, data and programs are not included in the public repository,
+so the experiments cannot be reproduced from this record alone.
+
+All experiments used the same eight Manchester spectral scenes. These were
+development data, not an independent test set.
+
+A complete local copy is now recorded in [Local archive](local-archive.md).
+It is excluded from public distribution pending data and asset review.
 
 ## 5207 digitization
 
@@ -59,6 +74,6 @@ Real E100 color/exposure measurements have not yet been used for validation.
 
 ## Reproduction
 
-The standalone implementation will need source permissions, accessible inputs,
-recorded settings and new tests. Passing checks in the earlier programs does
-not establish that the new implementation is correct.
+Reproducing these calculations requires accessible inputs, permission to use
+them and the recorded settings. The standalone implementation needs its own
+tests; the checks above apply only to the earlier programs.

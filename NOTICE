@@ -15,3 +15,26 @@ private calibration assets, or separate software mentioned in the research.
 
 Kodak and other material or product names identify source materials. No
 manufacturer affiliation, certification, or endorsement is implied.
+
+third_party/rawtherapee contains the pinned official RawTherapee 5.12 source and
+resources, with separately documented SoftLoaf preview/build changes. Its GPL
+and component/resource licenses remain in that tree and take precedence over
+the root default for those files. LibRaw retains its upstream LGPL/CDDL options
+and notices. No private camera calibration or code from another product is
+included in this source integration. See third_party/rawtherapee/SoftLoaf.md.
+
+The original scanline PNG interface links to libpng (PNG Reference Library
+License) and zlib through the configured build dependency. No other product
+implementation was copied for the streaming image or cache settings modules.
+
+The optional scan lens adapter uses the separately installed public Lensfun
+library and database, currently tested with 0.3.4. Lensfun library, tools and data
+retain their upstream LGPL-3.0, GPL-3.0 and CC-BY-SA-3.0 terms respectively; no Lensfun
+database or binary is bundled here. Frozen selections record source XML hashes
+and Lensfun attribution. Other products' private profiles are not imported.
+
+assets/science/cie contains unmodified original International Commission on
+Illumination datasets and metadata, obtained directly from CIE. These data use
+CC-BY-SA-4.0, separately from the code licence. Dataset titles, source URLs,
+DOIs, hashes, attribution and licence links are in that directory. No CIE
+endorsement is implied. These source acquisitions do not clear other materials.

@@ -1,0 +1,106 @@
+{
+  "schema": "softloaf.paper-presets/1",
+  "recorded_on": "2026-10-28",
+  "directory": "local/materials/paper-presets-v1",
+  "materials": [
+    {
+      "id": "endura-premier",
+      "name": "Kodak Endura Premier",
+      "process": "RA-4",
+      "density_metric": "Status A",
+      "file": "endura-premier-material.json",
+      "sha256": "63600099990bf8662633a7b137aec35fdea5f4ca166fc85b4d94ee158d6cb330",
+      "plot_file": "endura-premier-plot.json",
+      "plot_sha256": "692a1100f8f96290fd6db885f8ebaa7aa8348a527e657821a3e98d5c373392be",
+      "source_file": "endura-premier-source.json",
+      "source_sha256": "0edfcb2ea49ed937b484c7b8e3fc935e849f333bdb3bc737188966f69627efd0",
+      "source": {
+        "url": "https://business.kodakmoments.com/sites/default/files/files/products/e4070.pdf",
+        "sha256": "94ead00f26a4bbf8ce1a991ff73add049514e38f32d6e88aa7a8a1e3e2d7982e",
+        "revision": "E-4070, December 2017",
+        "pages": [
+          4,
+          5
+        ]
+      },
+      "fit_max_error_D": 0.0030064288822042456,
+      "summary": "原厂三类曲线；纸白为模型假设。"
+    },
+    {
+      "id": "ektacolor-edge",
+      "name": "Kodak Ektacolor EDGE",
+      "process": "RA-4",
+      "density_metric": "Status A",
+      "file": "ektacolor-edge-material.json",
+      "sha256": "d2b886f99959a8615f5e086fe8e1973cca0ecee531497a39cc73077a8156783a",
+      "plot_file": "ektacolor-edge-plot.json",
+      "plot_sha256": "674dd8ee28f0a62b1e7d33206c1d49655c24cee7cf5be385de1980f2f2f1d82b",
+      "source_file": "ektacolor-edge-source.json",
+      "source_sha256": "d88b184c3afe7baffc27b21979b61c649493d75668ba36641e0d1ba5625607fd",
+      "source": {
+        "url": "https://business.kodakmoments.com/sites/default/files/wysiwyg/pro/Paper/E7020.pdf",
+        "sha256": "07651c3f0255c6a0de2be91da0cef349d8ae34bc40bfec12ea1de38f37eca7c3",
+        "revision": "E-7020, April 2019",
+        "pages": [
+          3,
+          4
+        ]
+      },
+      "fit_max_error_D": 0.0038924714541155106,
+      "summary": "原厂三类曲线；纸白为模型假设。曝光时长未注明。"
+    },
+    {
+      "id": "royal-digital",
+      "name": "Kodak ROYAL Digital",
+      "process": "RA-4",
+      "density_metric": "Status A",
+      "file": "royal-digital-material.json",
+      "sha256": "3de3286da8f873cce2cac9f3b03d525162f0c18152bc7a0aeaeacada7bf19ba2",
+      "plot_file": "royal-digital-plot.json",
+      "plot_sha256": "ffc4fb8b165004967ee643dcd8cf6f585a031a48c50149e47c63dc3f1d0861d6",
+      "source_file": "royal-digital-source.json",
+      "source_sha256": "873ac5154229dc5647e9ad42f9c79ee08cd267145ee628ffe45d9370ffc06b5f",
+      "source": {
+        "url": "https://business.kodakmoments.com/sites/default/files/files/products/E7021.pdf",
+        "sha256": "0e2486616d88af011a081d3b00c3a3c11780b05dc0dc26e23de3815de606d96d",
+        "revision": "E-7021, April 2019",
+        "pages": [
+          3,
+          4
+        ]
+      },
+      "fit_max_error_D": 0.0037331561766462545,
+      "summary": "原厂三类曲线；纸白为模型假设。曝光时长未注明。"
+    },
+    {
+      "id": "endura-premier-metallic",
+      "name": "Kodak Endura Premier Metallic",
+      "process": "RA-4",
+      "density_metric": "Status A",
+      "file": "endura-premier-metallic-material.json",
+      "sha256": "2cc081223dd9ce6876ae863023e2cf22eafb020d951ed4ad7bbaf9cb863a18b9",
+      "plot_file": "endura-premier-metallic-plot.json",
+      "plot_sha256": "13a045e9e16f40cb24f338912a6361660b9bbb319bad7c724ea656dc1b2354ee",
+      "source_file": "endura-premier-metallic-source.json",
+      "source_sha256": "8c8da0d1c4a326691976c06b78ef9b1a0658320d74a11be662e0754a3602983f",
+      "source": {
+        "url": "https://business.kodakmoments.com/sites/default/files/files/resources/metallic-techpub-e4071.pdf",
+        "sha256": "5cbda06e85a85cdba32d5e5b892c8f2e503731ce5ae478608057b88b4ad81729",
+        "revision": "E-4071, March 2013",
+        "pages": [
+          4,
+          5
+        ]
+      },
+      "fit_max_error_D": 0.0042468968275311825,
+      "summary": "原厂三类曲线；纸白为模型假设。不模拟金属反光。"
+    }
+  ],
+  "reference_only": [
+    {
+      "id": "fuji-dpii-af3212e",
+      "reason": "Laser exposure / CP-48S / relative H; not validated for optical enlargement"
+    }
+  ],
+  "rights": "Local manufacturer reference; redistribution of curves and derived LUTs pending review."
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "softloaf.sampling-priors/1",
+  "report_sha256": "a41d45bfaab925ee234cb164edaefe33f59cd49e6967b24f93abac7519f4e6b7",
+  "families": {
+    "reversal": {
+      "database_sha256": "a4890d5f08062b6b3261857231977b903e992db8651247360983385c24845a34",
+      "file": "models/reversal.npz",
+      "sha256": "52e1761a0c3e10fb1255e612fbd8d26692fe1cabcff174c2053527184e9b2026",
+      "name": "local_512_128"
+    },
+    "negative": {
+      "database_sha256": "45f486e16b15f982e95d1bff9004bee0cb01a1dc47ecb27bef3c2018591cbd65",
+      "file": "models/negative.npz",
+      "sha256": "47bc1dbd9f195acd6c9d329e473dfc4e02e0959a387790559a09bb24ad6835b9",
+      "name": "root3_source_balanced_1e-05"
+    }
+  },
+  "rights": "Local reference inputs; review source-specific permissions before publishing datasets or derived LUTs."
+}

@@ -5,6 +5,121 @@
   "all_raw_assets_bundled": false,
   "assets": [
     {
+      "id": "iso_status_m_1984_table4_local",
+      "kind": "standard_density_spectral_products",
+      "recorded_on": "2026-10-27",
+      "source_url": "https://cdn.standards.iteh.ai/samples/20101/642e3ed0adfe43be85e67b2c413cca56/ISO-5-3-1984.pdf",
+      "version": "ISO 5/3:1984 Table 4, independently compared with ANSI/ISO 5-3:1995 Table 4",
+      "independent_source_url": "https://law.resource.org/pub/us/cfr/ibr/001/aimm.it2.18.1996.pdf",
+      "bundled": false,
+      "license_or_rights_status": "Local reference only; standard PDF, numeric extraction and derived distribution review pending",
+      "identity_manifest": "data/status-m-reference-manifest.json",
+      "quantity": "log10 spectral products, RGB; 5.000 peak, six printed log-domain tail slopes",
+      "application": "5207 material fit in original Status M; APD used only by negative output",
+      "limits": "360–730 nm / 2 nm normalized trapezoidal integration of log-interpolated products; not ISO 5-3:2009 computational conformance"
+    },
+    {
+      "id": "softloaf_sampling_database_local_0_1",
+      "kind": "derived_local_sampling_database",
+      "version": "0.1, 2026-10-26",
+      "source_url": null,
+      "bundled": false,
+      "license_or_rights_status": "local_only; source_specific_raw_and_derived_distribution_review_pending",
+      "source_records": [
+        "manchester_hyperspectral_50_v3",
+        "wolf_faust_it8_testscan14_5_2006",
+        "kodak_e100_e4000_2018"
+      ],
+      "additional_sources": "Colour0.4.7 BabelColor Average and ColorChecker N Ohta; exact numeric hashes in database",
+      "processing_grid_nm": [
+        400,
+        720,
+        10
+      ],
+      "native_grids_preserved": true,
+      "families": {
+        "reversal": {
+          "filename": "reversal.sqlite",
+          "sha256": "a4890d5f08062b6b3261857231977b903e992db8651247360983385c24845a34",
+          "spectral_records": 19213,
+          "output_status": "E100_local_reference",
+          "model_sha256": "52e1761a0c3e10fb1255e612fbd8d26692fe1cabcff174c2053527184e9b2026"
+        },
+        "negative": {
+          "filename": "negative.sqlite",
+          "sha256": "45f486e16b15f982e95d1bff9004bee0cb01a1dc47ecb27bef3c2018591cbd65",
+          "spectral_records": 19212,
+          "output_status": "APD_output_unimplemented",
+          "model_sha256": "47bc1dbd9f195acd6c9d329e473dfc4e02e0959a387790559a09bb24ad6835b9"
+        }
+      },
+      "note": "Separate banks and fitted models. Reversal tested against the local E100 reference; negative input spectral reconstruction only. No APD labels or negative display/LUT accuracy claim."
+    },
+    {
+      "id": "wolf_faust_it8_testscan14_5_2006",
+      "kind": "measured_reflective_IT8_target",
+      "source_url": "https://www.colorreference.de/testdata/index.html",
+      "author": "Wolf Faust",
+      "version": "Testscan14-5, July10 2006",
+      "material": "Kodak Professional Ultra Endura",
+      "sample_backing": "black",
+      "quantity": "spectral reflectance factor; original SPECTRAL_PCT divided by100",
+      "grid_nm": [
+        380,
+        780,
+        10
+      ],
+      "samples": 288,
+      "colorimetric_reference": "D50; CIE1931 2degree; XYZ scale Y=100; accompanying Lab",
+      "measurement_geometry": "not established by inspected metadata",
+      "license_or_rights_status": "public_download_reviewed_locally; raw_and_derived_redistribution_review_pending",
+      "bundled": false,
+      "files": [
+        {
+          "url": "https://www.colorreference.de/testdata/testscan14cgt.zip",
+          "sha256": "9999dd68cb322d141b0d27737a3f1e13439f28fcecc12214fa0f0d5d6f162b69",
+          "member": "Testscan14-5.cgt",
+          "member_sha256": "d48d2c2b43ea1cec01d65313b7a6f22e45c537d4b9ef5c9d293118193553099a"
+        },
+        {
+          "url": "https://www.colorreference.de/testdata/testscan14.zip",
+          "sha256": "531dda6f7de44d1797d5204fdc645e3fb9800232a3f178049f82cc995a6e2be9",
+          "member": "Testscan14-5.txt",
+          "member_sha256": "231ad24a064c1abf87ebf80d6a54911694946e7a2e803751de79601e4f06d8b3"
+        }
+      ],
+      "note": "Only target5 audited. Structural/colorimetric consistency checked; source XYZ/Lab derive from spectra, not independent measurement validation. Used for a local IT8-derived LUT prior trial; Set14 also overlaps prior paper-model research."
+    },
+    {
+      "id": "academy_tb_2014_005_local_reference",
+      "kind": "technical_bulletin",
+      "title": "Informative Notes on SMPTE ST 2065-2 and ST 2065-3",
+      "source_url": null,
+      "reference_catalog": "https://acescentral.com/aces-documentation-copy/",
+      "acquisition": "user_supplied_local_PDF",
+      "document_id": "TB-2014-005",
+      "version": "2016-03-29; historical appendix S-2008-002 v1.1, 2010-11-18",
+      "sha256": "ed52bc1d94514e74b5eb0ff4801b9a5142ccd821b9b62f56ddb0dabc5f582261",
+      "pages": 41,
+      "license_or_rights_status": "local_reference_read; redistribution_and_table_reuse_review_pending",
+      "bundled": false,
+      "reference_sections": {
+        "scope": "PDF p5: historical appendix superseded by SMPTE standards",
+        "APD_integral": "PDF p22; appendix p16, section5.2.1, equation6; 360-730nm",
+        "StatusM_conversion": "PDF p23; appendix p17, section5.2.2; stock-specific",
+        "fitting_method": "PDF p30; appendix p24, AnnexC",
+        "5207_example": "PDF p31; appendix p25; matrix, offset and residuals",
+        "ADX_encoding": "PDF pp18-21; appendix pp12-15"
+      },
+      "review_required_for": [
+        "raw_PDF",
+        "extracted_tables_and_coefficients",
+        "derived_models",
+        "distributed_LUTs"
+      ],
+      "note": "Source read and identity verified only; no PDF, response table or stock coefficients bundled. Historical definitions require normative verification; not a complete APD/ADX-to-ACES implementation."
+    },
+    {
       "id": "kodak_e100_e4000_2018",
       "kind": "manufacturer_document",
       "source_url": "https://www.kodakprofessional.com/sites/default/files/wysiwyg/pro/resources/e4000_ektachrome_100.pdf",
@@ -212,6 +327,161 @@
       "license_or_rights_status": "not_contributed_for_public_distribution",
       "bundled": false,
       "note": "Compatibility with historical GH7 input scale unverified. No matrix values or private profile files bundled."
+    },
+    {
+      "id": "kodak_5207_H1_2015",
+      "kind": "manufacturer_document",
+      "source_url": "https://125px.com/docs/motionpicture/kodak_2018/5207_ti2650.pdf",
+      "source_type": "mirror of Kodak original document",
+      "version": "H-1-5207t, July 2015",
+      "sha256": "e9806f7faeef5073118cacb8bfe3c42310c9a9fb97ab9b80ea94956d80add584",
+      "bundled": false,
+      "license_or_rights_status": "local_reference_only; extracted_data_and_derived_LUT_distribution_review_pending",
+      "quantity": "log10 energy sensitivity, Status M sensitometry, peak-normalized CMY spectral densities and minimum density; independent vector extraction pp4–5"
+    },
+    {
+      "id": "aces_core_v1_2_ADX16",
+      "kind": "reference_transform",
+      "source_url": "https://github.com/aces-aswf/aces-core/blob/v1.2/transforms/ctl/csc/ADX/ACEScsc.Academy.ADX16_to_ACES.ctl",
+      "version": "v1.2, commit 518c27f577e99cdecfddf2ebcfaa53444b1f9343; a1.0.3",
+      "sha256": "7d6fc1d8839096f5d57d745fc2f9a986f634fa621560d90d157d192119e5c292",
+      "bundled": false,
+      "license_or_rights_status": "Academy 2015 permissive license retained in third_party/aces-v1.2/LICENSE.md; adapted constants and algorithm in spectral_lut/negative.py",
+      "quantity": "normalized ADX16 to linear ACES2065-1 / AP0 D60; independently checked against OCIO builtin"
+    },
+    {
+      "id": "spektrafilm_reference_2026",
+      "kind": "explicit_user_supplied_reference",
+      "source_url": "https://github.com/andreavolpato/spektrafilm",
+      "version": "3bb2c2d2801ff68b92019cf1dbcbb133d60832bc",
+      "bundled": false,
+      "license_or_rights_status": "code GPLv3; inspected profile metadata and pinned profile license CC BY-SA 4.0; original data owners retained",
+      "review": "research/spektrafilm-review.md",
+      "runtime_integration": false,
+      "profiles_sha256": {
+        "kodak_ultra_endura.json": "319fa2514e9a6809fd09ce587c4f714effc035e7f9ebaeb3b55d9bc1b52c2a72",
+        "kodak_vision3_250d.json": "9ab85c8627c0533beb925b747e441e93beabe9e98c2429695b0a53866b56fcc7",
+        "kodak_ektachrome_100.json": "ef194fd80c60a1ac42bbbf1df458b4d047fc07bc17eebce674bb3bcba2ccf62a"
+      }
+    },
+    {
+      "id": "ocio_aces_2_0_cg_config_v4_0_0",
+      "kind": "runtime_builtin_color_configuration",
+      "source_url": "https://github.com/AcademySoftwareFoundation/OpenColorIO-Config-ACES/releases/tag/v4.0.0",
+      "version": "cg-config-v4.0.0_aces-v2.0_ocio-v2.5; runtime OpenColorIO 2.6.0",
+      "recorded_on": "2026-10-27",
+      "bundled": false,
+      "license_or_rights_status": "Configuration loaded from the pinned OpenColorIO dependency; no third-party config files copied into the repository; upstream notices remain with dependency.",
+      "sha256": "24ec81841048fc5db160a7bad882263246183385c5d49d0e86e11464917ead15",
+      "hash_encoding": "UTF-8 of OpenColorIO 2.6.0 Config.serialize(), not the release download bytes",
+      "quantity": "Official ACES 2.0 SDR 100-nit rendering to sRGB, Display P3 and Rec.1886; no HDR image export",
+      "note": "OpenDRT remains an independent pinned renderer; retired ACES 1.x display choices migrate to ACES 2.0 on recipe validation."
+    },
+    {
+      "id": "rawtherapee_5_12_runtime",
+      "kind": "local_external_raw_development_engine",
+      "source_url": "https://github.com/RawTherapee/RawTherapee/tree/a8a3d1bc7b419ed1c974c39276c97e618a4f9a1b",
+      "version": "5.12",
+      "bundled": false,
+      "recorded_on": "2026-10-27",
+      "license_or_rights_status": "GPL-3.0-or-later; upstream runtime remains local, no redistribution in this change",
+      "local_cli_sha256": "2d4ec3071ea6a6526f590e89cf75f44f9288dab23790eb415b660796e5b6daf2",
+      "note": "Locally ad-hoc signed CLI; all 23 loadable code/data sections across both architectures match installed upstream CLI; relies on installed frameworks and camera database. Technical PP3 and output ICCs are authored here."
+    },
+    {
+      "id": "alcedo_architecture_2026_10_27",
+      "kind": "source_architecture_reference",
+      "source_url": "https://github.com/zidage/AlcedoStudio/tree/18c863702565e4be7cba5d889314b555b6fb6037",
+      "bundled": false,
+      "recorded_on": "2026-10-27",
+      "license_or_rights_status": "GPL-3.0-only, upstream additional permission; no source copied",
+      "reviewed_files": [
+        "alcedo_studio/src/app/thumbnail_service.cpp",
+        "alcedo_studio/src/app/thumbnail_disk_cache_service.cpp",
+        "alcedo_studio/src/ui/alcedo_main/album_backend/export_queue.cpp"
+      ],
+      "note": "Versioned derivative cache, small decode concurrency, LRU and frozen export request concepts; original implementation in the existing application framework."
+    },
+    {
+      "id": "local_real_camera_raw_review_2026_10_27",
+      "kind": "user_supplied_local_validation_inputs",
+      "source_url": null,
+      "recorded_on": "2026-10-27",
+      "bundled": false,
+      "license_or_rights_status": "User authorized local testing; per-image redistribution rights not reconciled; originals and previews stay in ignored local storage",
+      "scope": "23 selected files from 1272-file / 501-camera-directory local corpus; 21 decoded, 2 formal-entry failures; not an exhaustive compatibility or real-camera color-accuracy certification",
+      "records": "artifacts/real-raw-review/report.json (local only)",
+      "source_integrity": "All selected originals checked before and after using SHA-256; unchanged",
+      "conditions": "RawTherapee 5.12, shared Camera white balance request, actual native fallback recorded, float32 sRGB D65 and linear AP1 D60, ACEScct input encoding, CIE 1931 2 degree colorimetric reference"
+    },
+    {
+      "id": "film_stock_expansion_20261027",
+      "kind": "manufacturer_and_processed_profile_survey",
+      "recorded_on": "2026-10-27",
+      "bundled": false,
+      "identity_manifest": "data/film-source-survey.json",
+      "recipe_manifest": "data/film-presets-manifest.json",
+      "source_url": "https://github.com/andreavolpato/spektrafilm",
+      "version": "3bb2c2d2801ff68b92019cf1dbcbb133d60832bc",
+      "author": "Manufacturer documents: Kodak / Kodak Alaris / Fujifilm; processed profiles: Andrea Volpato",
+      "license_or_rights_status": "Manufacturer documents local research only; selected processed sensitivities retain CC BY-SA 4.0 attribution and modification records; source-specific derived distribution review pending",
+      "limits": "12 additional provisional Status M negative materials; borrowed 5207 components recorded per role. C-41 only RA-4 print; no E-6, paper or movie-positive substitution into negative fit."
+    },
+    {
+      "id": "printing_optics_20261028",
+      "kind": "identified local optical transmittances and processed paper-base shape",
+      "recorded_on": "2026-10-28",
+      "identity_manifest": "data/printing-optics-manifest.json",
+      "implementation": "docs/printing-optics.zh-CN.md",
+      "source_repository": "https://github.com/andreavolpato/spektrafilm",
+      "source_commit": "3bb2c2d2801ff68b92019cf1dbcbb133d60832bc",
+      "scope": "KG3, Edmund CMY, optional reference lens; original profile base shape with fixed Dmin offset; not real enlarger or paper calibration",
+      "raw_assets_bundled": false,
+      "rights": "Original manufacturers retain filter data rights; processed profile derivatives CC BY-SA 4.0 with Andrea Volpato attribution; local derived LUT redistribution pending review"
+    },
+    {
+      "id": "kodak_motion_user_pdf_survey_20261028",
+      "kind": "manufacturer source curves; not runtime materials",
+      "recorded_on": "2026-10-28",
+      "identity_manifest": "data/kodak-motion-harvest-manifest.json",
+      "implementation": "experiments/harvest_kodak_motion.py",
+      "review": "experiments/verify_kodak_motion_harvest.py",
+      "author": "Eastman Kodak Company",
+      "scope": "Selected VISION3 5203, 5207, 5213 and 5219; VERITA 5206 excluded by user. Original vectors / embedded raster ink; unresolved source conditions retained. No substitutions or runtime recipe changes.",
+      "raw_assets_bundled": false,
+      "license_or_rights_status": "Local source reference; original PDFs, extracted curves and derived LUT distribution rights pending."
+    },
+    {
+      "id": "vision3_source_materials_v2_20261028",
+      "kind": "independent manufacturer-derived ECN-2 Status M materials",
+      "recorded_on": "2026-10-28",
+      "identity_manifest": "data/vision3-materials-manifest.json",
+      "implementation": "experiments/integrate_vision3_materials.py",
+      "validation": "experiments/verify_vision3_integration.py",
+      "scope": "Four independent own-stock materials and frozen per-stock relative exposures; Status M fitting, separate APD/ACES 2.0 and optical paper branches. 5203 complete 2015 source; 5219 Status M interpretation inferred and accepted. VERITA excluded. Saved user recipes preserved.",
+      "raw_assets_bundled": false,
+      "license_or_rights_status": "Local reference; original curves and derived material/LUT redistribution pending."
+    },
+    {
+      "id": "kodak_paper_materials_local_v1",
+      "kind": "manufacturer_curve_material_models",
+      "recorded_on": "2026-10-28",
+      "identity_manifest": "data/paper-presets-manifest.json",
+      "implementation": "experiments/build_paper_presets.py",
+      "review": "experiments/verify_paper_presets.py",
+      "scope": "Four RA-4 / Status A papers, own original vectors and declared conditions; assumed own constant paper white; no metallic angular appearance or measured full-color accuracy. Fuji laser exposure reference remains separate.",
+      "raw_assets_bundled": false,
+      "license_or_rights_status": "Local reference; manufacturer PDF, numerical curve and derived LUT redistribution rights pending."
+    },
+    {
+      "id": "cie_original_tables_release_2026_10_30",
+      "kind": "original_cie_numeric_tables",
+      "recorded_on": "2026-10-30",
+      "source_url": "https://cie.co.at/data-tables",
+      "identity_manifest": "assets/science/cie/sources.json",
+      "bundled": true,
+      "license_or_rights_status": "CC-BY-SA-4.0, declared by each original CIE metadata file; attribution and licence links retained in assets/science/cie/README.md",
+      "scope": "Unmodified source acquisitions only; runtime substitution and its comparisons not yet performed"
     }
   ]
 }

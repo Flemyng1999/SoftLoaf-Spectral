@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "application": {
+    "en": "SoftLoaf Spectral",
+    "zh-CN": "面包光谱"
+  },
+  "source_sha256": "7a91d3c04045fafa46682163f9a6f3e16e25aff50e913fd0c30104dd30b4a397",
+  "selection": "Colorful background, original bread-cat, no mohawk",
+  "operation": "Lanczos size conversion and PNG/ICO/ICNS packaging only",
+  "ico_sizes": [
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    96,
+    128,
+    256
+  ],
+  "master_size": 1024,
+  "files": {
+    "softloaf-spectral.png": "72ff3cb50c357db68ac693501de9ced00b28d19a8f3c36d26f5ce2b7ef8688ee",
+    "SoftLoafSpectral.ico": "09ea337e5d9cd79ebd584a6a0e56c7d94170baa2417e14a4d19ecafea0f3ba0c",
+    "SoftLoafSpectral.icns": "6ac3d9488021926605402464c27de7b3eaea7fa016e6df6da69454031840aeac"
+  }
+}

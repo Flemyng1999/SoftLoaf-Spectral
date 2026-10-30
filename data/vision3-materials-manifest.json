@@ -1,0 +1,112 @@
+{
+  "schema": "softloaf.vision3-materials/1",
+  "directory": "local/materials/vision3-source-v2",
+  "recorded_on": "2026-10-28",
+  "materials": [
+    {
+      "id": "5203",
+      "file": "5203-material.json",
+      "sha256": "3ed6b511d1bc0df44dc01abb93166294e7790ed23d5aa45e9fe1d07385922561",
+      "plot_file": "5203-plot.json",
+      "plot_sha256": "10a8740bbf7747659e111ad36b0bdc33e586d792b5fdf9cc5438ed43cc64488f",
+      "source": {
+        "file": "kodak_5203_2015.pdf",
+        "sha256": "adf0dedd974323b4e5d53a54023cd72bc85f447f5f814eb7882774c145d10eeb",
+        "revision": "H-1-5203t, July 2015",
+        "url": "https://www.kodak.com/content/products-brochures/Film/VISION3-50D-Color-Negative-Film-7203-TECHNICAL-DATA.pdf",
+        "pages": [
+          4,
+          5
+        ]
+      },
+      "fit": {
+        "name": "Kodak VISION3 50D 5203",
+        "fingerprint": "a4573acd9bf01f01762fe1f4429abc0868a84b2241a44d1d3bb2ef16db26c756",
+        "fit_metric": "Status M",
+        "neutral_max_error_D": 0.00018409541217345726
+      }
+    },
+    {
+      "id": "5207",
+      "file": "5207-material.json",
+      "sha256": "57e253fc68fe95833a5f862b4be010938b9b064dde4582dcd9095347fa7e1212",
+      "plot_file": "5207-plot.json",
+      "plot_sha256": "3896efd284185c771b62e9b17a3678b656734a8464013acd620388580d5393f1",
+      "source": {
+        "file": "Kodak_VISION3_250D_5207_7207_Technical_Data.pdf",
+        "sha256": "0a4f1c4fc454a4498162853a62f0989436d18233b7153cb7038f4dcb68f14f18",
+        "revision": "H-1-5207; revised 3-22",
+        "author": "Eastman Kodak Company",
+        "access": "user-supplied local PDF",
+        "printed_identity_used": true,
+        "pages": [
+          3,
+          4
+        ],
+        "source_collection_sha256": "7123989cb86a51c0f3e22e7feef432a5f95d103c839db1f55ef154aea47a285d"
+      },
+      "fit": {
+        "name": "Kodak VISION3 250D 5207",
+        "fingerprint": "1701b5d043d3975673e7e50e2a28e4edbfa7826beb95115e08ab8e46a8d50db6",
+        "fit_metric": "Status M",
+        "neutral_max_error_D": 0.0006301946016912252
+      }
+    },
+    {
+      "id": "5213",
+      "file": "5213-material.json",
+      "sha256": "02cd9b7032a3dcc2cc66c21589596e45ba93f955566d2a2b6178c1d6a43b41fa",
+      "plot_file": "5213-plot.json",
+      "plot_sha256": "c2745d1dfb316960d921c696aba802b0b39a2e39a126e3ed1dbcfebaad4f5af5",
+      "source": {
+        "file": "Kodak_VISION3_200T_5213_7213_Technical_Data_H-1-5213_2026.pdf",
+        "sha256": "6208b3938416434bb74fc628d102b59cd60cb1704510202496b46197796ec624",
+        "revision": "H-1-5213; revised 3-26",
+        "author": "Eastman Kodak Company",
+        "access": "user-supplied local PDF",
+        "printed_identity_used": true,
+        "pages": [
+          3,
+          4
+        ],
+        "source_collection_sha256": "3b0c74ac1fe305508347a24b2f047d4c04fa3aab329fb8439b6e421034860a2e"
+      },
+      "fit": {
+        "name": "Kodak VISION3 200T 5213",
+        "fingerprint": "3bd41227e67c3afe309c3ac7d725d70d8423912e7bfe874f22e416b5d83fd7f0",
+        "fit_metric": "Status M",
+        "neutral_max_error_D": 0.0004189321288852188
+      }
+    },
+    {
+      "id": "5219",
+      "file": "5219-material.json",
+      "sha256": "f15c9a8a809acf6cbe3c6cbf2b0334601f702db73ce85a8a41e79389d071c807",
+      "plot_file": "5219-plot.json",
+      "plot_sha256": "ea7a194adfe67447da27579a55518ce6332cd06c8a67db826a0b0a20a47ca11a",
+      "source": {
+        "file": "Kodak_VISION3_500T_5219_7219_Technical_Data.pdf",
+        "sha256": "bcf82ca05b991505ea5cdd198875128e724195eabed43976e0ccf7aec3b083c8",
+        "revision": "H-1-5219; revised 3-22",
+        "author": "Eastman Kodak Company",
+        "access": "user-supplied local PDF",
+        "printed_identity_used": true,
+        "pages": [
+          3,
+          4
+        ],
+        "source_collection_sha256": "7128a6a7cc6cac196ac9e85dd9106fbdca9b46acc5d5c29e88a9fa9473134e29"
+      },
+      "fit": {
+        "name": "Kodak VISION3 500T 5219",
+        "fingerprint": "f60be1ea56e214b17820bf87cc28af82f483b5aaae95f34256b20dd5294535fa",
+        "fit_metric": "Status M",
+        "neutral_max_error_D": 0.0008815517066530498
+      }
+    }
+  ],
+  "excluded": [
+    "5206"
+  ],
+  "rights": "Local manufacturer reference; derived LUT redistribution pending review."
+}

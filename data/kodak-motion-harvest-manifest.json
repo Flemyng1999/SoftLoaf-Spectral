@@ -1,0 +1,155 @@
+{
+  "schema": "softloaf.kodak-motion-source-survey/1",
+  "recorded_on": "2026-10-28",
+  "author": "Manufacturer sources: Eastman Kodak Company; collection: SoftLoaf Spectral, Yangming Feng and contributors",
+  "scope": "Independent source collection: four selected VISION3 stocks; VERITA 200D excluded by user. This is not a validated material catalog.",
+  "rights": "PDFs, extracted tables, chart images and derived material/LUT distribution pending source-specific review; local only.",
+  "raw_assets_bundled": false,
+  "source_acquisition": "Supply the named manufacturer PDFs and verify their SHA-256. No private source paths are published.",
+  "stocks": [
+    {
+      "id": "5203",
+      "name": "Kodak VISION3 50D 5203 / 7203",
+      "source": {
+        "file": "Kodak_VISION3_50D_5203_7203_Technical_Data.pdf",
+        "sha256": "f697ae60b74872b402e2ded8752fb1b326e4a392eece2bb3e3f9dd24b517271c",
+        "revision": "K-1165.25.09.30.EN.02; copyright 2025",
+        "author": "Eastman Kodak Company",
+        "access": "user-supplied local PDF",
+        "printed_identity_used": true
+      },
+      "process": "ECN-2",
+      "characteristic_density_status": "not_specified_in_this_document",
+      "curve_groups": [
+        "characteristic RGB",
+        "log sensitivity RGB",
+        "minimum density",
+        "midscale neutral",
+        "CMY dye spectra"
+      ],
+      "source_pages": [
+        2,
+        3
+      ],
+      "extraction_methods": [
+        "filled_vector_outline_center"
+      ],
+      "missing_components": [],
+      "substitutions": [],
+      "local_folder": "local/materials/kodak-motion-survey-v1/5203",
+      "runtime_material_changed": false
+    },
+    {
+      "id": "5207",
+      "name": "Kodak VISION3 250D 5207 / 7207",
+      "source": {
+        "file": "Kodak_VISION3_250D_5207_7207_Technical_Data.pdf",
+        "sha256": "0a4f1c4fc454a4498162853a62f0989436d18233b7153cb7038f4dcb68f14f18",
+        "revision": "H-1-5207; revised 3-22",
+        "author": "Eastman Kodak Company",
+        "access": "user-supplied local PDF",
+        "printed_identity_used": true
+      },
+      "process": "ECN-2",
+      "characteristic_density_status": "Status M",
+      "curve_groups": [
+        "characteristic RGB",
+        "log sensitivity RGB",
+        "minimum density",
+        "midscale neutral",
+        "CMY dye spectra"
+      ],
+      "source_pages": [
+        3,
+        4
+      ],
+      "extraction_methods": [
+        "reviewed_guide_located_raster_ink_centerline"
+      ],
+      "missing_components": [],
+      "substitutions": [],
+      "local_folder": "local/materials/kodak-motion-survey-v1/5207",
+      "runtime_material_changed": false
+    },
+    {
+      "id": "5213",
+      "name": "Kodak VISION3 200T 5213 / 7213",
+      "source": {
+        "file": "Kodak_VISION3_200T_5213_7213_Technical_Data_H-1-5213_2026.pdf",
+        "sha256": "6208b3938416434bb74fc628d102b59cd60cb1704510202496b46197796ec624",
+        "revision": "H-1-5213; revised 3-26",
+        "author": "Eastman Kodak Company",
+        "access": "user-supplied local PDF",
+        "printed_identity_used": true
+      },
+      "process": "ECN-2",
+      "characteristic_density_status": "Status M",
+      "curve_groups": [
+        "characteristic RGB",
+        "log sensitivity RGB",
+        "minimum density",
+        "midscale neutral",
+        "CMY dye spectra"
+      ],
+      "source_pages": [
+        3,
+        4
+      ],
+      "extraction_methods": [
+        "reviewed_guide_located_raster_ink_centerline"
+      ],
+      "missing_components": [],
+      "substitutions": [],
+      "local_folder": "local/materials/kodak-motion-survey-v1/5213",
+      "runtime_material_changed": false
+    },
+    {
+      "id": "5219",
+      "name": "Kodak VISION3 500T 5219 / 7219",
+      "source": {
+        "file": "Kodak_VISION3_500T_5219_7219_Technical_Data.pdf",
+        "sha256": "bcf82ca05b991505ea5cdd198875128e724195eabed43976e0ccf7aec3b083c8",
+        "revision": "H-1-5219; revised 3-22",
+        "author": "Eastman Kodak Company",
+        "access": "user-supplied local PDF",
+        "printed_identity_used": true
+      },
+      "process": "ECN-2",
+      "characteristic_density_status": "unconfirmed_source_label",
+      "curve_groups": [
+        "characteristic RGB",
+        "log sensitivity RGB",
+        "minimum density",
+        "midscale neutral",
+        "CMY dye spectra"
+      ],
+      "source_pages": [
+        3,
+        4
+      ],
+      "extraction_methods": [
+        "reviewed_guide_located_raster_ink_centerline"
+      ],
+      "missing_components": [],
+      "substitutions": [],
+      "local_folder": "local/materials/kodak-motion-survey-v1/5219",
+      "runtime_material_changed": false
+    }
+  ],
+  "excluded_stocks": [
+    {
+      "id": "5206",
+      "name": "Kodak VERITA 200D",
+      "reason": "Excluded by user; separate CMY dye spectra unavailable.",
+      "source": {
+        "file": "Kodak_VERITA_200D_5206_7206_Technical_Data_2026.pdf",
+        "sha256": "aa5bfd899003cf4a0ae5a86a33325e0eac2ed16b9fca61c8894532de1458bae2",
+        "revision": "H-1-5206; 2026",
+        "author": "Eastman Kodak Company",
+        "access": "user-supplied local PDF",
+        "printed_identity_used": true
+      },
+      "eligible_for_materials_or_recipes": false
+    }
+  ]
+}

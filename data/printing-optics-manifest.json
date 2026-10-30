@@ -1,0 +1,63 @@
+{
+  "repository": "https://github.com/andreavolpato/spektrafilm",
+  "commit": "3bb2c2d2801ff68b92019cf1dbcbb133d60832bc",
+  "files": {
+    "heat_absorbing__schott__KG3.csv": {
+      "path": "src/spektrafilm/data/filters/heat_absorbing/schott/KG3.csv",
+      "git_blob": "83e70275273ac0b9466d2a9d97dd52facc264b26",
+      "sha256": "7654aa57fa8e42ae280e8d679ae9ebf8cef48ed5cbe6c2ab43eba1c6608f3d1f",
+      "url": "https://github.com/andreavolpato/spektrafilm/blob/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/filters/heat_absorbing/schott/KG3.csv"
+    },
+    "heat_absorbing__schott__info.txt": {
+      "path": "src/spektrafilm/data/filters/heat_absorbing/schott/info.txt",
+      "git_blob": "614826b56e4a317f87cd08ba53870821e929fc5e",
+      "sha256": "cd9ae1fa3694cf0d6c422cfafd06e80250520023479294d628f4d678a1ba58db",
+      "url": "https://github.com/andreavolpato/spektrafilm/blob/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/filters/heat_absorbing/schott/info.txt"
+    },
+    "dichroics__edmund_optics__filter_c.csv": {
+      "path": "src/spektrafilm/data/filters/dichroics/edmund_optics/filter_c.csv",
+      "git_blob": "5223f4fc31ded551e4b9c97fd23c578c51f90067",
+      "sha256": "f72dc5b7ae571d8f5539756ac7951036639ed77f135fdf21e8a18d48f41b2ad2",
+      "url": "https://github.com/andreavolpato/spektrafilm/blob/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/filters/dichroics/edmund_optics/filter_c.csv"
+    },
+    "dichroics__edmund_optics__filter_m.csv": {
+      "path": "src/spektrafilm/data/filters/dichroics/edmund_optics/filter_m.csv",
+      "git_blob": "72182238955b1eb8a73313d2faba38f3938fb7b5",
+      "sha256": "40c42c1feed00cf0cb76781f83ab5de0e8c0d90cca9ba7670bb8dbda05cc5612",
+      "url": "https://github.com/andreavolpato/spektrafilm/blob/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/filters/dichroics/edmund_optics/filter_m.csv"
+    },
+    "dichroics__edmund_optics__filter_y.csv": {
+      "path": "src/spektrafilm/data/filters/dichroics/edmund_optics/filter_y.csv",
+      "git_blob": "edbb5cc1b4ca201f24e73f04742cd3e04ed76141",
+      "sha256": "21607355113717a854f8e61e78dd9784a7a1e91bfbd79dd1704293b9f58d9da9",
+      "url": "https://github.com/andreavolpato/spektrafilm/blob/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/filters/dichroics/edmund_optics/filter_y.csv"
+    },
+    "dichroics__edmund_optics__info.txt": {
+      "path": "src/spektrafilm/data/filters/dichroics/edmund_optics/info.txt",
+      "git_blob": "dd215d459426b29d2c0c93b1cc0a455b0ef37505",
+      "sha256": "b77f383a39ebd1f034ef6cc89e1e87ecbeaf499c9a8b3bb71f2b78b3ccea846d",
+      "url": "https://github.com/andreavolpato/spektrafilm/blob/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/filters/dichroics/edmund_optics/info.txt"
+    },
+    "lens_transmission__canon__canon_24_f28_is.csv": {
+      "path": "src/spektrafilm/data/filters/lens_transmission/canon/canon_24_f28_is.csv",
+      "git_blob": "1900f0961cf9c1d9675c52bf17f2543248eddc0b",
+      "sha256": "6edc1be37bc22ef4e36b98981c09c45ff0e9b3a3ce80e00c62906d8ec941df3a",
+      "url": "https://github.com/andreavolpato/spektrafilm/blob/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/filters/lens_transmission/canon/canon_24_f28_is.csv"
+    },
+    "lens_transmission__canon__canon_24_f28_is_info.txt": {
+      "path": "src/spektrafilm/data/filters/lens_transmission/canon/canon_24_f28_is_info.txt",
+      "git_blob": "19bff90ebb48cfd5435afa9ecc40ec6c1972d8c7",
+      "sha256": "3f776692ad77f102afa228ad87498050e09681cc296ab83f717215e21f6ed04e",
+      "url": "https://github.com/andreavolpato/spektrafilm/blob/3bb2c2d2801ff68b92019cf1dbcbb133d60832bc/src/spektrafilm/data/filters/lens_transmission/canon/canon_24_f28_is_info.txt"
+    }
+  },
+  "author": "Andrea Volpato and original filter data owners",
+  "license": "Retain upstream and manufacturer terms; local reference, redistribution pending",
+  "schema": "softloaf.printing-optics/1",
+  "paper_profile_sha256": "319fa2514e9a6809fd09ce587c4f714effc035e7f9ebaeb3b55d9bc1b52c2a72",
+  "original_sources": {
+    "heat": "https://www.newport.com/f/heat-absorbing-glass-filters",
+    "dichroic": "https://www.edmundoptics.com/f/additive-and-subtractive-dichroic-color-filters/11985/",
+    "lens": "https://www.lensrentals.com/blog/2018/03/a-geek-of-many-colors-adventures-in-spectrometry/"
+  }
+}

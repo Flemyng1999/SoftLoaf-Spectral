@@ -1,0 +1,57 @@
+{
+  "schema": "softloaf.camera-response-source-survey/1",
+  "date": "2026-10-29",
+  "scope": "Local 5207 scan sensitivity experiment; no A7R IV/III/II curve is relabelled as an A7R V measurement",
+  "sources": [
+    {
+      "model": "Sony ILCE-7RM5",
+      "kind": "prediction",
+      "authors": "Grigory Solomatov and Derya Akkaynak, ICCP 2023",
+      "method": "DNG colour matrices and autoencoder; no direct camera measurement",
+      "url": "https://color-lab-eilat.github.io/Spectral-sensitivity-estimation-web/",
+      "archive_url": "https://color-lab-eilat.github.io/Spectral-sensitivity-estimation-web/resources/csv.zip",
+      "member": "csv/Sony-ILCE-7RM5.csv",
+      "archive_sha256": "7054f1c411c3da2808297fffed456906d787b0d1622ca9c42ec2895262a56522",
+      "sha256": "3242e73995695d47bdd55a2a5008b479cfee1ac8e8589146b51ffdb89f9c7e0d",
+      "source_band_nm": [400,700],
+      "source_grid_nm": 10,
+      "redistribution": "not reviewed; numeric file retained on private external volume"
+    },
+    {
+      "model": "Sony ILCE-7RM4",
+      "kind": "measured source declaration",
+      "creator": "wetadigital",
+      "measurement_equipment": "lightsaber",
+      "url": "https://github.com/AcademySoftwareFoundation/rawtoaces-data/blob/main/data/camera/Sony_ILCE-7RM4_380_780_5.json",
+      "sha256": "2e2efe8ca7b92ba65e54029e751d8e363ba1e40dec513fd8d65f9357bc592033",
+      "source_band_nm": [380,780],
+      "source_grid_nm": 5,
+      "license": "Apache-2.0"
+    },
+    {
+      "model": "Sony ILCE-7RM3",
+      "kind": "measured source declaration",
+      "creator": "wetadigital",
+      "measurement_equipment": "lightsaber",
+      "url": "https://github.com/AcademySoftwareFoundation/rawtoaces-data/blob/main/data/camera/Sony_ILCE-7RM3_380_780_5.json",
+      "sha256": "0359aad186a62ba8be765416c0fc764d9905aa47062961e8a2d447b02e349fa8",
+      "source_band_nm": [380,780],
+      "source_grid_nm": 5,
+      "license": "Apache-2.0"
+    },
+    {
+      "model": "Sony ILCE-7RM2",
+      "kind": "measured source declaration",
+      "creator": "wetadigital",
+      "measurement_equipment": "lightsaber",
+      "url": "https://github.com/AcademySoftwareFoundation/rawtoaces-data/blob/main/data/camera/Sony_ILCE-7RM2_380_780_5.json",
+      "sha256": "3a3d6650421e6ba835780b8879b885712d2d4f179788899ba0d735c619c5065c",
+      "source_band_nm": [380,780],
+      "source_grid_nm": 5,
+      "license": "Apache-2.0"
+    }
+  ],
+  "units": "Relative responses, not absolute QE. The experiment uses the effective energy-response forward-model convention. Lens inclusion, per-photon calibration, uncertainty and FWHM are not established by the source header.",
+  "processing": "Linearly interpolate nonnegative source values only within provided coverage; peak-normalize each camera channel. Shared primary band 400-700 nm; 391-730 nm used for the separate A7R IV coverage control. No invented prediction tails.",
+  "rights": "Public source metadata only. Source curves, private target and film-derived outputs stay on external storage; no publication permission inferred."
+}

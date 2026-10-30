@@ -1,0 +1,15 @@
+{
+  "schema": "softloaf.local-material-identities/1",
+  "extraction": "experiments/extract_5207_materials.py; PyMuPDF 2.0, numpy 2.5.4; published curves with documented projection and tail assumptions",
+  "rights": "Only hashes bundled; actual tables and source PDFs remain local pending redistribution review",
+  "sha256": {
+    "5207_characteristic.csv": "f05d518f5f6233e87405af31b97003c82b38875ea5a22c73de11bb217011fcde",
+    "5207_dyes.csv": "515fbaf7bfeeefd89ea12c9ec7b9e3a2c7ade44d50c3be34a30b5a80ceece7b4",
+    "5207_sensitivity.csv": "a7a35b3c69c7c85bdef9b78c3ee588a6826bb1eae1a128fc2bfd5f0c5db21cef",
+    "apd_weights.csv": "8c12b342c6dbdeb9b4861a6991a1b891316c078c484fa4ab5a087c93ced5de63",
+    "paper_characteristic.csv": "7fdc15cfc5c9a67a42cfc0a93f28b6a80bf59ccfea781fb9c583a1b76dae2a6a",
+    "paper_dyes.csv": "4a48b4e724582705da9cbaea9ee98b09082b4de59057b2e91addb2d04118c030",
+    "paper_sensitivity.csv": "8c97e7dc2bfbf37b5ee1e9d87af771528ed4cc05c517c48e90caba1c2ab1a308",
+    "provenance.json": "c1f3b3177741fad1057a9c6c44bd87f30ada18949a926b0d86942eacd80bff89"
+  }
+}
