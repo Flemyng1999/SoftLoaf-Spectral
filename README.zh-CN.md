@@ -1,7 +1,7 @@
 # 面包光谱（SoftLoaf Spectral）
 
 **安装版与科学资料分开提供。** alpha.1 为源码版，alpha.2 增加 macOS arm64
-独立运行时打包；Windows 安装器仍在验证。已上线下载见
+独立运行时，alpha.3 增加 Windows x64 运行时测试版。已上线下载及平台要求见
 [Releases](https://github.com/Flemyng1999/SoftLoaf-Spectral/releases)。两种分发均不附
 胶片／相纸曲线、冻结采样模型、照片或扫描标定。公开内核测试可独立运行；
 应用仍需另行准备科学资料目录。
@@ -13,8 +13,10 @@ RAW 白平衡、放大光和观看光保持独立；已有配方保留其记录�
 
 日志、跨平台 CI、本地严格测试和设置中的语言选择见
 [检查体系与 Windows 开发](docs/quality-and-windows.md)。自有内核使用 C++23；
-Windows 使用 D3D12，保留 CPU 处理及故障重试。独立运行时候选版已完成
-真实 RAW 的 GPU／CPU 全尺寸导出和 LUT 回读；最终安装器仍须另行验收。
+Windows 使用 D3D12，保留 CPU 处理及故障重试。alpha.3 安装器未签名，
+需要 WebView2 Evergreen；已完成实际安装版的 RAW 预览与全尺寸导出、
+GPU／CPU 处理、LUT 文件回读、缓存保留及卸载重装检查。数值误差与物理颜色
+准确性仍有限制，见发布附件 `Windows-Validation.json` 和 `Known-Limits.md`。
 
 [English](README.md)
 

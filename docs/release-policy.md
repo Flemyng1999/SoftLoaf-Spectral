@@ -2,8 +2,9 @@
 
 面包光谱 (SoftLoaf Spectral) distributes source prereleases and separately
 verified platform packages. A successful development build is not an
-installable release. Alpha.2 publication is macOS-first; a Windows installer
-must pass its own dependency and installed-candidate checks before being added.
+installable release. Alpha.2 publication was macOS-first; alpha.3 adds the
+Windows runtime preview after its dependency and installed-candidate checks.
+Each future Windows installer must pass those checks before publication.
 
 For 0.1.0-alpha.1 the owner explicitly selected a source-only prerelease without
 unreviewed data. This channel publishes an audited immutable source archive,
