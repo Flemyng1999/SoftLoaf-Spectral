@@ -18,6 +18,7 @@ research/private/
 artifacts/
 dist/
 build/
+build-installer/
 *.egg-info/
 
 # Local video figures retain their source-specific distribution status.

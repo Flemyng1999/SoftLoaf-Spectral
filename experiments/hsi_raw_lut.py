@@ -22,9 +22,6 @@ os.environ.setdefault('MPLCONFIGDIR', str(Path('artifacts/.matplotlib').resolve(
 os.environ.setdefault('XDG_CACHE_HOME', str(Path('artifacts/.cache').resolve()))
 
 import colour
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image, ImageCms
 import PyOpenColorIO as ocio
@@ -293,6 +290,9 @@ def bake_cube(film_rgb, size, path):
 
 
 def figures(out, examples, report):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
     for name, images in examples.items():
         fig, axes = plt.subplots(1, 4, figsize=(15, 4.2), layout='constrained')
         labels = ['Spectral E100 reference', 'Ideal RGB + spectral-prior LUT',

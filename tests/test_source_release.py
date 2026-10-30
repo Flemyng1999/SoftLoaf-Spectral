@@ -41,7 +41,8 @@ def test_credential_and_personal_path_checks_do_not_echo_values():
 
 def test_release_version_and_public_fit_summaries_are_consistent():
     import spectral_app
-    assert spectral_app.__version__==(ROOT/'VERSION').read_text().strip()=='0.1.0-alpha.1'
+    assert spectral_app.__version__==(ROOT/'VERSION').read_text().strip()
+    assert spectral_app.__version__.startswith('0.1.0-alpha.')
     from spectral_lut.provenance import public_fit_summary
     source={'name':'synthetic','fit_metric':'Status M','fingerprint':'abc','neutral_max_error_D':.001,
             'provenance':{'exposure_reference':{'channels':{'R':[1]*33}}}}

@@ -9,8 +9,10 @@ import sys
 
 class RawRuntime:
     def __init__(self,root,cli=None,*,platform=None):
+        from .runtime_paths import packaged,resources,state_root
         root=Path(root);platform=platform or sys.platform
-        config_path=root/'local/raw-runtime.json';config={}
+        frozen=packaged() and root.resolve()==resources()
+        config_path=(state_root() if frozen else root)/'local/raw-runtime.json';config={}
         if config_path.is_file():
             config=json.loads(config_path.read_text(encoding='utf-8'))
             if config.get('schema')!=1:raise ValueError('Unknown RAW runtime configuration')
@@ -20,12 +22,13 @@ class RawRuntime:
             value=Path(config.get(name,default))
             return value if value.is_absolute() else root/value
         base=root/'local/runtime'
-        integrated=base/('RawTherapeeEngine/rawtherapee-cli.exe' if platform=='win32' else 'RawTherapeeEngine.app/Contents/MacOS/rawtherapee-cli')
-        reference=base/('RawTherapee/rawtherapee-cli.exe' if platform=='win32' else 'RawTherapee.app/Contents/MacOS/rawtherapee-cli')
+        executable='bin/rawtherapee-cli.exe' if platform=='win32' else 'MacOS/rawtherapee-cli'
+        integrated=(root/'raw-engine'/executable) if frozen else base/('RawTherapeeEngine/rawtherapee-cli.exe' if platform=='win32' else 'RawTherapeeEngine.app/Contents/MacOS/rawtherapee-cli')
+        reference=(root/'raw-reference'/executable) if frozen else base/('RawTherapee/rawtherapee-cli.exe' if platform=='win32' else 'RawTherapee.app/Contents/MacOS/rawtherapee-cli')
         self.integrated=location('integrated',integrated)
         self.reference=Path(os.environ.get('SOFTLOAF_RAWTHERAPEE_REFERENCE',location('reference',reference)))
         override=cli or os.environ.get('SOFTLOAF_RAWTHERAPEE')
-        candidates=[override] if override else [self.integrated,self.reference,shutil.which('rawtherapee-cli'),'/Applications/RawTherapee.app/Contents/MacOS/rawtherapee-cli']
+        candidates=[override] if override else [self.integrated,self.reference]+([] if frozen else [shutil.which('rawtherapee-cli'),'/Applications/RawTherapee.app/Contents/MacOS/rawtherapee-cli'])
         self.cli=next((Path(p) for p in candidates if p and Path(p).is_file()),None)
         self.preview=Path(os.environ.get('SOFTLOAF_RAWTHERAPEE_PREVIEW',str(self.integrated)))
         self.dll_directory=location('dll_directory',root/'local/runtime/dlls') if 'dll_directory' in config else None
@@ -33,7 +36,7 @@ class RawRuntime:
         if self.cli:
             bundled=self.cli.parent.parent/'Resources/share'
             share=bundled if bundled.is_dir() else self.cli.parent if platform=='win32' else share
-        self.resources=Path(os.environ.get('SOFTLOAF_RAWTHERAPEE_DATA',str(share)))
+        self.resources=Path(os.environ.get('SOFTLOAF_RAWTHERAPEE_DATA',str(root/'raw-engine'/('bin' if platform=='win32' else 'Resources/share') if frozen else share)))
 
     def environment(self,cli,base=None):
         env=dict(os.environ if base is None else base)
@@ -48,6 +51,11 @@ def find_lcms2():
     if configured:
         if not Path(configured).is_file():raise RuntimeError('Configured LCMS2 library is missing')
         return configured
+    from .runtime_paths import packaged,native_directory
+    if packaged():
+        return next((str(native_directory()/name) for name in
+            ('liblcms2.2.dylib','liblcms2-2.dll','lcms2.dll','liblcms2.so.2')
+            if (native_directory()/name).is_file()),None)
     library=ctypes.util.find_library('lcms2')
     if library:return library
     runtime=RawRuntime(Path(__file__).resolve().parents[1])

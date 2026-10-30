@@ -14,6 +14,8 @@
 @property NSDate *started;
 @property NSMutableSet<WKDownload *> *downloads;
 @property BOOL quitting;
+@property NSTextField *loading;
+@property BOOL refreshedDrawingArea;
 @end
 
 @implementation SpectralApp
@@ -53,18 +55,75 @@
     self.window.title = @"面包光谱";
     self.window.minSize = NSMakeSize(960, 650);
     self.window.delegate = self;
-    [self.window center]; [self.window makeKeyAndOrderFront:nil];
     NSTextField *loading = [NSTextField labelWithString:@"正在载入光谱材料与计算内核…"];
     loading.frame = NSMakeRect(40, 400, 800, 30);
+    self.loading = loading;
     [self.window.contentView addSubview:loading];
+    [self.window center]; [self.window makeKeyAndOrderFront:nil];
     [NSApp activateIgnoringOtherApps:YES];
+    [self startService];
+}
+- (NSDictionary *)serviceEnvironment {
+    NSMutableDictionary *environment = [NSProcessInfo.processInfo.environment mutableCopy];
+    for (NSString *name in @[@"PYTHONPATH",@"PYTHONHOME",@"PYTHONSTARTUP",@"DYLD_LIBRARY_PATH",@"DYLD_FRAMEWORK_PATH"])
+        [environment removeObjectForKey:name];
+    return environment;
+}
+- (BOOL)configureService:(NSString *)executable state:(NSString *)state {
+    NSTask *probe = [NSTask new]; probe.executableURL = [NSURL fileURLWithPath:executable];
+    probe.arguments = @[@"--needs-setup"]; probe.environment = [self serviceEnvironment];
+    NSError *error = nil;
+    if (![probe launchAndReturnError:&error]) return NO;
+    [probe waitUntilExit];
+    if (probe.terminationStatus == 0) return YES;
+    NSOpenPanel *science = [NSOpenPanel openPanel];
+    science.canChooseFiles = NO; science.canChooseDirectories = YES; science.allowsMultipleSelection = NO;
+    science.message = @"选择光谱资料文件夹（含 runtime-science.json）";
+    science.prompt = @"选择资料";
+    if ([science runModal] != NSModalResponseOK) return NO;
+    NSOpenPanel *data = [NSOpenPanel openPanel];
+    data.canChooseFiles = NO; data.canChooseDirectories = YES; data.allowsMultipleSelection = NO;
+    data.message = @"选择外置数据盘上的文件夹，用于 RAW、预览和缓存。";
+    data.prompt = @"选择数据位置"; data.directoryURL = [NSURL fileURLWithPath:@"/Volumes"];
+    if ([data runModal] != NSModalResponseOK) return NO;
+    NSURL *volume = nil; [data.URL getResourceValue:&volume forKey:NSURLVolumeURLKey error:nil];
+    if (!volume) return NO;
+    NSString *pixels = data.URL.path;
+    NSTask *configure = [NSTask new]; configure.executableURL = [NSURL fileURLWithPath:executable];
+    configure.arguments = @[@"--configure",@"--science-root",science.URL.path,@"--data-root",pixels,@"--volume",volume.path];
+    configure.currentDirectoryURL = [NSURL fileURLWithPath:state];
+    configure.environment = [self serviceEnvironment];
+    NSPipe *output = [NSPipe pipe];configure.standardOutput = output;configure.standardError = output;
+    if (![configure launchAndReturnError:&error]) return NO;
+    NSData *response = [output.fileHandleForReading readDataToEndOfFile];[configure waitUntilExit];
+    if (configure.terminationStatus == 0) return YES;
+    NSDictionary *record = [NSJSONSerialization JSONObjectWithData:response options:0 error:nil];
+    NSAlert *alert = [NSAlert new];alert.messageText = @"无法使用这份资料或数据位置";
+    alert.informativeText = record[@"message"] ?: @"请选择完整的光谱资料，并确认外置数据盘已经连接。";
+    [alert runModal];return NO;
+}
+- (void)startService {
     NSString *resource = NSBundle.mainBundle.resourcePath;
+#if SOFTLOAF_PACKAGED_SERVICE
+    NSString *state = NSProcessInfo.processInfo.environment[@"SOFTLOAF_STATE_HOME"];
+    if (!state) state = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,NSUserDomainMask,YES) firstObject]
+        stringByAppendingPathComponent:@"SoftLoafSpectral"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:state withIntermediateDirectories:YES attributes:nil error:nil];
+    NSString *checkout = state;
+    NSString *python = [resource stringByAppendingPathComponent:@"Service/spectral-service"];
+    if (![[NSFileManager defaultManager] isExecutableFileAtPath:python]) {
+        [self failure:@"安装包缺少计算服务，请重新安装面包光谱。"];
+        return;
+    }
+    if (![self configureService:python state:state]) { [NSApp terminate:nil]; return; }
+#else
     NSDictionary *runtime = [NSDictionary dictionaryWithContentsOfFile:[resource stringByAppendingPathComponent:@"runtime.plist"]];
     NSString *checkout = runtime[@"Checkout"], *python = runtime[@"Python"];
     if (!checkout || !python || ![[NSFileManager defaultManager] isExecutableFileAtPath:python]) {
         [self failure:@"这是本地开发版，需要构建时指定的 Python 环境。请按照开发说明重新构建。"];
         return;
     }
+#endif
     self.readyFile = [NSTemporaryDirectory() stringByAppendingPathComponent:
         [NSString stringWithFormat:@"softloaf-%@.json", NSUUID.UUID.UUIDString]];
     NSString *output = [checkout stringByAppendingPathComponent:@"artifacts/application"];
@@ -75,14 +134,16 @@
     self.service = [NSTask new];
     self.service.executableURL = [NSURL fileURLWithPath:python];
     self.service.currentDirectoryURL = [NSURL fileURLWithPath:checkout];
+#if SOFTLOAF_PACKAGED_SERVICE
+    self.service.arguments = @[@"--ready-file",self.readyFile,@"--parent-pid",[NSString stringWithFormat:@"%d",getpid()]];
+#else
     self.service.arguments = @[@"-m", @"spectral_app", @"--core",
         [resource stringByAppendingPathComponent:@"libsoftloaf_core.dylib"],
         @"--ready-file", self.readyFile, @"--parent-pid", [NSString stringWithFormat:@"%d", getpid()]];
+#endif
     self.service.standardOutput = logHandle; self.service.standardError = logHandle;
     // Child runs the configured environment without inheriting Python injection settings.
-    NSMutableDictionary *environment = [NSProcessInfo.processInfo.environment mutableCopy];
-    [environment removeObjectForKey:@"PYTHONPATH"]; [environment removeObjectForKey:@"PYTHONHOME"];
-    self.service.environment = environment;
+    self.service.environment = [self serviceEnvironment];
     NSError *error = nil;
     if (![self.service launchAndReturnError:&error]) {
         [self failure:@"无法启动本地计算服务。请检查 Python 环境和开发版构建。"];
@@ -105,14 +166,50 @@
     if (![ready[@"pid"] isEqual:@(self.service.processIdentifier)] ||
         ![url.host isEqualToString:@"127.0.0.1"] || ![url.scheme isEqualToString:@"http"] || !url.port) return;
     [timer invalidate]; self.baseURL = url;
+    [self.loading removeFromSuperview];self.loading = nil;
+    [self createWebView];
+    [self recordLayout:@"installed" details:@{}];
+    [self.web loadRequest:[NSURLRequest requestWithURL:url]];
+}
+- (void)createWebView {
     WKWebViewConfiguration *webConfiguration = [[WKWebViewConfiguration alloc] init];
     [webConfiguration.userContentController addScriptMessageHandler:self name:@"cacheFolder"];
     [webConfiguration.userContentController addScriptMessageHandler:self name:@"uiLanguage"];
     webConfiguration.websiteDataStore = WKWebsiteDataStore.nonPersistentDataStore;
-    self.web = [[WKWebView alloc] initWithFrame:NSZeroRect configuration:webConfiguration];
+    self.web = [[WKWebView alloc] initWithFrame:self.window.contentLayoutRect configuration:webConfiguration];
     self.web.navigationDelegate = self; self.web.UIDelegate = self;
     SLInstallContentView(self.window, self.web);
-    [self.web loadRequest:[NSURLRequest requestWithURL:url]];
+}
+- (void)recordLayout:(NSString *)phase details:(NSDictionary *)details {
+    NSDictionary *record = @{ @"phase":phase,@"web_frame":NSStringFromRect(self.web.frame),
+        @"root_frame":NSStringFromRect(self.window.contentView.frame),@"visible_rect":NSStringFromRect(self.window.contentLayoutRect),@"window_visible":@(self.window.visible),@"occlusion":@(self.window.occlusionState),@"view_hidden":@(self.web.hidden),@"view_layer":@(self.web.wantsLayer),
+        @"details":details };
+    NSData *bytes = [NSJSONSerialization dataWithJSONObject:record options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *path = [self.service.currentDirectoryURL.path stringByAppendingPathComponent:@"artifacts/application/native-layout.json"];
+    [bytes writeToFile:path atomically:YES];
+}
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    (void)navigation;
+    // On the tested macOS 27 WebKit, first navigation can leave a blank drawing
+    // area until a geometry update despite a correct DOM viewport. Refresh only
+    // the view once; the outer window and the user's window size stay unchanged.
+    if (!self.refreshedDrawingArea && NSWidth(webView.frame)>1) {
+        self.refreshedDrawingArea = YES;
+        NSRect frame = webView.frame;frame.size.width -= 1;webView.frame = frame;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSRect final = self.window.contentLayoutRect;
+            if (self.window.styleMask & NSWindowStyleMaskFullSizeContentView) final = self.web.superview.bounds;
+            self.web.frame = final;
+            self.web.needsDisplay = YES;[self.window displayIfNeeded];
+        });
+    }
+    [webView evaluateJavaScript:@"({width:innerWidth,height:innerHeight,ready:document.readyState,children:document.body.children.length,display:getComputedStyle(document.body).display,opacity:getComputedStyle(document.body).opacity,appRect:JSON.stringify(document.querySelector('.app').getBoundingClientRect())})"
+        completionHandler:^(id result,NSError *error) {
+            [self recordLayout:@"loaded" details:error ? @{@"error":error.localizedDescription} : ([result isKindOfClass:NSDictionary.class] ? result : @{})];
+        }];
+}
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
+    (void)webView;[self recordLayout:@"web-process-terminated" details:@{}];
 }
 - (void)showAbout:(id)sender {
     (void)sender;
@@ -212,7 +309,7 @@
         completionHandler(result == NSModalResponseOK ? panel.URLs : nil);
     }];
 }
-- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView { [webView reload]; }
+
 - (BOOL)windowShouldClose:(NSWindow *)sender {
     (void)sender;
     [NSApp terminate:nil];

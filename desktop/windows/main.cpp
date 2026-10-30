@@ -6,8 +6,11 @@
 #include <charconv>
 #include "process_tree.h"
 #include "dpi_window.h"
+#include "command_line.h"
 #include <ole2.h>
 #include <shellapi.h>
+#include <shobjidl.h>
+#include <shlobj.h>
 #include <WebView2.h>
 #include <wrl.h>
 #include <filesystem>
@@ -22,7 +25,7 @@ namespace fs=std::filesystem;
 namespace {
 struct Application {
     HWND window=nullptr;HANDLE service=nullptr,stop=nullptr;DWORD service_id=0;bool ready=false,closing=false,check=false,english=true;int exit_code=0;
-    fs::path directory,source,report,ready_file;std::wstring origin;
+    fs::path directory,source,report,ready_file,browser_cache;std::wstring origin;
     ComPtr<ICoreWebView2Controller> controller;ComPtr<ICoreWebView2> web;
     std::wstring setting(const wchar_t* key,const wchar_t* fallback=L"")const {
         std::vector<wchar_t> value(32768);GetPrivateProfileStringW(L"runtime",key,fallback,value.data(),static_cast<DWORD>(value.size()),(directory/L"runtime.ini").c_str());return value.data();
@@ -32,7 +35,7 @@ struct Application {
     void resize(){if(controller){RECT bounds{};GetClientRect(window,&bounds);controller->put_Bounds(bounds);}}
     void start_web(){
         if(check)result(false,"environment-start");
-        auto cache=setting(L"browser_cache");
+        auto cache=browser_cache.empty()?setting(L"browser_cache"):browser_cache.wstring();
         // Only this fixed, pixel-free smoke page may use the build directory.
         if(check&&cache.empty())cache=(directory/L"shell-check-browser-cache").wstring();
         if(cache.empty()){failure(L"Set the browser profile on the configured external data volume.","runtime-config");return;}fs::create_directories(cache);
@@ -84,16 +87,67 @@ struct Application {
         }).Get());
         if(FAILED(started))failure(L"Could not initialize Microsoft WebView2.","environment-rejected",started);
     }
+    bool run_setup(const fs::path& executable,const std::vector<std::wstring>& arguments,const fs::path& working) {
+        auto command=softloaf::quote_argument(executable.wstring());
+        for(const auto& argument:arguments)command+=L" "+softloaf::quote_argument(argument);
+        STARTUPINFOW info{};info.cb=sizeof(info);PROCESS_INFORMATION child{};
+        if(!CreateProcessW(executable.c_str(),command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,working.c_str(),&info,&child))return false;
+        CloseHandle(child.hThread);
+        const auto waited=WaitForSingleObject(child.hProcess,60000);DWORD code=2;
+        if(waited==WAIT_TIMEOUT)TerminateProcess(child.hProcess,2);
+        else GetExitCodeProcess(child.hProcess,&code);
+        CloseHandle(child.hProcess);return waited==WAIT_OBJECT_0&&code==0;
+    }
+    fs::path choose_directory(const wchar_t* title) {
+        ComPtr<IFileOpenDialog> dialog;
+        if(FAILED(CoCreateInstance(CLSID_FileOpenDialog,nullptr,CLSCTX_INPROC_SERVER,IID_PPV_ARGS(&dialog))))return {};
+        DWORD options=0;dialog->GetOptions(&options);dialog->SetOptions(options|FOS_PICKFOLDERS|FOS_FORCEFILESYSTEM);
+        dialog->SetTitle(title);
+        if(FAILED(dialog->Show(window)))return {};
+        ComPtr<IShellItem> item;if(FAILED(dialog->GetResult(&item)))return {};
+        PWSTR raw=nullptr;if(FAILED(item->GetDisplayName(SIGDN_FILESYSPATH,&raw)))return {};
+        fs::path result(raw);CoTaskMemFree(raw);return result;
+    }
+    static std::wstring from_utf8(const std::string& value) {
+        const auto count=MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),static_cast<int>(value.size()),nullptr,0);
+        if(count<=0)return {};
+        std::wstring result(count,L'\0');MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),static_cast<int>(value.size()),result.data(),count);return result;
+    }
     void start_service(){
+#if SOFTLOAF_PACKAGED_SERVICE
+        PWSTR application_data=nullptr;
+        if(FAILED(SHGetKnownFolderPath(FOLDERID_LocalAppData,0,nullptr,&application_data))){failure(L"Could not locate application settings.");return;}
+        source=fs::path(application_data)/L"SoftLoafSpectral";CoTaskMemFree(application_data);
+        if(const auto override_path=_wgetenv(L"SOFTLOAF_STATE_HOME"))source=override_path;
+        fs::create_directories(source);
+        const auto python=(directory/L"Service/spectral-service.exe").wstring();
+        if(!fs::is_regular_file(python)){failure(L"The installed calculation service is missing. Reinstall SoftLoaf Spectral.");return;}
+        if(!run_setup(python,{L"--needs-setup"},source)) {
+            const auto science=choose_directory(L"Select scientific data (contains runtime-science.json)");
+            if(science.empty()){DestroyWindow(window);return;}
+            const auto data=choose_directory(L"Select a data-drive folder for RAW, previews and caches");
+            if(data.empty()){DestroyWindow(window);return;}
+            std::vector<wchar_t> volume(32768);
+            if(!GetVolumePathNameW(data.c_str(),volume.data(),static_cast<DWORD>(volume.size()))||
+               !run_setup(python,{L"--configure",L"--science-root",science.wstring(),L"--data-root",data.wstring(),L"--volume",volume.data()},source)) {
+                failure(L"The scientific data or data-drive folder could not be used. Check the data inventory and reconnect the drive.");return;
+            }
+        }
+#else
         source=setting(L"source");const auto python=setting(L"python"),core=setting(L"core");
         if(!fs::is_regular_file(python)||!fs::is_regular_file(core)){failure(L"Development Python or C++ runtime is missing. Check runtime.ini.");return;}
+#endif
         const auto output=source/L"artifacts/application";fs::create_directories(output);
         const auto identity=std::to_wstring(GetCurrentProcessId());ready_file=output/(L"windows-ready-"+identity+L".json");fs::remove(ready_file);
         const auto event_name=L"Local\\SoftLoafSpectralStop-"+identity;stop=CreateEventW(nullptr,TRUE,FALSE,event_name.c_str());
         SECURITY_ATTRIBUTES security{sizeof(SECURITY_ATTRIBUTES),nullptr,TRUE};
         HANDLE log=CreateFileW((output/L"windows-desktop.log").c_str(),GENERIC_WRITE,FILE_SHARE_READ,&security,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,nullptr);
         STARTUPINFOW info{};info.cb=sizeof(info);info.dwFlags=STARTF_USESTDHANDLES;info.hStdOutput=log;info.hStdError=log;info.hStdInput=GetStdHandle(STD_INPUT_HANDLE);
-        auto command=L"\""+python+L"\" -X utf8 -m spectral_app --compute auto --core \""+core+L"\" --parent-pid "+identity+L" --stop-event \""+event_name+L"\" --ready-file \""+ready_file.wstring()+L"\"";
+        auto command=softloaf::quote_argument(python);
+#if !SOFTLOAF_PACKAGED_SERVICE
+        command+=L" -X utf8 -m spectral_app --core "+softloaf::quote_argument(core);
+#endif
+        command+=L" --compute auto --parent-pid "+identity+L" --stop-event "+softloaf::quote_argument(event_name)+L" --ready-file "+softloaf::quote_argument(ready_file.wstring());
         PROCESS_INFORMATION process{};const auto ok=CreateProcessW(python.c_str(),command.data(),nullptr,nullptr,TRUE,CREATE_NO_WINDOW,nullptr,source.c_str(),&info,&process);
         if(log!=INVALID_HANDLE_VALUE)CloseHandle(log);
         if(!ok){failure(L"Could not start the local Python service.");return;}
@@ -114,6 +168,8 @@ struct Application {
         std::ifstream file(ready_file);const std::string text((std::istreambuf_iterator<char>(file)),{});std::smatch match;
         std::smatch owner;
         if(std::regex_search(text,owner,std::regex(R"sl("pid"\s*:\s*([0-9]+))sl"))&&owns_service(owner[1].str())&&std::regex_search(text,match,std::regex(R"sl("url"\s*:\s*"(http://127\.0\.0\.1:[0-9]+/)")sl"))){
+            std::smatch cache;
+            if(std::regex_search(text,cache,std::regex(R"sl("browser_cache"\s*:\s*"([^"]+)")sl")))browser_cache=from_utf8(cache[1].str());
             const auto url=match[1].str();origin.assign(url.begin(),url.end());KillTimer(window,1);KillTimer(window,2);ready=true;start_web();return;
         }
         DWORD code=STILL_ACTIVE;GetExitCodeProcess(service,&code);
@@ -156,7 +212,7 @@ int WINAPI wWinMain(HINSTANCE instance,HINSTANCE,PWSTR,int show){
     Application app;application=&app;wchar_t executable[32768]{};GetModuleFileNameW(nullptr,executable,32768);app.directory=fs::path(executable).parent_path();
     int argc=0;auto** argv=CommandLineToArgvW(GetCommandLineW(),&argc);
     for(int i=1;i<argc;++i){if(std::wstring(argv[i])==L"--shell-check")app.check=true;else if(std::wstring(argv[i])==L"--report"&&i+1<argc)app.report=argv[++i];}LocalFree(argv);
-    WNDCLASSW type{};type.lpfnWndProc=procedure;type.hInstance=instance;type.lpszClassName=L"SoftLoafSpectralDevelopment";type.hCursor=LoadCursorW(nullptr,IDC_ARROW);type.hIcon=LoadIconW(instance,MAKEINTRESOURCEW(101));type.hbrBackground=reinterpret_cast<HBRUSH>(COLOR_WINDOW+1);RegisterClassW(&type);
+    WNDCLASSW type{};type.lpfnWndProc=procedure;type.hInstance=instance;type.lpszClassName=SOFTLOAF_PACKAGED_SERVICE ? L"SoftLoafSpectral" : L"SoftLoafSpectralDevelopment";type.hCursor=LoadCursorW(nullptr,IDC_ARROW);type.hIcon=LoadIconW(instance,MAKEINTRESOURCEW(101));type.hbrBackground=reinterpret_cast<HBRUSH>(COLOR_WINDOW+1);RegisterClassW(&type);
     app.window=CreateWindowW(type.lpszClassName,L"SoftLoaf Spectral",WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,1320,900,nullptr,nullptr,instance,nullptr);
     auto menu=CreateMenu();AppendMenuW(menu,MF_STRING,1,L"Settings…");AppendMenuW(menu,MF_STRING,2,L"Exit");SetMenu(app.window,menu);softloaf::size_initial_window(app.window);ShowWindow(app.window,show);
     if(app.check)app.start_web();else app.start_service();

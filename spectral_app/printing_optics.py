@@ -25,13 +25,14 @@ The three sequential paths multiply. These are not calibrated enlarger units.
 def load_optics(root,grid):
     root=Path(root);manifest=root/'data/printing-optics-manifest.json'
     if not manifest.is_file():return None
-    identity=json.loads(manifest.read_text());directory=root/'local/reference-assets/spektrafilm/printing-optics'
+    from .runtime_paths import science_root
+    identity=json.loads(manifest.read_text());directory=science_root(root)/'local/reference-assets/spektrafilm/printing-optics'
     if not directory.is_dir():return None
     for name,record in identity['files'].items():
         path=directory/name
         if path.name!=name or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=record['sha256']:
             raise ValueError('Optical source identity changed: '+name)
-    profile=root/'local/reference-assets/spektrafilm/profile-survey/kodak_ultra_endura.json'
+    profile=science_root(root)/'local/reference-assets/spektrafilm/profile-survey/kodak_ultra_endura.json'
     if hashlib.sha256(profile.read_bytes()).hexdigest()!=identity['paper_profile_sha256']:
         raise ValueError('Paper base source identity changed')
     source={**copy.deepcopy(identity),'resampling':'sort source wavelengths; average duplicate positions; linear interpolation; endpoint hold outside source coverage, explicitly assumed, not measured tails',

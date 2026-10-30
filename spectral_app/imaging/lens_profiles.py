@@ -6,6 +6,8 @@ public library's coordinate residual accompany each frozen profile selection.
 import ctypes as ct
 from ctypes.util import find_library
 from contextlib import contextmanager
+import sys
+from ..runtime_paths import packaged, resources, native_directory
 import hashlib
 from pathlib import Path
 import re
@@ -19,7 +21,7 @@ def normal(value):return re.sub('[^a-z0-9]','',str(value).lower())
 class LensCatalog:
     def __init__(self,directory=None,library=None):
         self.entries={};self.cameras={};self.lib=None
-        candidates=[Path(directory)] if directory else [Path('/opt/homebrew/share/lensfun/version_1'),Path('/usr/share/lensfun/version_1'),Path('/usr/share/lensfun')]
+        candidates=[Path(directory)] if directory else [resources()/'assets/lensfun/version_1'] if packaged() else [Path('/opt/homebrew/share/lensfun/version_1'),Path('/usr/share/lensfun/version_1'),Path('/usr/share/lensfun')]
         folder=next((p for p in candidates if p.is_dir()),None)
         if folder:
             for path in sorted(folder.glob('*.xml')):
@@ -35,7 +37,7 @@ class LensCatalog:
                     fragment=ET.tostring(node,encoding='utf-8');key=hashlib.sha256(sha.encode()+fragment).hexdigest()
                     self.entries[key]={'id':key,'name':maker+' · '+name,'maker':maker,'model':name,'source_sha256':sha,'fragment':fragment,
                         'focals':sorted({float(p.get('focal')) for p in points})}
-        path=library or find_library('lensfun') or next((str(p) for p in [Path('/opt/homebrew/lib/liblensfun.dylib'),Path('/usr/local/lib/liblensfun.dylib')] if p.is_file()),None)
+        path=library or (str(native_directory()/('liblensfun.dll' if sys.platform=='win32' else 'liblensfun.1.dylib')) if packaged() else find_library('lensfun') or next((str(p) for p in [Path('/opt/homebrew/lib/liblensfun.dylib'),Path('/usr/local/lib/liblensfun.dylib')] if p.is_file()),None))
         if path:
             try:
                 self.lib=ct.CDLL(path);lib=self.lib;P=ct.c_void_p;F=ct.c_float;I=ct.c_int

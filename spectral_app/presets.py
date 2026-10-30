@@ -16,7 +16,8 @@ def visible_negative_presets(entries):
 def load_recipe_presets(root):
     root=Path(root)
     manifest=root/'data/film-presets-manifest.json'
-    directory=root/'local/materials/film-presets-v1'
+    from .runtime_paths import science_root
+    directory=science_root(root)/'local/materials/film-presets-v1'
     if not manifest.is_file() or not directory.is_dir():return []
     catalog=json.loads(manifest.read_text())
     if catalog.get('schema')!='softloaf.experimental-presets/1':raise ValueError('Unknown preset catalog')

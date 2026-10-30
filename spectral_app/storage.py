@@ -16,6 +16,10 @@ class DataStorage:
 
     @classmethod
     def configured(cls):
+        from .runtime_paths import packaged,settings as runtime_settings,state_root
+        if packaged():
+            config=runtime_settings()
+            return cls(config['data_root'],config['volume'],state_root())
         project=Path(__file__).resolve().parents[1]
         settings=project/'local/storage-settings.json'
         if not settings.is_file():return cls(project=project)

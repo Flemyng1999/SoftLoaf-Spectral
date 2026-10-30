@@ -4,6 +4,7 @@ if(NOT SOFTLOAF_RAWTHERAPEE)
     return()
 endif()
 include(ExternalProject)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
 set(SOFTLOAF_RT_SOURCE "${CMAKE_SOURCE_DIR}/third_party/rawtherapee")
 set(SOFTLOAF_RT_RUNTIME "${CMAKE_SOURCE_DIR}/local/runtime/RawTherapeeEngine.app/Contents")
 set(SOFTLOAF_RT_FLAGS
@@ -19,6 +20,7 @@ if(APPLE)
         list(APPEND SOFTLOAF_RT_FLAGS -DLOCAL_PREFIX=/usr/local)
     endif()
     list(APPEND SOFTLOAF_RT_FLAGS
+        -DOSX_DEV_BUILD=ON -DDATADIR=../Resources/share -DCREDITSDIR=../Resources -DLICENCEDIR=../Resources
         "-DOpenMP_C_FLAGS=-Xclang -fopenmp -I${SOFTLOAF_OMP_INCLUDE}"
         "-DOpenMP_CXX_FLAGS=-Xclang -fopenmp -I${SOFTLOAF_OMP_INCLUDE}"
         -DOpenMP_C_LIB_NAMES=omp -DOpenMP_CXX_LIB_NAMES=omp
@@ -33,5 +35,6 @@ ExternalProject_Add(softloaf_rawtherapee_cli
     BUILD_ALWAYS TRUE
     INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory "${SOFTLOAF_RT_RUNTIME}/MacOS"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different <BINARY_DIR>/rtgui/rawtherapee-cli "${SOFTLOAF_RT_RUNTIME}/MacOS/rawtherapee-cli"
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${SOFTLOAF_RT_SOURCE}/rtdata" "${SOFTLOAF_RT_RUNTIME}/Resources/share"
+    COMMAND ${Python3_EXECUTABLE} "${CMAKE_SOURCE_DIR}/scripts/install_rt_resources.py"
+        --source "${SOFTLOAF_RT_SOURCE}/rtdata" --destination "${SOFTLOAF_RT_RUNTIME}/Resources/share" --platform macos
     BUILD_BYPRODUCTS "${SOFTLOAF_RT_RUNTIME}/MacOS/rawtherapee-cli")

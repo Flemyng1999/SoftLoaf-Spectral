@@ -25,6 +25,7 @@ from .photo_cache import PreviewStore
 from .rendition_cache import RenditionCache
 from .preview_codec import interactive_encoding
 from .storage import DataStorage
+from .runtime_paths import state_path,packaged
 from .preview_policy import PREVIEW_SHORT_EDGE,PREVIEW_SCHEMA,preview_size
 from .rawtherapee import RawTherapee, DecodeGate, RAW_EXTENSIONS, lut_input
 from .photo_jobs import PhotoJobs
@@ -39,7 +40,9 @@ MAX_RAW_BYTES = 256*1024*1024
 class Application(PipelineRoutes, Workbench):
     def __init__(self, model):
         from .preferences import Preferences
-        self.preferences=Preferences(Path(__file__).resolve().parents[1]/'local/ui-settings.json')
+        self.preferences=Preferences(state_path('local/ui-settings.json'))
+        self.workspace_directory=state_path('workspace') if packaged() else model.output
+        self.workspace_directory.mkdir(parents=True,exist_ok=True)
         self.storage=DataStorage.configured()
         self.storage.validate()
         super().__init__(model)
@@ -116,7 +119,7 @@ class Application(PipelineRoutes, Workbench):
                     self._save_photo_metadata(restored)
             except (OSError, KeyError, TypeError, ValueError):
                 continue
-        session_path = self.model.output/'workspace.json'
+        session_path = self.workspace_directory/'workspace.json'
         if session_path.is_file():
             try:
                 saved = json.loads(session_path.read_text())
@@ -177,7 +180,7 @@ class Application(PipelineRoutes, Workbench):
         result['cache_settings']={'limits':copy.deepcopy(self.cache_settings.limits)}
         result['scan']={'available':self.scans is not None,'stocks':list(self.scans.materials) if self.scans else []}
         result['application'] = {'name': 'SoftLoaf Spectral', 'version': __version__,
-                                 'stage': 'local development', 'desktop': True}
+                                 'stage': 'installation preview' if packaged() else 'local development', 'desktop': True}
         result['session'] = copy.deepcopy(self.session)
         result['session_revision'] = self.session_revision
         result['session_warning'] = self.session_warning
@@ -353,12 +356,12 @@ class Application(PipelineRoutes, Workbench):
 
     def save_session(self, request):
         # Serialize threads and independent services sharing the same workspace.
-        with self.session_lock, (self.model.output/'.workspace.lock').open('a+b') as lock:
+        with self.session_lock, (self.workspace_directory/'.workspace.lock').open('a+b') as lock:
             acquire_file_lock(lock)
             if self.session_warning:
                 raise RecipeError('invalid_session', '上次工作区无法复现；原文件保留，请先下载配方并检查本地工作区。')
             expected = request.get('expected_revision')
-            path = self.model.output/'workspace.json'
+            path = self.workspace_directory/'workspace.json'
             try:
                 disk_revision = json.loads(path.read_text())['revision'] if path.is_file() else 0
                 if type(disk_revision) is not int or disk_revision < 0:
@@ -369,9 +372,9 @@ class Application(PipelineRoutes, Workbench):
                 raise RecipeError('session_conflict', '另一窗口已经更新工作区；未覆盖其保存内容，请先下载当前配方。')
             state = self._validated_session(request.get('session'))
             revision = self.session_revision+1
-            temporary = self.model.output/'workspace.tmp'
+            temporary = self.workspace_directory/'workspace.tmp'
             temporary.write_bytes(json_bytes({'revision': revision, 'session': state}))
-            temporary.replace(self.model.output/'workspace.json')
+            temporary.replace(self.workspace_directory/'workspace.json')
             self.session_revision, self.session = revision, state
             return {'ok': True, 'revision': revision}
 
