@@ -538,7 +538,7 @@ class Workbench:
                 'ocio_config': dict(self.model.display_manager.config_metadata),
                 'display_targets': [{'id': key, 'label': value['label']} for key, value in TARGETS.items()],
                 'raw_supported': False, 'source': 'E100 local float64 neutral-fitted reference; spectral prior estimated from ordinary AP1 RGB',
-                'compute_backend': 'C++17 float64 / ABI 1' if self.model.core is not None else 'Python NumPy float64 reference',
+                'compute_backend': 'C++23 float64 / ABI 1' if self.model.core is not None else 'Python NumPy float64 reference',
                 'encoding': 'linear ACEScg/AP1 D60 input; LUT input ACEScct AP1 D60',
                 'film_exposure_ev': {'min': -4, 'max': 4}, 'viewing_gain': {'min': .1, 'max': 8},
                 'scene_daylight': {'min_k': 4000, 'max_k': 10000, 'step_k': 100, 'default_k': 6500},
@@ -556,7 +556,7 @@ class Workbench:
             'name': view['illuminant'], 'source': f'CIE_std_illum_{view["illuminant"]}.csv',
             'sha256': self.model.sources[f'CIE_std_illum_{view["illuminant"]}.csv']}
         return {'observer': 'CIE 1931 2 degree', 'input': 'scene-linear ACEScg/AP1 D60; no RAW decoding or camera SSF assumed',
-            'compute_backend': 'C++17 float64 / ABI 1' if self.model.core is not None else 'Python NumPy float64 reference',
+            'compute_backend': 'C++23 float64 / ABI 1' if self.model.core is not None else 'Python NumPy float64 reference',
             'compute_kernel_sha256': self.model.core.sha256 if self.model.core is not None else None,
             'spectral_prior': 'float64 minimum-first-difference, regularization 1e-8; nonnegative projection; no upper reflectance cap',
             'scene_illuminant': 'CIE D65 energy SPD' if recipe['scene']['illuminant'] == 'D65' else 'CIE D-series simulated daylight energy SPD',

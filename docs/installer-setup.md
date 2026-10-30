@@ -112,6 +112,13 @@ upstream camera resources, not just an executable copied from an installation.
 Include the exact upstream archive, this build script and dependency source
 archives with the corresponding-source supplement.
 
+Use a short checkout path when freezing on Windows: the resource arguments can
+otherwise exceed Windows' process command-line limit. For remote installed-byte
+tests, keep the SSH session alive or launch through the interactive desktop.
+A service left behind after its SSH session closes can remain reachable while
+new RT child processes fail with `STATUS_DLL_INIT_FAILED`. An attached run and
+a normal desktop launch must be checked separately from that failed harness.
+
 The X-Trans bounds change uses RT's existing interpolation for the outer 11
 sensor pixels. In the tested X-T30 and X-T30 II files, the changed region is
 the outer four output pixels. The remaining region matches the independent
