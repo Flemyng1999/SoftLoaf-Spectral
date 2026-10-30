@@ -12,6 +12,23 @@ def model(tmp_path_factory):
     return SpectralModel(Path('local/film-color-slides/hyperspectral-demo'),Path('local/reference-assets/OpenDRT_v1.0.0_mini-config_v2.zip'),tmp_path_factory.mktemp('5207'),core=NativeCore())
 
 
+def test_application_updates_saved_daylight_and_tungsten_stocks_to_their_own_reference(model):
+    from spectral_app.application import Application
+    app=Application(model);data=app.bootstrap();seen=set()
+    for group in ('templates','recipe_presets','reversal_presets'):
+        for entry in data.get(group,[]):
+            old=copy.deepcopy(entry['recipe']);stock=old['film']['stock']
+            old['scene']={'illuminant':'CIE_D','temperature_k':6500};old['revision']=10
+            result=app.validate_recipe(old,compute=True)['normalized_recipe']
+            expected={'illuminant':'Planck','temperature_k':3200} if stock in ('5213','5219') else {'illuminant':'CIE_D','temperature_k':5500}
+            assert result['scene']==expected
+            assert result['revision']==11
+            for field in old.keys()-{'scene','revision'}:assert result[field]==old[field]
+            assert app.validate_recipe(result,compute=True)['normalized_recipe']==result
+            seen.add(stock)
+    assert seen=={'5203','5207','5213','5219','E100','velvia50','velvia100','provia100f'}
+
+
 def test_5207_preserves_published_dmin_subtracted_dye_basis(model):
     dyes=model.negative_material['dyes']
     assert dyes['quantity']=='net_spectral_density'

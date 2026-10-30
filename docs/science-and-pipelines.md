@@ -39,7 +39,12 @@ this condition automatically and show it as a read-only note. This is a film
 model reference, not an estimate of the imported photograph's illumination or
 its camera white balance. Printing and viewing lights remain independent.
 The lower-level reference calculation still accepts explicit scene conditions
-for scientific comparisons. Saved recipes retain their recorded conditions.
+for scientific comparisons. The application upgrades saved recipes, including
+workspace baselines and deletion-recovery records, to the declared film
+reference when validating or restoring them. An actual scene change increments
+the recipe revision once. Other nodes and RAW stages remain unchanged. Unknown
+materials without a valid reference retain their conditions rather than borrow
+another stock's light. External recipe files are only rewritten when saved.
 
 The scene reflectance factor multiplied by the exposure illuminant gives the
 incident spectrum. Integrating it with each layer response gives effective

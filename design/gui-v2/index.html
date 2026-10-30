@@ -552,7 +552,17 @@ async function save(){
   announce('已发起 r'+frozen.revision+' 配方 JSON 下载；后续修改不会被覆盖。');
  }catch(e){announce(e.message,true);}
 }
-async function openRecipe(file){if(!file)return;try{if(file.size>4000000)throw Error('配方文件超过 4 MB。');const loaded=JSON.parse(await file.text()),v=await api('/api/validate',{recipe:loaded});addDocument(v.normalized_recipe,true);announce(v.computable?'已验证并打开配方。':'已打开配方；对应材料尚未就绪。');}catch(e){announce('没有替换当前配方：'+e.message,true);}finally{$('recipe-file').value='';}}
+async function openRecipe(file){
+ if(!file)return;
+ try{
+  if(file.size>4000000)throw Error('配方文件超过 4 MB。');
+  const loaded=JSON.parse(await file.text()),v=await api('/api/validate',{recipe:loaded});
+  const changed=loaded.scene?.illuminant!==v.normalized_recipe.scene?.illuminant||loaded.scene?.temperature_k!==v.normalized_recipe.scene?.temperature_k;
+  addDocument(v.normalized_recipe,true);
+  if(changed){saveKey=null;remember();render();}
+  announce(changed?'已采用片种参考拍摄光，请保存更新后的配方。':v.computable?'已验证并打开配方。':'已打开配方；对应材料尚未就绪。');
+ }catch(e){announce('没有替换当前配方：'+e.message,true);}finally{$('recipe-file').value='';}
+}
 function exportLabel(){const frozen=exportResult?.frozen||exportJob?.recipe;if(!frozen)return'';const rev=frozen.revision,id=frozen.recipe_id||frozen.id,same=active&&active.id===id&&active.revision===rev&&resultMeta&&key(active)===key(resultMeta.recipe)&&!!exportResult?.frozen?.fingerprint&&exportResult.frozen.fingerprint===result?.version?.fingerprint;return '冻结版本 r'+rev+(same?' · 当前版本':' · 当前配方已有其他版本，不能视为当前版本导出完成');}
 function exportSnapshotMatchesCurrent(){
  const f=exportResult?.frozen;

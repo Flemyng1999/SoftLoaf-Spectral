@@ -11,6 +11,8 @@ test('language resolution is explicit and preserves user or material names',()=>
  assert.equal(translateText('My 用户配方','en'),'My 用户配方');
  assert.equal(translateText('保存配方','zh-CN'),'保存配方');
  assert.equal(translateText(' \n  ','en'),' \n  ');
+ for(const text of ['已采用片种参考拍摄光，请保存更新后的配方。','已将旧配方的拍摄光更新为片种参考条件；曝光、放大光和观看光保留。'])
+  assert.ok(!/[\u4e00-\u9fff]/u.test(translateText(text,'en')));
 });
 test('English covers spectrum plots, conversion diagnostics and reported workspace conflicts',()=>{
  for(const text of ['片基密度谱','片基密度 D','波长 nm','转换过程','XYZ 到显示 RGB','矩阵变换','范围限制','输入 XYZ','内置高光谱场景','Colour 24 色卡','186 个采样点','正在处理 sample.NEF 原始尺寸 · 冻结配方 r2…','186 个计算采样点','取样：22 · neutral 5 (.70 D)','相对 XYZ D65 · 相对 Y','本机工作区未保存：另一窗口已经更新工作区；未覆盖其保存内容，请先下载当前配方。 可使用「保存配方」带走当前版本。']){

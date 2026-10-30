@@ -31,7 +31,7 @@ test('failed preference write restores the authoritative language and control',a
 test('dynamic SVG labels, diagnostic units, built-in inputs and conflict messages translate and round-trip',async()=>browser(async page=>{
  await setup(page);await page.locator('#ui-language').selectOption('en');
  await page.locator('body').evaluate(body=>{
-  const panel=document.createElement('section');panel.id='dynamic-panel';panel.innerHTML='<h3>片基密度谱</h3><svg><text>片基密度 D</text><text>波长 nm</text></svg><p>186 个采样点</p><p>XYZ · D65 → 色度转换 → sRGB</p><p>本机工作区未保存：另一窗口已经更新工作区；未覆盖其保存内容，请先下载当前配方。 可使用「保存配方」带走当前版本。</p><select><option>内置高光谱场景</option><option>Colour 24 色卡</option></select><span data-user-content>用户的片基密度谱</span>';body.append(panel);
+  const panel=document.createElement('section');panel.id='dynamic-panel';panel.innerHTML='<h3>片基密度谱</h3><svg><text>片基密度 D</text><text>波长 nm</text></svg><p>186 个采样点</p><p>XYZ · D65 → 色度转换 → sRGB</p><p>本机工作区未保存：另一窗口已经更新工作区；未覆盖其保存内容，请先下载当前配方。 可使用「保存配方」带走当前版本。</p><p>已采用片种参考拍摄光，请保存更新后的配方。</p><p>已将旧配方的拍摄光更新为片种参考条件；曝光、放大光和观看光保留。</p><select><option>内置高光谱场景</option><option>Colour 24 色卡</option></select><span data-user-content>用户的片基密度谱</span>';body.append(panel);
  });
  await page.waitForFunction(()=>document.querySelector('#dynamic-panel h3').textContent==='Film-base density spectrum');
  assert.deepEqual(await page.locator('#dynamic-panel svg text').allTextContents(),['Film-base density (D)','Wavelength (nm)']);

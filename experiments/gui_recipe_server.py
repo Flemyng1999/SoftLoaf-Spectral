@@ -622,11 +622,14 @@ class Workbench:
         return {'preview': preview or png_preview(output, self.model.display_profile(recipe['display'].get('target','sRGB'))), 'nodes': nodes,
                 'sample': {'input_ap1': np.asarray(point).tolist(), 'xyz_d65': sample['XYZ'].tolist(), 'display_rgb': sample['display_rgb'].tolist(), 'display_target': recipe['display'].get('target','sRGB'), **({'srgb':sample['display_rgb'].tolist()} if recipe['display'].get('target','sRGB')=='sRGB' else {})}}
 
+    def validate_recipe(self,recipe,compute=False):
+        return self.model.validate(recipe,compute=compute)
+
     def evaluate(self, request):
-        recipe = self.model.validate(request.get('recipe'), compute=True)['normalized_recipe']
+        recipe = self.validate_recipe(request.get('recipe'), compute=True)['normalized_recipe']
         baseline = request.get('baseline')
         if baseline is not None:
-            baseline = self.model.validate(baseline, compute=True)['normalized_recipe']
+            baseline = self.validate_recipe(baseline, compute=True)['normalized_recipe']
         input_spec = request.get('input') or {'id': 'scene43_rgb' if 'scene43_rgb' in self.model.inputs else 'chart', 'exposure_ev': 0}
         selection = request.get('selection') or {'x': .5, 'y': .5, 'sample_id': self.model.samples[0]['id']}
         if not isinstance(input_spec, dict) or input_spec.get('id') not in self.model.inputs:
@@ -678,7 +681,7 @@ class Workbench:
         grid = request.get('grid', 65)
         if type(grid) is not int or not 2 <= grid <= 129:
             raise RecipeError('invalid_grid', 'LUT 边长需要是 2 到 129 的整数。')
-        recipe = self.model.validate(request.get('recipe'), compute=True)['normalized_recipe']
+        recipe = self.validate_recipe(request.get('recipe'), compute=True)['normalized_recipe']
         purpose = request.get('purpose')
         if purpose not in ('internal', 'display', 'pipeline'):
             raise RecipeError('invalid_export', '请选择完整 OCIO/CTF 效果包、内部 XYZ 或显示 LUT。')
@@ -987,7 +990,7 @@ def make_server(workbench, ui, logo, port=8772):
                 if not isinstance(body, dict):
                     raise RecipeError('invalid_request', '请求必须是 JSON 对象。')
                 if self.path == '/api/validate':
-                    result = workbench.model.validate(body.get('recipe'))
+                    result = workbench.validate_recipe(body.get('recipe'))
                 elif self.path == '/api/evaluate':
                     result = workbench.evaluate(body)
                 elif self.path in extra:
