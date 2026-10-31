@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "Please cite the repository and the exact revision used; also cite each upstream dataset separately."
 type: software
-version: 0.1.0-alpha.3
-date-released: 2026-10-30
+version: 0.1.1
+date-released: 2026-10-31
 title: "SoftLoaf Spectral"
 abstract: "Spectral simulation of negative film digitization, optical printing and reversal film viewing."
 authors:

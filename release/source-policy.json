@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "channel": "source-only",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.1",
   "files": [
     ".gitignore",
     "AGENTS.md",

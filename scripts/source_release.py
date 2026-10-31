@@ -1,4 +1,4 @@
-"""Build an audited source-only archive from an immutable Git commit.
+"""Build an audited source archive from an immutable Git commit.
 
 Does not create tags, upload files, collect ignored assets or certify binaries.
 """
@@ -12,6 +12,13 @@ import subprocess
 import tarfile
 
 ROOT=Path(__file__).resolve().parents[1]
+
+
+def source_channel(version):
+    number=r'(?:0|[1-9][0-9]*)'
+    if not isinstance(version,str) or not re.fullmatch(rf'{number}\.{number}\.{number}(?:-alpha\.[1-9][0-9]*)?',version):
+        raise ValueError('Expected a canonical stable or alpha release version')
+    return 'source-only prerelease' if '-alpha.' in version else 'source archive'
 
 
 def validate_entry(name,data,policy):
@@ -39,7 +46,8 @@ def build(commit,output,root=ROOT):
     if git('rev-parse',commit+'^{commit}').decode().strip()!=commit:raise ValueError('Commit identity mismatch')
     version=git('show',commit+':VERSION').decode().strip()
     policy=json.loads(git('show',commit+':release/source-policy.json'))
-    if not re.fullmatch(r'\d+\.\d+\.\d+-alpha\.\d+',version):raise ValueError('This packager is for source alpha releases')
+    channel=source_channel(version)
+    if policy.get('version')!=version:raise ValueError('Source policy version differs from VERSION')
     output.mkdir(parents=True,exist_ok=True)
     stem='SoftLoaf-Spectral-'+version+'-source';archive=output/(stem+'.tar.gz')
     partial=archive.with_suffix(archive.suffix+'.partial');records=[]
@@ -58,7 +66,7 @@ def build(commit,output,root=ROOT):
         partial.replace(archive)
     except BaseException:
         process.kill();process.wait();partial.unlink(missing_ok=True);raise
-    manifest={'schema':1,'version':version,'commit':commit,'channel':'source-only prerelease',
+    manifest={'schema':1,'version':version,'commit':commit,'channel':channel,
               'scientific_runtime_included':False,'installer_included':False,
               'files':records,'archive':archive.name,'archive_sha256':hashlib.sha256(archive.read_bytes()).hexdigest()}
     record_path=output/(stem+'-manifest.json')

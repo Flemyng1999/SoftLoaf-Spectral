@@ -6,6 +6,13 @@ installable release. Alpha.2 publication was macOS-first; alpha.3 adds the
 Windows runtime preview after its dependency and installed-candidate checks.
 Each future Windows installer must pass those checks before publication.
 
+Version 0.1.1 is a joint macOS arm64 and Windows x64 runtime release. Keep its
+GitHub release draft until both platforms pass their installed-byte gates and
+the complete explicit asset inventory has uploaded and passed hash checks.
+Publish both installers together; do not expose a one-platform release first.
+The version does not certify physical film accuracy or approve scientific-data
+redistribution. Numerical limits and separately required inputs remain explicit.
+
 For 0.1.0-alpha.1 the owner explicitly selected a source-only prerelease without
 unreviewed data. This channel publishes an audited immutable source archive,
 inventory, checksums, build/test instructions and an explicit missing-input
