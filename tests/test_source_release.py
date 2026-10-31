@@ -42,9 +42,23 @@ def test_credential_and_personal_path_checks_do_not_echo_values():
 def test_release_version_and_public_fit_summaries_are_consistent():
     import spectral_app
     assert spectral_app.__version__==(ROOT/'VERSION').read_text().strip()
-    assert spectral_app.__version__.startswith('0.1.0-alpha.')
+    from scripts.source_release import source_channel
+    assert source_channel(spectral_app.__version__) in ('source archive','source-only prerelease')
+    assert policy()['version']==spectral_app.__version__
     from spectral_lut.provenance import public_fit_summary
     source={'name':'synthetic','fit_metric':'Status M','fingerprint':'abc','neutral_max_error_D':.001,
             'provenance':{'exposure_reference':{'channels':{'R':[1]*33}}}}
     assert public_fit_summary(source)=={k:source[k] for k in policy()['public_fit_fields']}
     assert 'provenance' in source
+
+
+@pytest.mark.parametrize('version,channel',[('0.1.1','source archive'),('0.1.0-alpha.3','source-only prerelease')])
+def test_source_archives_support_stable_and_existing_alpha_versions(version,channel):
+    from scripts.source_release import source_channel
+    assert source_channel(version)==channel
+
+
+@pytest.mark.parametrize('version',['v0.1.1','0.1','0.1.1/../private','0.1.1-beta.1','01.1.1'])
+def test_source_archive_version_cannot_invent_an_unreviewed_channel_or_path(version):
+    from scripts.source_release import source_channel
+    with pytest.raises(ValueError):source_channel(version)

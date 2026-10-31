@@ -1,6 +1,6 @@
-# Installing the alpha.3 candidate
+# Installing 0.1.1
 
-This prerelease packages the native window and its runtime. Scientific inputs
+This release packages the native window and its runtime. Scientific inputs
 remain separate. It contains no film/paper curves, trained spectral models,
 photographs, transmission-target measurements or scan calibrations. A normal
 installation does not provide material presets until a prepared data directory

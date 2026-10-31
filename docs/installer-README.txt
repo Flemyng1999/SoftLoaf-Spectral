@@ -1,4 +1,4 @@
-面包光谱 / SoftLoaf Spectral 0.1.0-alpha.3
+面包光谱 / SoftLoaf Spectral 0.1.1
 Yangming Feng and contributors
 https://github.com/Flemyng1999/SoftLoaf-Spectral
 
@@ -18,7 +18,7 @@ Do not select another user's private data or copy unreviewed data into releases.
 macOS: Apple Silicon, macOS 26 or newer. Tested on macOS 27.0.1 / Apple M2 Pro.
 Windows: x64 Windows 11, Microsoft Edge WebView2 Evergreen Runtime required.
 D3D12 is selected when available; CPU recovery is retained. This Windows
-prerelease is unsigned. No Microsoft Store certification is claimed.
+package is unsigned. No Microsoft Store certification is claimed.
 
 Drag the Mac application into Applications. Run the Windows installer as the
 current user; no administrator installation is needed. Close the application
